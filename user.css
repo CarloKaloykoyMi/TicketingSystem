@@ -1,0 +1,43 @@
+/* Add this CSS to organize the table */
+.table-container {
+    margin-top: 20px;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+.table th {
+    background-color: #f8f9fa;
+}
+
+.modal-body label {
+    font-weight: bold;
+}
+
+.modal-body input {
+    width: 100%;
+}
+
+.modal-footer {
+    justify-content: flex-start;
+}
+
+/* Adjustments for small screens */
+@media (max-width: 576px) {
+    .modal-body input {
+        width: auto;
+    }
+}
+
+/* Additional styles for buttons in the table */
+.btn-group {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+}
+
+.btn-primary,
+.btn-danger {
+    width: 100%;
+}

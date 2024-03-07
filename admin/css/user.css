@@ -1,0 +1,133 @@
+.container {
+    max-width: 400px;
+    margin: 150px auto 0 auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #fff;
+}
+
+h2 {
+    margin-bottom: 2rem;
+}
+
+.button-group {
+    flex-direction: column; /* Change to row layout */
+}
+
+.button-option {
+    display: flex;
+    align-items: center;
+}
+
+.button-option img {
+    width: 30px;
+    margin-right: 10px;
+}
+
+.btn {
+    margin-bottom: 10px; /* Add margin-bottom for space between buttons */
+}
+
+.navbar {
+    background-color: #7a7a7a;
+    color: #fff;
+    padding: 10px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 999;
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-logo img {
+    height: 90px;
+    width: 100px; 
+}
+
+.logo-text {
+    margin-left: 10px; 
+    font-size: 25px; 
+    font-weight: bold; 
+}
+
+
+.links ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.links a {
+    color: var(--dark-one);
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 1;
+    transition: 0.3s;
+}
+
+.links a.active {
+    background-color: var(--main-color);
+    color: var(--light-one);
+    border-radius: 2rem;
+    font-size: 1rem;
+    padding: 0.9rem 2.1rem;
+    margin-left: 1rem;
+}
+
+.links a:hover {
+    color: var(--main-color);
+}
+
+.links a.active:hover {
+    color: var(--light-one);
+    background-color: #5F5F5F;
+}
+
+.forms {
+    margin-top: 60px;
+}
+
+.links ul {
+    display: flex;
+}
+
+.links a {
+    display: inline-block;
+    padding: 0.9rem 1.2rem;
+    color: var(--dark-one);
+    font-size: 1.05rem;
+    text-transform: uppercase;
+    font-weight: 500;
+    line-height: 1;
+    transition: 0.3s;
+    text-decoration: none; 
+}
+
+.links a.active {
+    background-color: #000;
+    color: var(--light-one);
+    border-radius: 2rem;
+    font-size: 1rem;
+    padding: 0.9rem 2.1rem;
+    margin-left: 1rem;
+}
+
+.links a:hover {
+    color: var(--main-color);
+}
+
+.links a.active:hover {
+    color: var(--light-one);
+    background-color: #5F5F5F;
+}
