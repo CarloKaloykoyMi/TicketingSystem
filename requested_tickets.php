@@ -3,7 +3,6 @@ include('function/myfunction.php');
 include 'sidebar_navbar.php';
 include('crud.php');
 
-
 if (!isset($_SESSION['auth_user']['username'])) {
     session_destroy();
     unset($_SESSION['auth_user']['username']);
@@ -67,7 +66,7 @@ while ($row = mysqli_fetch_array($result)) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tickets</h4>
+                            <h4>Requested Tickets</h4>
                         </div>
                         <div class="card-body" id="category_table">
                             <table id="example" class="table table-striped" style="width:100%">
@@ -75,7 +74,7 @@ while ($row = mysqli_fetch_array($result)) {
                                     <tr>
                                         <th>Dates</th>
                                         <th>Subject</th>
-                                        <th>To Department</th>
+                                        <th>Requested Department</th>
                                         <th>Requestor</th>
                                         <th>Status</th>
                                         <th>Action</th>
@@ -109,7 +108,7 @@ while ($row = mysqli_fetch_array($result)) {
                                                     ?>
                                                 </td>
                                                 <td class="table-action">
-                                                    <a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="btn btn-primary"><i class="fas fa-eye"></i>View
+                                                    <a href="requested_ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="btn btn-primary"><i class="fas fa-eye"></i>View
                                                     </a>
                                                 </td>
                                             </tr>

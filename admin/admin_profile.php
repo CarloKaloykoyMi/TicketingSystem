@@ -16,7 +16,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $email = $_SESSION['auth_user']['email'];
     $role = $_SESSION['auth_user']['role'];
     $lname = $_SESSION['auth_user']['lastname'];
-    $fname = $_SESSION['auth_user']['firstname'];
     
 }
 
@@ -193,7 +192,7 @@ $atresult= mysqli_query($con, $atsql);
 
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-5 label "><i class="fa-solid fa-user"></i> First Name:</div>
-                                                <div class="col-lg-3 col-md-5"><?php echo $fname ?></div>
+                                                <div class="col-lg-3 col-md-5"><?php echo $fn ?></div>
                                             </div>
 
                                             <div class="row">

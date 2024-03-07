@@ -1,4 +1,3 @@
-
 <?php
 include('function/myfunction.php');
 include 'sidebar_navbar.php';
@@ -161,6 +160,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 </table>
             </div>
 
+            <!-- MODAL -->
             <div class="modal fade" id="myModal">
                 <div class="modal-dialog modal-lg">
                     <div class="modal-content">
@@ -287,55 +287,55 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             <img id="preview-image" src="img/empty.png" height="200" alt="Image Preview">
                                         </div>
                                     </div>
-                        
-                        <div class="modal-footer">
-                            <button type="submit" name="add_ticket" class="btn btn-success" style="background-color: #6C757D;">Submit</button>
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+
+                                    <div class="modal-footer">
+                                        <button type="submit" name="add_ticket" class="btn btn-success" style="background-color: #6C757D;">Submit</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                    </div>
+                            </form>
                         </div>
-                        </form>
                     </div>
                 </div>
             </div>
+
         </div>
 
-    </div>
+        <script>
+            const fileInput = document.getElementById('example-fileinput');
+            const imagePreview = document.getElementById('image-preview');
 
-    <script>
-        const fileInput = document.getElementById('example-fileinput');
-        const imagePreview = document.getElementById('image-preview');
+            fileInput.addEventListener('change', function() {
+                imagePreview.innerHTML = ''; // Clear previous previews
 
-        fileInput.addEventListener('change', function() {
-            imagePreview.innerHTML = ''; // Clear previous previews
+                const files = this.files;
 
-            const files = this.files;
+                for (const file of files) {
+                    const reader = new FileReader();
 
-            for (const file of files) {
-                const reader = new FileReader();
+                    reader.addEventListener('load', function() {
+                        if (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.type === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
+                            // If file is pdf, docx, or ppt, display only the filename
+                            const filenameElement = document.createElement('p');
+                            filenameElement.textContent = file.name;
+                            imagePreview.appendChild(filenameElement);
+                        } else if (file.type.startsWith('image/')) {
+                            // If file is an image, display the preview
+                            const imgElement = document.createElement('img');
+                            imgElement.src = reader.result;
+                            imgElement.height = 200;
+                            imgElement.alt = 'Image Preview';
+                            imagePreview.appendChild(imgElement);
+                        }
+                    });
 
-                reader.addEventListener('load', function() {
                     if (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.type === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
-                        // If file is pdf, docx, or ppt, display only the filename
-                        const filenameElement = document.createElement('p');
-                        filenameElement.textContent = file.name;
-                        imagePreview.appendChild(filenameElement);
-                    } else if (file.type.startsWith('image/')) {
-                        // If file is an image, display the preview
-                        const imgElement = document.createElement('img');
-                        imgElement.src = reader.result;
-                        imgElement.height = 200;
-                        imgElement.alt = 'Image Preview';
-                        imagePreview.appendChild(imgElement);
+                        reader.readAsDataURL(new Blob([file.name]));
+                    } else {
+                        reader.readAsDataURL(file);
                     }
-                });
-
-                if (file.type === 'application/pdf' || file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' || file.type === 'application/vnd.openxmlformats-officedocument.presentationml.presentation') {
-                    reader.readAsDataURL(new Blob([file.name]));
-                } else {
-                    reader.readAsDataURL(file);
                 }
-            }
-        });
-    </script>
+            });
+        </script>
 
 </body>
 

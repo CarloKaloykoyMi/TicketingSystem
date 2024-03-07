@@ -159,8 +159,6 @@ if (isset($_POST['add_ticket'])) {
     $atsql="INSERT INTO audit_trail (user_id,action) VALUES('$userid','$action');";
     $atrun= mysqli_query($con,$atsql);
 
-
-
     if ($run) {
         echo '<script>alert("Changes Saved.");</script>';
         echo '<script>window.location.href = "User_Profile.php"</script>';
@@ -170,4 +168,25 @@ if (isset($_POST['add_ticket'])) {
         echo '<script>alert("Error Changing. Please try again.");</script>';
     }
 
+}
+else if (isset($_POST['change_status'])) {
+    $ticket_id = $_POST['ticket_id'];
+    $status = $_POST['status']; // Retrieve the selected status from the form data
+
+    // Use prepared statements to prevent SQL injection
+    $updateUser_query = "UPDATE ticket SET status=? WHERE ticket_id=?";
+    $stmt = mysqli_prepare($con, $updateUser_query);
+
+    // Bind parameters and execute the query
+    mysqli_stmt_bind_param($stmt, "si", $status, $ticket_id);
+    $updateUser_query_run = mysqli_stmt_execute($stmt);
+
+    if ($updateUser_query_run) {
+        echo '<script>alert("Status updated successfully.");</script>';
+        echo '<script>window.location.href = "requested_ticket_info.php?ticket_id=' . $ticket_id . '";</script>';
+        exit();
+    } else {
+        // PHP code failed to execute
+        echo '<script>alert("Error updating user request. Please try again.");</script>';
+    }
 }

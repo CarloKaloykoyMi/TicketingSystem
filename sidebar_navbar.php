@@ -43,7 +43,7 @@ while ($row = mysqli_fetch_array($result)) {
 
                 <!-- User Name -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><?php echo $fname . ' ' . $lname; ?></a>
+                    <a class="nav-link" href="#"><?php echo $fn . ' ' . $ln; ?></a>
                 </li>
             </ul>
         </div>

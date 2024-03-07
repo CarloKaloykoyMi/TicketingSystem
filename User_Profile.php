@@ -8,8 +8,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
     unset($_SESSION['auth_user']['user_id']);
     unset($_SESSION['auth_user']['email']);
     unset($_SESSION['auth_user']['role']);
-    unset($_SESSION['auth_user']['lastname']);
-    unset($_SESSION['auth_user']['firstname']);
+
     echo '<script>window.location.href = "emplogin.php";</script>';
 } else {
     $username = $_SESSION['auth_user']['username'];
@@ -194,7 +193,7 @@ $atresult= mysqli_query($con, $atsql);
 
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> First Name:</div>
-                                                <div class="col-lg-3 col-md-5"><?php echo $fname ?></div>
+                                                <div class="col-lg-3 col-md-5"><?php echo $fn ?></div>
                                             </div>
 
                                             <div class="row">
@@ -204,7 +203,7 @@ $atresult= mysqli_query($con, $atsql);
 
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> Last Name:</div>
-                                                <div class="col-lg-3 col-md-5"><?php echo $lname ?></div>
+                                                <div class="col-lg-3 col-md-5"><?php echo $ln ?></div>
                                             </div>
 
                                             <div class="row">

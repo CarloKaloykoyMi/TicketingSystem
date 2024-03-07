@@ -1,27 +1,23 @@
-<?php include('../function/myfunction.php');
+<?php include('function/myfunction.php');
 include 'sidebar_navbar.php';
 
 if (!isset($_SESSION['auth_user']['username'])) {
     session_destroy();
     unset($_SESSION['auth_user']['username']);
-    unset($_SESSION['auth_user']['user_id']);
+    unset($_SESSION['userid']);
     unset($_SESSION['auth_user']['email']);
     unset($_SESSION['auth_user']['role']);
-    unset($_SESSION['auth_user']['fname']);
-    unset($_SESSION['auth_user']['lname']);
-    echo '<script>window.location.href = "../adminlogin.php";</script>';
+    unset($_SESSION['auth_user']['lastname']);
+    unset($_SESSION['auth_user']['firstname']);
+    echo '<script>window.location.href = "emplogin.php";</script>';
 } else {
-    $username = $_SESSION['auth_user']['username'];
-    $user_id = $_SESSION['auth_user']['user_id'];
     $email = $_SESSION['auth_user']['email'];
     $role = $_SESSION['auth_user']['role'];
     $lname = $_SESSION['auth_user']['lastname'];
     $fname = $_SESSION['auth_user']['firstname'];
+    $userid1 = $_SESSION['userid'];
 }
 
-?>
-
-<?php
 if (isset($_GET['ticket_id'])) {
     $ticket_id = $_GET['ticket_id'];
 
@@ -53,32 +49,26 @@ $reply_result = mysqli_query($con, $query);
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" type="x-icon" href="Images/Ticket -Logo-3.png">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tickets</title>
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <title>Requested Ticket Information</title>
+    <!-- Add Bootstrap CSS link -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/sidebar_navbar.css">
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-    <!-- Font Awesome CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Lineicons CSS -->
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-
-    <!-- Your existing CSS -->
-    <link rel="stylesheet" href="css/sidebar.css">
-
     <!-- jQuery and DataTables JavaScript -->
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script defer src="js/table.js"></script>
+    <script defer src="script.js"></script>
 
 </head>
 
@@ -148,7 +138,7 @@ $reply_result = mysqli_query($con, $query);
                                                 <div>
                                                     <hr>
                                                     <div class="text-right">
-                                                        <a href="ticket.php" class="btn btn-secondary mb-3" style="position: absolute; top: 40px; right: 10px;">Go Back</a>
+                                                        <a href="requested_tickets.php" class="btn btn-secondary mb-3" style="position: absolute; top: 40px; right: 10px;">Go Back</a>
                                                     </div>
                                                     <span class="number pull-right"><b>Ticket # <?php echo $ticket_data['ticket_id']; ?></b></span> <br>
                                                     <span class="number pull-right"><b>Status:
@@ -172,7 +162,6 @@ $reply_result = mysqli_query($con, $query);
                                                         Update Status
                                                     </button>
 
-
                                                     <br>
                                                     <!-- Modal -->
                                                     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -183,7 +172,7 @@ $reply_result = mysqli_query($con, $query);
                                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                 </div>
                                                                 <div class="modal-body">
-                                                                    <form action="code.php" method="POST">
+                                                                    <form action="crud.php" method="POST">
                                                                         <label for="Status" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
                                                                         <select id="Status" name="status" class="form-control" required>
                                                                             <option value="" disabled>Select your Status</option>
@@ -216,20 +205,17 @@ $reply_result = mysqli_query($con, $query);
                                                     <span style="font-size:26px;padding-bottom:10px;"><b><i class="fas fa-file"></i> Subject: </b> <?php echo $ticket_data['subject']; ?></span>
                                                 </div>
 
-                                                <p class="info">Requested by <a href="#"><?php echo $ticket_data['requestor']; ?></a> &nbsp; <?php echo date('M d, Y', strtotime($ticket_data['date_created'])); ?>
-
-                                                </p>
+                                                <p class="info">Requested by <a href="#"><?php echo $ticket_data['requestor']; ?></a> &nbsp; <?php echo date('M d, Y', strtotime($ticket_data['date_created'])); ?></p>
                                                 <hr>
-                                                <b><i class="fas fa-comments"></i> Concern:</b>
-                                                <p><?php echo $ticket_data['concern']; ?></p>
-
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 200px; right: 10px;">
                                                     Reply
                                                 </button>
+                                                <b><i class="fas fa-comments"></i> Concern:</b>
+                                                <p><?php echo $ticket_data['concern']; ?></p>
 
                                                 <!-- count of the attachment -->
                                                 <?php
-                                                $usID = $ticket_data['user_id'];
+                                                $usID=$ticket_data['user_id'];
                                                 $sql = "SELECT ticket_id, user_id,COUNT(*) as number_file FROM `file_attachment` WHERE ticket_id='$ticket_id' AND user_id = '$usID';";
                                                 $result = mysqli_query($con, $sql);
                                                 while ($row = mysqli_fetch_array($result)) {
@@ -252,11 +238,11 @@ $reply_result = mysqli_query($con, $query);
 
                                                         // Check if the file name is an image
                                                         if (preg_match('/\.(jpg|jpeg|png|gif)$/i', $item['file_name'])) {
-                                                            echo '<img src="../ticket_files/ticket_' . $ticket_id . '_' . $ticket_data['requestor'] . '_' . date("F j, Y") . '/' . $item['file_name'] . '" alt="Image Attachment" style="width:100%; height:250">';
+                                                            echo '<img src="ticket_files/ticket_' . $ticket_id . '_' . $ticket_data['requestor'] . '_' . date("F j, Y") . '/' . $item['file_name'] . '" alt="Image Attachment" style="width:100%; height:250">';
                                                         } else {
                                                             // Check if the file name is a document
                                                             if (preg_match('/\.(doc|docx|pdf)$/i', $item['file_name'])) {
-                                                                echo '<a href="../ticket_files/' . $item['file_name'] . '" download="' . $item['file_name'] . '">Document Attachment: ' . $item['file_name'] . '</a>';
+                                                                echo '<a href="ticket_files/' . $item['file_name'] . '" download="' . $item['file_name'] . '">Document Attachment: ' . $item['file_name'] . '</a>';
                                                             } else {
                                                                 // If neither image nor document, just display the file name
                                                                 echo 'Attachment: ' . $item['file_name'] . ' goes here';
@@ -268,6 +254,9 @@ $reply_result = mysqli_query($con, $query);
                                                 }
                                                 ?>
 
+                                                <!-- end of count attachment -->
+
+                                                <!-- Modal of the Reply button -->
                                                 <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -276,7 +265,7 @@ $reply_result = mysqli_query($con, $query);
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
-                                                                <form action="code.php" method="POST">
+                                                                <form action="crud.php" method="POST">
                                                                     <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>"> <input type="hidden" name="userid" value="<?php echo $user_id; ?>">
                                                                     <input type="text" name="sender" style="display: none;" value="<?php echo $fname . " " . $lname; ?>">
                                                                     <div class="mb-3">
@@ -293,7 +282,7 @@ $reply_result = mysqli_query($con, $query);
                                                         </div>
                                                     </div>
                                                 </div>
-
+                                                <!-- Modal of the Reply button -->
                                             </div>
                                         </div>
                                     </li>
@@ -319,7 +308,7 @@ $reply_result = mysqli_query($con, $query);
 
                                 ?>
                                     <div class="dialog-header">
-                                        <img src=<?php echo "../Images/" . $foldername . "/". $img ?> alt="Profile Icon" class="dialog-profile-icon">
+                                        <img src=<?php echo "Images/" . $foldername . "/". $img ?> alt="Profile Icon" class="dialog-profile-icon">
                                         <p class="mb-0"><?php echo $name ?></p>
                                     </div>
 
@@ -331,7 +320,6 @@ $reply_result = mysqli_query($con, $query);
                                     echo "</table>";
                                 }
                                 ?>
-                            </div>
                         </div>
                     </div>
 
