@@ -106,7 +106,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
             <div class="container1">
                 <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#myModal" style="position: absolute; top: 70px; right: 10px;">Create Ticket</button>
                 <h3>
-                    <center>Overall Ticket List </center>
+                    <center>My Ticket List </center>
                 </h3>
                 <table id="example" class="table table-responsive hover table-bordered">
                     <thead class="table-light">
