@@ -355,7 +355,7 @@
             inputValue = inputValue.replace(/  +/g, ' ');
 
             // Remove any non-letter characters except spaces
-            var lettersOnly = inputValue.replace(/[^A-Za-z ]/g, '');
+            var lettersOnly = inputValue.replace(/[^A-Za-zñÑ ]/g, '');
 
             if (inputValue !== lettersOnly && inputValue.trim() !== '') {
                 lastNameNote.style.display = 'block';
@@ -393,22 +393,6 @@
                 phoneNumberNote.style.display = 'block';
             } else {
                 phoneNumberNote.style.display = 'none';
-            }
-
-            input.value = numbersOnly;
-        }
-    </script>
-
-    <script>
-        function restrictToNum(input) {
-            var postalNote = input.parentNode.querySelector('.note');
-            var inputValue = input.value;
-            var numbersOnly = inputValue.replace(/[^0-9]/g, '').slice(0, 4);
-
-            if (inputValue !== numbersOnly || inputValue.length !== 4) {
-                postalNote.style.display = 'block';
-            } else {
-                postalNote.style.display = 'none';
             }
 
             input.value = numbersOnly;

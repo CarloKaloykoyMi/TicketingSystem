@@ -210,7 +210,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <div class="modal-body">
                     <form action="code.php" method="POST">
 
-
                         <div class="col-md-12 mt-3">
                             <div class="input-group">
                                 <span class="input-group-prepend">
@@ -226,7 +225,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         <i class="fas fa-user input-group-text"></i>
                                     </span>
                                     <label for="" class="sr-only"> Last Name</label>
-                                    <input type="text" name="lastname" placeholder="Enter Last Name" class="form-control" required>
+                                    <input type="text" name="lastname" placeholder="Enter Last Name" id="lastNameInput" class="form-control" oninput="restrictToLettersWithSingleSpace(this)" required>
+                                    <span class="note" style="display: none; color: red;">Please enter letters only.</span>
                                 </div>
 
                                 <div class="col-md-12 mt-3">
@@ -235,7 +235,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             <i class="fas fa-user input-group-text"></i>
                                         </span>
                                         <label for="" class="sr-only"> First Name</label>
-                                        <input type="text" name="firstname" placeholder="Enter First Name" class="form-control" required>
+                                        <input type="text" name="firstname" placeholder="Enter First Name" id="firstNameInput" class="form-control" oninput="restrictToLettersWithSingleSpace(this)" required>
+                                        <span class="note" style="display: none; color: red;">Please enter letters only.</span>
                                     </div>
 
                                     <div class="col-md-12 mt-3">
@@ -244,7 +245,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 <i class="fas fa-user input-group-text"></i>
                                             </span>
                                             <label for="" class="sr-only">Middle Initial</label>
-                                            <input type="text" name="middleinitial" placeholder="Enter Middle Initial" class="form-control" required>
+                                            <input type="text" name="middleinitial" id="middleNameInput" placeholder="Enter Middle Initial" class="form-control" required>
+                                            <span class=" note" style="display: none; color: red;">Please enter letters only.</span>
                                         </div>
 
                                         <div class="col-md-12 mt-3">
@@ -254,7 +256,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                     <i class="fa fa-phone input-group-text"></i>
                                                 </span>
                                                 <label for="" class="sr-only">Contact Number</label>
-                                                <input type="number" name="contact" placeholder="Enter Contact Number" class="form-control" required>
+                                                <input type="text" name="contact" id="phoneNumberInput" placeholder="Enter Contact Number" oninput="restrictToNumbers(this)" class="form-control" required>
+                                                <span class="note" style="display: none; color: red;">Please enter a valid 11-digit numbers.</span>
+
                                             </div>
 
                                             <div class="col-md-12 mt-3">
@@ -392,6 +396,43 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 });
             });
         });
+    </script>
+
+    <script>
+        function restrictToLettersWithSingleSpace(input) {
+            var lastNameNote = input.parentNode.querySelector('.note');
+            var inputValue = input.value;
+
+            // Replace multiple spaces with a single space
+            inputValue = inputValue.replace(/  +/g, ' ');
+
+            // Remove any non-letter characters except spaces
+            var lettersOnly = inputValue.replace(/[^A-Za-zñÑ ]/g, '');
+
+            if (inputValue !== lettersOnly && inputValue.trim() !== '') {
+                lastNameNote.style.display = 'block';
+            } else {
+                lastNameNote.style.display = 'none';
+            }
+
+            input.value = lettersOnly;
+        }
+    </script>
+
+    <script>
+        function restrictToNumbers(input) {
+            var phoneNumberNote = input.parentNode.querySelector('.note');
+            var inputValue = input.value;
+            var numbersOnly = inputValue.replace(/[^0-9]/g, '').slice(0, 11);
+
+            if (inputValue !== numbersOnly || inputValue.length !== 11) {
+                phoneNumberNote.style.display = 'block';
+            } else {
+                phoneNumberNote.style.display = 'none';
+            }
+
+            input.value = numbersOnly;
+        }
     </script>
 
     <!-- Bootstrap JS (optional) -->

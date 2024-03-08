@@ -95,7 +95,7 @@ while ($row = mysqli_fetch_array($result)) {
             <li class="sidebar-item">
                 <a href="User_Profile.php" class="sidebar-link">
                     <i class="fa fa-gear"></i>
-                    <span><strong>SETTINGS</strong></span>
+                    <span><strong>PROFILE</strong></span>
                 </a>
             </li>
             <hr style="border-color: white;">
