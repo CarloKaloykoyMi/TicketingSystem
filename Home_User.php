@@ -289,7 +289,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     </div>
 
                                     <div class="modal-footer">
-                                        <button type="submit" name="add_ticket" class="btn btn-success" style="background-color: #6C757D;">Submit</button>
+                                        <button type="submit" name="add_ticket" class="btn" style="background-color: #6C757D; color: #FFF;">Submit</button>
                                         <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                     </div>
                             </form>

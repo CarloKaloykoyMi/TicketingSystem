@@ -64,37 +64,34 @@ while ($row = mysqli_fetch_array($result)) {
             <button class="toggle-btn" type="button">
                 <i class="lni lni-grid-alt"></i>
             </button>
-
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="Home_User.php" class="sidebar-link">
+                <div class="sidebar-link">
                     <i class="fa-solid fa-HOME"></i>
-                    <span><strong>MY REQUEST</strong></span>
-                </a>
+                    <span><strong>MY REQUESTS</strong></span>
+                </div>
                 <ul class="sub-menu">
-                    <li><a href="resolvedtickets.php"><i class="fa-solid fa-circle-check"></i>
-                            <span class="nav-item">MY RESOLVED TICKETS</span></a></li>
-                    <li><a href="unresolvedtickets.php"><i class="fa-solid fa-triangle-exclamation"></i>
-                            <span class="nav-item">MY UNRESOLVED TICKETS </span></a></li>
-                    <li><a href="pendingtickets.php"><i class="fa-solid fa-spinner"></i>
-                            <span class="nav-item">MY PENDING TICKETS</span></a></li>
+                    <li><a href="home_user.php"><i class="fa-solid fa-clipboard-list"></i> <span class="nav-item">CREATE TICKET</span></a></li>
+                    <li><a href="resolvedtickets.php"><i class="fa-solid fa-circle-check"></i> <span class="nav-item">MY RESOLVED TICKETS</span></a></li>
+                    <li><a href="unresolvedtickets.php"><i class="fa-solid fa-triangle-exclamation"></i> <span class="nav-item">MY UNRESOLVED TICKETS </span></a></li>
+                    <li><a href="pendingtickets.php"><i class="fa-solid fa-spinner"></i> <span class="nav-item">MY PENDING TICKETS</span></a></li>
                 </ul>
             </li>
+
             <li class="sidebar-item">
-                <a href="requested_tickets.php" class="sidebar-link">
+                <div class="sidebar-link">
                     <i class="fa-solid fa-ticket"></i>
                     <span><strong>REQUESTED TICKETS</strong></span>
-                </a>
+                </div>
                 <ul class="sub-menu">
-                    <li><a href=""><i class="fa-solid fa-circle-check"></i>
-                            <span class="nav-item">RESOLVED TICKETS</span></a></li>
-                    <li><a href=""><i class="fa-solid fa-triangle-exclamation"></i>
-                            <span class="nav-item">UNRESOLVED TICKETS </span></a></li>
-                    <li><a href=""><i class="fa-solid fa-spinner"></i>
-                            <span class="nav-item">PENDING TICKETS</span></a></li>
+                    <li><a href="requested_tickets.php"><i class="fa-solid fa-ticket"></i> <span class="nav-item">VIEW REQUESTED TICKETS</span></a></li>
+                    <li><a href=""><i class="fa-solid fa-circle-check"></i> <span class="nav-item">RESOLVED TICKETS</span></a></li>
+                    <li><a href=""><i class="fa-solid fa-triangle-exclamation"></i> <span class="nav-item">UNRESOLVED TICKETS </span></a></li>
+                    <li><a href=""><i class="fa-solid fa-spinner"></i> <span class="nav-item">PENDING TICKETS</span></a></li>
                 </ul>
             </li>
+            
             <li class="sidebar-item">
                 <a href="User_Profile.php" class="sidebar-link">
                     <i class="fa fa-gear"></i>
