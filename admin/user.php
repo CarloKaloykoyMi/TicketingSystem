@@ -141,37 +141,35 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for="company"><i class="fas fa-building"></i> Company</label>
-                                                                    <select name="company" class="form-control">
-                                                                        <option value="company1" <?= ($item['company'] == 'company1') ? 'selected' : ''; ?>>Company 1</option>
-                                                                        <option value="company2" <?= ($item['company'] == 'company2') ? 'selected' : ''; ?>>Company 2</option>
-                                                                        <option value="company3" <?= ($item['company'] == 'company3') ? 'selected' : ''; ?>>Company 3</option>
-                                                                        <!-- Add more options as needed -->
+                                                                    <select name="company" id="company_edit" class="form-control">
+                                                                        <?php
+                                                                        $companies = getAll("company");
+
+                                                                        foreach ($companies as $company) {
+                                                                            $selected = ($item['company'] == $company['company_name']) ? 'selected' : '';
+                                                                            echo '<option value="' . $company['company_name'] . '" ' . $selected . '>' . $company['company_name'] . '</option>';
+                                                                        }
+                                                                        ?>
                                                                     </select>
                                                                 </div>
 
-                                                                <div class="col-md-12 mt-3">
-                                                                    <label for="branch"><i class="fa-solid fa-location-dot"></i> Branch</label>
-                                                                    <select name="branch" class="form-control">
-                                                                        <option value="branch1" <?= ($item['branch'] == 'branch1') ? 'selected' : ''; ?>>Branch 1</option>
-                                                                        <option value="branch2" <?= ($item['branch'] == 'branch2') ? 'selected' : ''; ?>>Branch 2</option>
-                                                                        <option value="branch3" <?= ($item['branch'] == 'branch3') ? 'selected' : ''; ?>>Branch 3</option>
-                                                                        <!-- Add more options as needed -->
-                                                                    </select>
-                                                                </div>
-
-                                                                <div class="col-md-12 mt-3">
+                                                                <div class="col-md-12 mt-3">    
                                                                     <label for="department"><i class="fa-solid fa-users"></i> Department</label>
                                                                     <select name="department" class="form-control">
-                                                                        <option value="department1" <?= ($item['department'] == 'department1') ? 'selected' : ''; ?>>Department 1</option>
-                                                                        <option value="department2" <?= ($item['department'] == 'department2') ? 'selected' : ''; ?>>Department 2</option>
-                                                                        <option value="department3" <?= ($item['department'] == 'department3') ? 'selected' : ''; ?>>Department 3</option>
-                                                                        <!-- Add more options as needed -->
+                                                                        <?php
+                                                                        $departments = getAll("department");
+
+                                                                        foreach ($departments as $department) {
+                                                                            $selected = ($item['department'] == $department['department_name']) ? 'selected' : '';
+                                                                            echo '<option value="' . $department['department_name'] . '" ' . $selected . '>' . $department['department_name'] . '</option>';
+                                                                        }
+                                                                        ?>
                                                                     </select>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fas fa-envelope"></i> Email</label>
-                                                                    <input type="email" name="email" value="<?= $item['email']; ?>" class="form-control">
+                                                                    <input type="email" name="email" value="<?= $item['email']; ?>" class="form-control" disabled>
                                                                 </div>
 
                                                                 <!-- Add other form fields for editing as needed -->
@@ -298,7 +296,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                     </select>
                                                 </div>
                                             </div>
-
 
                                             <div class="col-md-12 mt-3">
                                                 <div class="form-group" style="display: none;" id="branchGroup">
