@@ -74,11 +74,11 @@ while ($row = mysqli_fetch_array($result)) {
                     <li><a href="Home_User.php"><i class="fa-solid fa-house"></i>
                             <span class="nav-item">Overall Ticket List</span></a></li>
                     <li><a href="resolvedtickets.php"><i class="fa-solid fa-circle-check"></i>
-                            <span class="nav-item">RESOLVED TICKETS</span></a></li>
+                            <span class="nav-item">Resolved Tickets</span></a></li>
                     <li><a href="unresolvedtickets.php"><i class="fa-solid fa-triangle-exclamation"></i>
-                            <span class="nav-item">UNRESOLVED TICKETS </span></a></li>
+                            <span class="nav-item">Unresolved Tickets </span></a></li>
                     <li><a href="pendingtickets.php"><i class="fa-solid fa-spinner"></i>
-                            <span class="nav-item">PENDING TICKETS</span></a></li>
+                            <span class="nav-item">Pending Tickets</span></a></li>
                 </ul>
             </li>
             <li class="sidebar-item">

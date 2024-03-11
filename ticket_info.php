@@ -157,7 +157,7 @@ $reply_result = mysqli_query($con, $query);
                                                                                         <div class="media-body">
                                                                                             <div>
                                                                                                 <div class="text-right">
-                                                                                                    <a href="#" class="btn btn-secondary mb-3" style="position: absolute; top: 5px; right: 15px;" onclick="goBack()">Go Back</a>
+                                                                                                    <a href="Home_User.php" class="btn btn-secondary mb-3" style="position: absolute; top: 5px; right: 15px;">Go Back</a>
                                                                                                 </div>
                                                                                                 <span class="number pull-right"><strong>Ticket #<?php echo $ticket_data['ticket_id']; ?></strong></span> <br>
                                                                                                 <span class="number pull-right"><b>Status:

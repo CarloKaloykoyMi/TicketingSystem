@@ -245,7 +245,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 <i class="fas fa-user input-group-text"></i>
                                             </span>
                                             <label for="" class="sr-only">Middle Initial</label>
-                                            <input type="text" name="middleinitial" id="middleNameInput" placeholder="Enter Middle Initial" class="form-control" required>
+                                            <input type="text" name="middleinitial" id="middleNameInput" placeholder="Enter Middle Initial" class="form-control">
                                             <span class=" note" style="display: none; color: red;">Please enter letters only.</span>
                                         </div>
 

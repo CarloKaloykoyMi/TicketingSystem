@@ -25,7 +25,7 @@ while ($row = mysqli_fetch_array($result)) {
     $fn = $row['firstname'];
     $ml = $row['middleinitial'];
     $ln = $row['lastname'];
-    $name = $fn . " " . $ml . ". " . $ln;
+    $name = $fn . " " . ($ml ? $ml . ". " : "") . $ln; // check if middle initial is not empty, if not, include it in the name
     $company = $row['company'];
     $branch = $row['branch'];
     $department = $row['department'];
@@ -50,15 +50,9 @@ $atresult = mysqli_query($con, $atsql);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="css/sidebar_navbar.css">
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
     <!-- jQuery and DataTables JavaScript -->
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="script.js"></script>
-    <title>Home</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
@@ -261,37 +255,63 @@ $atresult = mysqli_query($con, $atsql);
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-building"></i> Company</label>
+                                                    <label for="company" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-building"></i> Company</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="company" type="text" class="form-control" id="fullName" value="<?php echo $company ?>">
+                                                        <?php
+                                                        $companies = getAll("company");
+
+                                                        if ($companies) {
+                                                            echo '<select name="company" class="form-control" id="company">';
+                                                            foreach ($companies as $row) {
+                                                                $selected = ($row['company_name'] == $company) ? 'selected' : '';
+                                                                echo '<option value="' . $row['company_name'] . '" ' . $selected . '>' . $row['company_name'] . '</option>';
+                                                            }
+                                                            echo '</select>';
+                                                        } else {
+                                                            echo '<p>Error fetching data from the database</p>';
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3" id="branchGroup" style="display:none;">
+                                                    <label for="branch" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-code-branch"></i> Branch</label>
+                                                    <div class="col-md-8 col-lg-8">
+                                                        <select name="branch" class="form-control" id="branch"></select>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label for="Job" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-location-dot"></i> Branch</label>
+                                                    <label for="department" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-users"></i> Department</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="job" type="text" class="form-control" id="Job" value="<?php echo $branch ?>" readonly>
-                                                    </div>
-                                                </div>
+                                                        <?php
+                                                        $departments = getAll("department");
 
-                                                <div class="row mb-3">
-                                                    <label for="Address" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-users"></i> Department</label>
-                                                    <div class="col-md-8 col-lg-8">
-                                                        <input name="address" type="text" class="form-control" id="Address" value="<?php echo $department ?>">
+                                                        if ($departments) {
+                                                            echo '<select name="department" class="form-control" id="department">';
+                                                            foreach ($departments as $row) {
+                                                                $selected = ($row['department_name'] == $department) ? 'selected' : '';
+                                                                echo '<option value="' . $row['department_name'] . '" ' . $selected . '>' . $row['department_name'] . '</option>';
+                                                            }
+                                                            echo '</select>';
+                                                        } else {
+                                                            echo '<p>Error fetching data from the database</p>';
+                                                        }
+                                                        ?>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
                                                     <label for="Phone" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-phone"></i> Contact Number</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="phone" type="text" class="form-control" id="Phone" value="<?php echo $contact ?>">
+                                                        <input name="phone" type="text" class="form-control" maxlength="11" value="<?php echo $contact ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
                                                     <label for="Email" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-envelope"></i> Email</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="email" type="email" class="form-control" id="Email" value="<?php echo $email ?>">
+                                                        <input name="email" type="email" class="form-control" disabled value="<?php echo $email ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -373,6 +393,30 @@ $atresult = mysqli_query($con, $atsql);
     <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#company').change(function() {
+                var companyName = $(this).val();
+
+                $.ajax({
+                    url: 'get_branches.php',
+                    type: 'POST',
+                    data: {
+                        company_name: companyName
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#branch').html(response);
+                        $('#branchGroup').toggle(response.trim() !== '');
+                    },
+                    error: function() {
+                        alert('Error fetching branches.');
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 
 </html>

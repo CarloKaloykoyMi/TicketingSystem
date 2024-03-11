@@ -1,7 +1,7 @@
 <?php session_start();
 include('mysql_connect.php'); // connection to MySQL
 
-if (isset($_POST['register'])) {
+if (isset($_POST['register'])) { // check if the form has been submitted
 
     // check if the form has been submitted
     $lastName = $_POST['lastName'];
@@ -29,15 +29,15 @@ if (isset($_POST['register'])) {
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>';
         } else {
-            $verification_status = 0;
+            $verification_status = 0; // Set the verification status to 0
             // Insert the data into the database
             $query = mysqli_query($con, "INSERT INTO user (lastName,firstName,middleinitial,company,branch,department,email,contact,username,password,verification_status,role) 
             VALUES('$lastName','$firstName','$middleinitial','$company','$branch','$department','$email','$contact','$username','$password','$verification_status','1')");
 
             if ($query) {
-                $otp = rand(100000, 999999);
-                $_SESSION['otp'] = $otp;
-                $_SESSION['mail'] = $email;
+                $otp = rand(100000, 999999); // Generate a random 6 digit number
+                $_SESSION['otp'] = $otp; // Store the OTP in a session
+                $_SESSION['mail'] = $email; // Store the email in a session
                 require "phpmailer/PHPMailerAutoload.php";
                 $mail = new PHPMailer;
 
