@@ -107,18 +107,6 @@ a.sidebar-link:hover {
   position: relative;
 }
 
-#sidebar:not(.expand) .sidebar-item .sidebar-dropdown {
-  position: absolute;
-  top: 0;
-  background-color: #0e2238;
-  padding: 0;
-  min-width: 15rem;
-  width: 100%;
-  position: absolute;
-  left: -100%;
-  transition: 0.5s;
-}
-
 #sidebar:not(.expand) .sidebar-item:hover .has-dropdown + .sidebar-dropdown {
   display: block;
   max-height: 15em;
@@ -191,21 +179,6 @@ li:hover .sub-menu {
   color: white;
 }
 
-.status-pending {
-  background-color: orange;
-}
-
-.status-resolved {
-  background-color: green;
-}
-
-.status-unresolved {
-  background-color: blue;
-}
-
-.status-cancelled {
-  background-color: red;
-}
 /* Style the main navigation items */
 li {
   display: inline-block;
@@ -254,6 +227,7 @@ a:hover {
   display: block;
   font-size: 0.9rem;
   white-space: nowrap;
+  text-decoration: none; /* Remove underline */
 }
 
 .sub-menu a:hover {
@@ -279,13 +253,10 @@ a:hover {
 }
 
 #sidebar:not(.expand) .sidebar-item .sub-menu {
-  position: absolute;
   top: 0;
-  background-color: #0e2238;
+  background-color: rgb(100, 96, 96);
   padding: 0;
   min-width: 15rem;
   width: 100%;
-  position: absolute;
-  left: -100%;
   transition: 0.5s;
 }

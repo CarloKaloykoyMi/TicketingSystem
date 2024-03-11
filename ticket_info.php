@@ -131,7 +131,7 @@ $reply_result = mysqli_query($con, $query);
                 <div class="grid-body">
                     <center>
                         <h2>Ticket Details </h2>
-                    </center <hr>
+                    </center>
                     </head>
 
                     <div class="main p-3">
@@ -160,13 +160,71 @@ $reply_result = mysqli_query($con, $query);
                                                                                                     <a href="#" class="btn btn-secondary mb-3" style="position: absolute; top: 5px; right: 15px;" onclick="goBack()">Go Back</a>
                                                                                                 </div>
                                                                                                 <span class="number pull-right"><strong>Ticket #<?php echo $ticket_data['ticket_id']; ?></strong></span> <br>
-                                                                                                <hr>
-                                                                                                <span style="font-size:20px;padding-bottom:10px;"><b><i class="fas fa-file"></i> Subject: </b> <?php echo $ticket_data['subject']; ?></span>
+                                                                                                <span class="number pull-right"><b>Status:
+                                                                                                        <?php
+                                                                                                        $status = $ticket_data['status'];
+
+                                                                                                        if ($status == 'Pending') {
+                                                                                                            echo '<span class="badge text-bg-warning">' . $status . '</span>';
+                                                                                                        } elseif ($status == 'Resolved') {
+                                                                                                            echo '<span class="badge text-bg-success">' . $status . '</span>';
+                                                                                                        } elseif ($status == 'Cancelled') {
+                                                                                                            echo '<span class="badge text-bg-danger">' . $status . '</span>';
+                                                                                                        } else {
+                                                                                                            echo '<span class="badge text-bg-primary">' . $status . '</span>';
+                                                                                                        }
+                                                                                                        ?>
+                                                                                                    </b>
+                                                                                                </span>
+                                                                                                <!-- Button trigger modal -->
+                                                                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 10px;">
+                                                                                                    Update Status
+                                                                                                </button>
+                                                                                                <br>
+
+                                                                                                <!-- Modal -->
+                                                                                                <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                                    <div class="modal-dialog">
+                                                                                                        <div class="modal-content">
+                                                                                                            <div class="modal-header">
+                                                                                                                <h5 class="modal-title" id="exampleModalLabel">Ticket Status</h5>
+                                                                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                            </div>
+                                                                                                            <div class="modal-body">
+                                                                                                                <form action="crud.php" method="POST">
+                                                                                                                    <label for="Status" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
+                                                                                                                    <select id="Status" name="status" class="form-control" required>
+                                                                                                                        <option value="" disabled>Select your Status</option>
+                                                                                                                        <?php
+                                                                                                                        $currentStatus = $ticket_data['status'];
+                                                                                                                        $statusOptions = array("Pending", "Unresolved", "Resolved", "Cancelled");
+                                                                                                                        foreach ($statusOptions as $option) {
+                                                                                                                            $selected = ($option == $currentStatus) ? 'selected' : '';
+                                                                                                                            echo "<option value=\"$option\" $selected>$option</option>";
+                                                                                                                        }
+                                                                                                                        ?>
+                                                                                                                    </select>
+                                                                                                                    <!-- Add the ticket_id input field -->
+                                                                                                                    <input type="hidden" name="ticket_id" value="<?php echo $ticket_data['ticket_id']; ?>">
+                                                                                                                    <div class="modal-footer">
+
+                                                                                                                        <!-- Move the submit button inside the form -->
+                                                                                                                        <button class="btn btn-primary float-end" type="submit" name="change_status">Save Changes</button>
+                                                                                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                                                                                                                    </div>
+
+                                                                                                                </form>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div>
                                                                                             </div>
 
+                                                                                            <br>
+                                                                                            <span style="font-size:20px;padding-bottom:10px;"><b><i class="fas fa-file"></i> Subject: </b> <?php echo $ticket_data['subject']; ?></span>
                                                                                             <p class="info">Requested by: <a href="#"><?php echo $ticket_data['requestor']; ?></a> <br>
-                                                                                                Date: <?php echo date('M d, Y', strtotime($ticket_data['date_created'])); ?></p>
-                                                                                            <b><i class="fas fa-comments"></i> Concern:</b>
+                                                                                                <?php echo date('F j, Y g:i A', strtotime($ticket_data['date_created'])); ?> <br>
+                                                                                                <hr> <b><i class="fas fa-comments"></i> Concern:</b>
                                                                                             <p><?php echo $ticket_data['concern']; ?></p>
 
                                                                                             <?php
@@ -183,6 +241,7 @@ $reply_result = mysqli_query($con, $query);
                                                                                             }
                                                                                             ?>
                                                                                             <span class="number pull-right"><strong>Attachment: <?php echo $count_file; ?></strong></span> <br>
+                                                                                            <hr>
 
                                                                                             <?php
                                                                                             if (mysqli_num_rows($result) > 0) {
