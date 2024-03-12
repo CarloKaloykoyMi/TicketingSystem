@@ -16,6 +16,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $lname = $_SESSION['auth_user']['lastname'];
     $fname = $_SESSION['auth_user']['firstname'];
     $userid1 = $_SESSION['userid'];
+    $email = $_SESSION['auth_user']['email'];
+
 }
 
 if (isset($_GET['ticket_id'])) {
@@ -206,13 +208,14 @@ $reply_result = mysqli_query($con, $query);
                                                                                                                     </select>
                                                                                                                     <!-- Add the ticket_id input field -->
                                                                                                                     <input type="hidden" name="ticket_id" value="<?php echo $ticket_data['ticket_id']; ?>">
+                                                                                                                    <input type="hidden" name="email" value="<?php echo $email; ?>">
+
                                                                                                                     <div class="modal-footer">
 
                                                                                                                         <!-- Move the submit button inside the form -->
                                                                                                                         <button class="btn btn-primary float-end" type="submit" name="change_status">Save Changes</button>
                                                                                                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                                                                                                     </div>
-
                                                                                                                 </form>
                                                                                                             </div>
                                                                                                         </div>

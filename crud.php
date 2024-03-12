@@ -10,10 +10,11 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     $todepartment = $_POST['todepartment'];
     $concern = $_POST['concern'];
     $status = "Pending";
+    $email = $_POST['email'];
 
     // Insert ticket information into the ticket table
-    $insert_ticket_query = "INSERT INTO ticket (user_id, subject, to_company, to_dept, requestor, concern, status) 
-    VALUES ('$userid','$subject','$company','$todepartment','$requestor','$concern','$status')";
+    $insert_ticket_query = "INSERT INTO ticket (user_id, subject, to_company, to_dept, requestor, concern, status, email) 
+    VALUES ('$userid','$subject','$company','$todepartment','$requestor','$concern','$status','$email')";
 
     $insert_ticket_query_run = mysqli_query($con, $insert_ticket_query); // Run the query
 
@@ -178,6 +179,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
 else if (isset($_POST['change_status'])) {
     $ticket_id = $_POST['ticket_id'];
     $status = $_POST['status']; // Retrieve the selected status from the form data
+    $email = $_POST['email'];
 
     // Use prepared statements to prevent SQL injection
     $updateUser_query = "UPDATE ticket SET status=? WHERE ticket_id=?";
@@ -188,13 +190,49 @@ else if (isset($_POST['change_status'])) {
     $updateUser_query_run = mysqli_stmt_execute($stmt);
 
     if ($updateUser_query_run) {
-        echo '<script>alert("Status updated successfully.");</script>';
-        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '";</script>';
-        exit();
+        // Retrieve requestor email based on ticket_id
+        $getRequestorEmail_query = "SELECT email FROM ticket WHERE ticket_id=?";
+        $stmt = mysqli_prepare($con, $getRequestorEmail_query);
+        mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $email);
+        mysqli_stmt_fetch($stmt);
+        mysqli_stmt_close($stmt);
+
+        // Send email notification
+        require "phpmailer/PHPMailerAutoload.php"; // Include the PHPMailer library
+        $mail = new PHPMailer; // Create a new PHPMailer instance
+
+        $mail->isSMTP(); // Enable SMTP
+        $mail->Host = 'smtp.gmail.com'; // Specify the SMTP server
+        $mail->Port = 587; // Set the SMTP port
+        $mail->SMTPAuth = true; // Enable SMTP authentication
+        $mail->SMTPSecure = 'tls'; // Enable TLS encryption
+
+        $mail->Username = 'odetocode04@gmail.com'; // email
+        $mail->Password = 'mnugjcpwaslqthdn'; // email password
+
+        $mail->setFrom('no-reply@gmail.com', 'no-reply'); // Set the sender of the email
+        $mail->addAddress($email); // Send email to the requestor
+
+        $mail->isHTML(true); // Set email format to HTML
+        $mail->Subject = "Ticket Status Updated"; // Set the email subject
+        $mail->Body = "Dear User,<br><br>Your ticket with ID #$ticket_id has been updated to '$status'.<br><br>Thank you for using our system.<br><br>Best regards,<br>CGG E-Ticketing"; // Set the email body
+
+        // Send email
+        if (!$mail->send()) { // Check if the email was sent
+            echo '<script>alert("Error sending email notification. Please try again.");</script>';
+        } else {
+            echo '<script>alert("Status updated successfully. Email notification sent.");</script>';
+            echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '";</script>';
+            exit();
+        }
     } else {
         // PHP code failed to execute
-        echo '<script>alert("Error updating user request. Please try again.");</script>';
+        echo '<script>alert("Error updating ticket status. Please try again.");</script>';
     }
+
+
 }else if(isset($_POST['ChangePassword'])){
         $user_id=$_POST['userid'];
         $oldpass=$_POST['password'];
