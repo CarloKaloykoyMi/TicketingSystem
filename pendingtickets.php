@@ -89,7 +89,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </thead>
                     <tbody>
                         <?php
-                        $ticket = getPendingStatus($userid);
+                        $ticket = getPendingStatus();
 
                         if (mysqli_num_rows($ticket) > 0) {
                             foreach ($ticket as $item) {
