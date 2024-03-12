@@ -323,7 +323,7 @@ $reply_result = mysqli_query($con, $query);
 
                                 ?>
                                     <div class="dialog-header">
-                                        <img src=<?php echo "../Images/" . $foldername . "/". $img ?> alt="Profile Icon" class="dialog-profile-icon">
+                                        <img src=<?php echo "../Images/" . $foldername . "/". $img ?> alt="Profile Icon" class="dialog-profile-icon" style="background-color:#555;">
                                         <p class="mb-0"><?php echo $name ?></p>
                                     </div>
 
