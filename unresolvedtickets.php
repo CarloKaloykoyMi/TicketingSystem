@@ -87,7 +87,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </thead>
                     <tbody>
                         <?php
-                        $ticket = getUnresolvedStatus($userid);
+                        $ticket = getUnresolvedStatus();
 
                         if (mysqli_num_rows($ticket) > 0) {
                             foreach ($ticket as $item) {
