@@ -16,50 +16,37 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $email = $_SESSION['auth_user']['email'];
     $role = $_SESSION['auth_user']['role'];
     $lname = $_SESSION['auth_user']['lastname'];
-    
 }
 
 $sql = "SELECT * FROM user WHERE user_id = '$user_id';";
 $result = mysqli_query($con, $sql);
 while ($row = mysqli_fetch_array($result)) {
     $fn = $row['firstname'];
-    $ml= $row['middleinitial'];
+    $ml = $row['middleinitial'];
     $ln = $row['lastname'];
-    $name = $fn . " " . $ml . ". " . $ln;
-    $company= $row['company'];
-    $branch= $row['branch'];
-    $department= $row['department'];
-    $contact= $row['contact'];
+    $name = $fn . " " . ($ml ? $ml . ". " : "") . $ln; // check if middle initial is not empty, if not, include it in the name
+    $company = $row['company'];
+    $branch = $row['branch'];
+    $department = $row['department'];
+    $contact = $row['contact'];
 }
 $atsql = "SELECT * FROM audit_trail WHERE user_id = '$user_id' ORDER BY `Date` desc";
-$atresult= mysqli_query($con, $atsql);
+$atresult = mysqli_query($con, $atsql);
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-<title>Edit Profile</title>
+    <title>Edit Profile</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- datatable css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-
-    <!-- icon css -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-    <!-- datatable css -->
-    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script defer src="js/table.js"></script>
+    <!--css -->
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
 <style>
@@ -108,17 +95,20 @@ $atresult= mysqli_query($con, $atsql);
     }
 
     .logs-container {
-            margin-top: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            padding: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        .nav-tabs-bordered .nav-link:hover {
-        background-color: #007bff; /* Replace with your preferred color */
-        color: #fff; /* Text color on hover */
+        margin-top: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .nav-tabs-bordered .nav-link:hover {
+        background-color: #007bff;
+        /* Replace with your preferred color */
+        color: #fff;
+        /* Text color on hover */
     }
 </style>
 </head>
@@ -134,7 +124,7 @@ $atresult= mysqli_query($con, $atsql);
                 </div>
                 <div class="modal-body">
                     <form method="POST" action="code.php" enctype="multipart/form-data">
-                    <input type="hidden" name="size" value="1000000">
+                        <input type="hidden" name="size" value="1000000">
                         <input type="hidden" name="userid" value=<?= $user_id ?>>
                         <input type="hidden" name="username" value=<?= $username ?>>
                         <input type="file" name="image">
@@ -147,9 +137,6 @@ $atresult= mysqli_query($con, $atsql);
 
     <div class="main p-3">
         <div class="container-fluid">
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-            <script src="js/sidebar.js"></script>
-
             <main id="main" class="main">
                 <section class="section profile">
                     <div class="row">
@@ -159,7 +146,7 @@ $atresult= mysqli_query($con, $atsql);
                                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                                     <div class="card" style="width: 15rem;">
-                                    <img src='<?php echo "../Images/". $user_id."-".$username. "/" . $img ?>' class="card-img-top" alt="Profile" style="max-width: 100%; max-height: 220px;">
+                                        <img src='<?php echo "../Images/" . $user_id . "-" . $username . "/" . $img ?>' class="card-img-top" alt="Profile" style="max-width: 100%; max-height: 220px;">
                                     </div>
                                     <h2><?php echo $name ?></h2>
                                 </div>
@@ -187,7 +174,7 @@ $atresult= mysqli_query($con, $atsql);
                                     <div class="tab-content pt-2">
 
                                         <div class="tab-pane fade show active profile-overview" id="profile-overview">
-                                           <br>
+                                            <br>
                                             <h5 class="card-title"><b>Profile Details:</b></h5>
 
                                             <div class="row">
@@ -244,7 +231,7 @@ $atresult= mysqli_query($con, $atsql);
                                                     <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-user"></i> First Name</label>
                                                     <div class="col-md-8 col-lg-8">
                                                         <input name="firstName" type="text" class="form-control" id="fullName" value="<?php echo $fn ?>">
-                                                        <input type="hidden" name="userid" value="<?=$user_id ?>">
+                                                        <input type="hidden" name="userid" value="<?= $user_id ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -260,43 +247,69 @@ $atresult= mysqli_query($con, $atsql);
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-building"></i> Company</label>
+                                                    <label for="company" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-building"></i> Company</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="company" type="text" class="form-control" id="fullName" value="<?php echo $company ?>">
+                                                        <?php
+                                                        $companies = getAll("company");
+
+                                                        if ($companies) {
+                                                            echo '<select name="company" class="form-control" id="company">';
+                                                            foreach ($companies as $row) {
+                                                                $selected = ($row['company_name'] == $company) ? 'selected' : '';
+                                                                echo '<option value="' . $row['company_name'] . '" ' . $selected . '>' . $row['company_name'] . '</option>';
+                                                            }
+                                                            echo '</select>';
+                                                        } else {
+                                                            echo '<p>Error fetching data from the database</p>';
+                                                        }
+                                                        ?>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3" id="branchGroup" style="display:none;">
+                                                    <label for="branch" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-code-branch"></i> Branch</label>
+                                                    <div class="col-md-8 col-lg-8">
+                                                        <select name="branch" class="form-control" id="branch"></select>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label for="Job" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-location-dot"></i> Branch</label>
+                                                    <label for="department" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-users"></i> Department</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="job" type="text" class="form-control" id="Job" value="<?php echo $branch ?>" readonly>
-                                                    </div>
-                                                </div>
+                                                        <?php
+                                                        $departments = getAll("department");
 
-                                                <div class="row mb-3">
-                                                    <label for="Address" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-users"></i> Department</label>
-                                                    <div class="col-md-8 col-lg-8">
-                                                        <input name="address" type="text" class="form-control" id="Address" value="<?php echo $department ?>">
+                                                        if ($departments) {
+                                                            echo '<select name="department" class="form-control" id="department">';
+                                                            foreach ($departments as $row) {
+                                                                $selected = ($row['department_name'] == $department) ? 'selected' : '';
+                                                                echo '<option value="' . $row['department_name'] . '" ' . $selected . '>' . $row['department_name'] . '</option>';
+                                                            }
+                                                            echo '</select>';
+                                                        } else {
+                                                            echo '<p>Error fetching data from the database</p>';
+                                                        }
+                                                        ?>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
                                                     <label for="Phone" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-phone"></i> Contact Number</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="phone" type="text" class="form-control" id="Phone" value="<?php echo $contact ?>">
+                                                        <input name="phone" type="text" class="form-control" maxlength="11" value="<?php echo $contact ?>">
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
                                                     <label for="Email" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-envelope"></i> Email</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="email" type="email" class="form-control" id="Email" value="<?php echo $email ?>">
+                                                        <input name="email" type="email" class="form-control" disabled value="<?php echo $email ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
-                                                    
+
                                                     <div class="col-md-8 col-lg-9">
-                                        
+
                                                     </div>
                                                 </div>
 
@@ -310,7 +323,7 @@ $atresult= mysqli_query($con, $atsql);
 
                                             <!-- Settings Form -->
                                             <form>
-                                        <div class="text-center">
+                                                <div class="text-center">
                                                     <button type="submit" class="btn btn-primary">Save Changes</button>
                                                 </div>
                                             </form><!-- End settings Form -->
@@ -363,66 +376,61 @@ $atresult= mysqli_query($con, $atsql);
         </div>
     </div>
 
-</body>
+    <div class="logs-container mt-4" style="padding: 10px;">
+        <h3>User Action Logs</h3>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Action</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="userLogs">
+                <?php
+                while ($atrow = mysqli_fetch_array($atresult)) {
+                    $action = $atrow['Action'];
+                    $date = $atrow['Date'];
 
-<div class="logs-container mt-4" style="padding: 10px;">
-    <h3>User Action Logs</h3>
-    <table class="table table-bordered">
-        <thead>
-            <tr>
-                <th>Action</th>
-                <th>Date</th>
-            </tr>
-        </thead>
-        <tbody id="userLogs">
-            <?php
-        while ($atrow = mysqli_fetch_array($atresult)) {
-    $action = $atrow['Action'];
-    $date = $atrow['Date'];
-
-    echo "<tr>
+                    echo "<tr>
             <td>$action</td>
             <td>$date</td>
           </tr>";
-}
+                }
 
-echo '    </tbody>
+                echo '    </tbody>
     </table>
-</div>';?>
+</div>'; ?>
 
-<script>
-    function addLog(userLevel, action, date) {
-        var logsContainer = document.getElementById("adminLogs");
-        var logRow = document.createElement("tr");
-        
-        var userLevelCell = document.createElement("td");
-        userLevelCell.appendChild(document.createTextNode(userLevel));
-        logRow.appendChild(userLevelCell);
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+                <script src="js/sidebar.js"></script>
 
-        var actionCell = document.createElement("td");
-        actionCell.appendChild(document.createTextNode(action));
-        logRow.appendChild(actionCell);
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        var dateCell = document.createElement("td");
-        dateCell.appendChild(document.createTextNode(date));
-        logRow.appendChild(dateCell);
+                <script>
+                    $(document).ready(function() {
+                        $('#company').change(function() {
+                            var companyName = $(this).val();
 
-        logsContainer.appendChild(logRow);
-    }
+                            $.ajax({
+                                url: 'get_branch.php',
+                                type: 'POST',
+                                data: {
+                                    company_name: companyName
+                                },
+                                success: function(response) {
+                                    console.log(response);
+                                    $('#branch').html(response);
+                                    $('#branchGroup').toggle(response.trim() !== '');
+                                },
+                                error: function() {
+                                    alert('Error fetching branches.');
+                                }
+                            });
+                        });
+                    });
+                </script>
+</body>
 
-    // Example log
-    addLog("Admin", "edited profile", "2024-02-20 15:30:00");
-</script>
-
-
-
-    <!-- Bootstrap and custom scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <script src="js/sidebar.js"></script>
-    </body>
 </html>
