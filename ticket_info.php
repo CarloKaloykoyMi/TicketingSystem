@@ -114,6 +114,9 @@ $reply_result = mysqli_query($con, $query);
     .btn-custom:hover {
         color: #ffffff;
     }
+    .text-justify {
+    text-align: justify;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -224,8 +227,11 @@ $reply_result = mysqli_query($con, $query);
                                                                                             <span style="font-size:20px;padding-bottom:10px;"><b><i class="fas fa-file"></i> Subject: </b> <?php echo $ticket_data['subject']; ?></span>
                                                                                             <p class="info">Requested by: <a href="#"><?php echo $ticket_data['requestor']; ?></a> <br>
                                                                                                 <?php echo date('F j, Y g:i A', strtotime($ticket_data['date_created'])); ?> <br>
-                                                                                                <hr> <b><i class="fas fa-comments"></i> Concern:</b>
-                                                                                            <p><?php echo $ticket_data['concern']; ?></p>
+                                                                                                <hr>
+                                                                                                <b><i class="fas fa-comments"></i> Concern:</b><br>
+                                                                                                <br>
+                                                                                                <p class="text-justify"><?php echo $ticket_data['concern']; ?></p>
+
 
                                                                                             <?php
                                                                                             $sql = "SELECT ticket_id, user_id,COUNT(*) as number_file FROM `file_attachment` WHERE ticket_id='$ticket_id' AND user_id = '$userid1';";
@@ -266,9 +272,7 @@ $reply_result = mysqli_query($con, $query);
                                                                                             }
                                                                                             ?>
 
-
-
-                                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 200px; right: 10px;">
+                                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 198px; right: 10px;">
                                                                                                 Reply
                                                                                             </button>
 

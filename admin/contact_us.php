@@ -88,19 +88,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">View Contact Us</h5>
+                                                            <h5 class="modal-title" id="exampleModalLabel">Contact Us</h5>
                                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                         </div>
                                                         <div class="modal-body">
                                                             <!-- Your view form content goes here -->
                                                             <div class="col-md-12 mt-3">
-                                                                <label for=""><i class="fas fa-building"></i> Name</label>
-                                                                <input type="text" name="name" value="<?= $item['first_name'] . ' ' . $item['last_name']; ?>" class="form-control" readonly>
+                                                                <label for=""><i class="fa-solid fa-user"></i> Name</label>
+                                                                <input type="text" name="name" value="<?= $item['first_name'] . ' ' . $item['last_name']; ?>" class="form-control" disabled>
                                                             </div>
 
                                                             <div class="col-md-12 mt-3">
-                                                                <label for=""><i class="fa-solid fa-location-dot"></i> Contact</label>
-                                                                <input type="text" name="phone" value="<?= $item['phone']; ?>" class="form-control" readonly>
+                                                                <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
+                                                                <input type="text" name="phone" value="<?= $item['phone']; ?>" class="form-control" disabled>
                                                             </div>
 
                                                             <div class="col-md-12 mt-3">
@@ -109,9 +109,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                             </div>
 
                                                             <div class="col-md-12 mt-3">
-                                                                <label for="concern"><i class="fas fa-envelope"></i> Message</label>
-                                                                <textarea class="form-control" readonly name="concern" rows="3" placeholder="Concerns" required><?= $item['message']; ?></textarea>
-                                                            </div>
+                                                            <div class="col-md-12 mt-3">
+                                                            <label for="concern"><i class="fa-solid fa-message"></i> Message</label>
+                                                            <textarea class="form-control" name="concern" rows="3" placeholder="Concerns" required disabled><?= $item['message']; ?></textarea>
+                                                        </div>
                                                         </div>
                                                     </div>
                                                 </div>

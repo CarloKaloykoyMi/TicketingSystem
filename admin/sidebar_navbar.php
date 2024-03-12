@@ -87,7 +87,7 @@ while ($row = mysqli_fetch_array($result)) {
             </li>
             <li class="sidebar-item">
                 <a href="branch.php" class="sidebar-link">
-                    <i class="fas fa-building"></i>
+                <i class="fa-solid fa-location-dot"></i>
                     <span>Branch</span>
                 </a>
             </li>
@@ -99,7 +99,7 @@ while ($row = mysqli_fetch_array($result)) {
             </li>
             <li class="sidebar-item">
                 <a href="contact_us.php" class="sidebar-link">
-                    <i class="fa fa-gear"></i>
+                <i class="fa-solid fa-envelope"></i>
                     <span>Contact Us</span>
                 </a>
             </li>

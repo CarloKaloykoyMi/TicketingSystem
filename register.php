@@ -205,16 +205,6 @@
                             <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword"><i class="fas fa-eye"></i></button>
                         </div>
                     </div>
-
-                    <div>
-                        <div class="row justify-content-center">
-                            <label class="form-check-label text-center">
-                                <br><input class="form-check-input" type="checkbox" value="" id="policyCheckbox" required>
-                                I agree to the terms and conditions of the <a href="policy.php" class="text-orange">Policy</a>
-                            </label>
-                        </div>
-                    </div>
-
                 </div>
                 <div class="button-container">
                     <button type="submit" name="register" class="btn btn-primary"><i class="fas fa-user-plus"></i> Register</button>
