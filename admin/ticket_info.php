@@ -128,6 +128,9 @@ $reply_result = mysqli_query($con, $query);
         align-self: flex-end;
         background-color: #dcf8c6;
     }
+    .text-justify {
+    text-align: justify;
+}
 </style>
 
 <body>
@@ -221,10 +224,11 @@ $reply_result = mysqli_query($con, $query);
                                                 </p>
                                                 <hr>
                                                 <b><i class="fas fa-comments"></i> Concern:</b>
-                                                <p><?php echo $ticket_data['concern']; ?></p>
+                                                <br><br>
+                                                <p class="text-justify"><?php echo $ticket_data['concern']; ?></p>
 
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 200px; right: 10px;">
-                                                    Reply
+                                                  Reply
                                                 </button>
 
                                                 <!-- count of the attachment -->
@@ -319,7 +323,7 @@ $reply_result = mysqli_query($con, $query);
 
                                 ?>
                                     <div class="dialog-header">
-                                        <img src=<?php echo "../Images/" . $foldername . "/". $img ?> alt="Profile Icon" class="dialog-profile-icon">
+                                        <img src=<?php echo "../Images/" . $foldername . "/". $img ?> alt="Profile Icon" class="dialog-profile-icon" style="background-color:#555;">
                                         <p class="mb-0"><?php echo $name ?></p>
                                     </div>
 

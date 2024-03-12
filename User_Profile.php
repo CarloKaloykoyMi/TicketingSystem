@@ -153,7 +153,7 @@ $atresult = mysqli_query($con, $atsql);
                             <div class="card">
                                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                                    <div class="card" style="width: 15rem;">
+                                    <div class="card" style="width: 15rem; background-color:#555;">
                                         <img src='<?php echo "Images/" . $user_id . "-" . $username . "/" . $img ?>' class="card-img-top" alt="Profile" style="max-width: 100%; max-height: 220px;">
                                     </div>
                                     <h2><?php echo $name ?></h2>
