@@ -7,11 +7,11 @@ include('mysql_connect.php');
 $sql = "SELECT * FROM user WHERE user_id='$user_id'";
 $result = mysqli_query($con, $sql);
 while ($row = mysqli_fetch_array($result)) {
-    $username =$row['username'];
+    $username = $row['username'];
     $fn = $row['firstname'];
     $ml = $row['middleinitial'];
     $ln = $row['lastname'];
-    $name = $fn . " " . $ml . ". " . $ln;
+    $name = $fn . " " . ($ml ? $ml . ". " : "") . $ln; // check if middle initial is not empty, if not, include it in the name
     $company = $row['company'];
     $branch = $row['branch'];
     $department = $row['department'];
@@ -36,15 +36,14 @@ while ($row = mysqli_fetch_array($result)) {
             <ul class="navbar-nav ms-auto">
                 <!-- User Profile Picture -->
                 <li class="nav-item">
-                    <img src='<?php echo "../Images/". $user_id."-".$username. "/" . $img ?>' alt="User Profile" class="nav-link rounded-circle" style="width: 40px; height: 40px;">
+                    <img src='<?php echo "../Images/" . $user_id . "-" . $username . "/" . $img ?>' alt="User Profile" class="nav-link rounded-circle" style="width: 40px; height: 40px;">
                 </li>
 
                 <!-- User Name -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#"> Hi,
+                    <a class="nav-link" href="admin_profile.php">
                         <?php
-                        $username = $_SESSION['auth_user']['username'];
-                        echo $username;
+                        echo $name;
                         ?>
                     </a>
                 </li>
@@ -95,13 +94,19 @@ while ($row = mysqli_fetch_array($result)) {
             <li class="sidebar-item">
                 <a href="user.php" class="sidebar-link">
                     <i class="fa-solid fa-user-large"></i>
-                    <span>User</span>
+                    <span>Employees</span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="contact_us.php" class="sidebar-link">
+                    <i class="fa fa-gear"></i>
+                    <span>Contact Us</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a href="admin_profile.php" class="sidebar-link">
                     <i class="fa fa-gear"></i>
-                    <span>Settings</span>
+                    <span>Profile</span>
                 </a>
             </li>
             <div class="sidebar-item">
