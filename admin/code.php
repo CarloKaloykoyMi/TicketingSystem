@@ -230,10 +230,12 @@ if (isset($_POST['add_company'])) {
         $msg = "There was a problem uploading Image";
     }
 
-    $action ='Profile Picture Changed';
-    $sql="INSERT INTO audit_trail (user_id,action) VALUES('$user_id','$action');";
-    $atrun= mysqli_query($con,$sql);
-     echo "<script> location.href='admin_profile.php'; </script>";
+    $action = 'Profile Picture Changed';
+    $sql = "INSERT INTO audit_trail (user_id,action) VALUES('$user_id','$action');";
+    $atrun = mysqli_query($con, $sql);
+    echo "<script> location.href='admin_profile.php'; </script>";
+
+
 } elseif (isset($_POST['delete_department'])) {
     $id = $_POST['department_id'];
     $sql = "DELETE FROM department WHERE id = '$id';";
@@ -249,27 +251,24 @@ if (isset($_POST['add_company'])) {
     $sql = "DELETE FROM branch WHERE id = '$id';";
     $sqlRun =  mysqli_query($con, $sql);
     echo "<script> location.href='../admin/branch.php'; </script>";
-}elseif (isset($_POST['saveChanges'])){
+
+} elseif (isset($_POST['saveChanges'])) {
     $userid = $_POST['userid'];
     $fn = $_POST['firstName'];
     $mI = $_POST['middleInitial'];
     $ln = $_POST['lastName'];
     $company = $_POST['company'];
-    $job = $_POST['job'];
-    $address = $_POST['address'];
+    $branch = $_POST['branch'];
+    $department = $_POST['department'];
     $phone = $_POST['phone'];
-    $email= $_POST['email'];
-    $about = $_POST['about'];
 
     $sql = "UPDATE `user` SET `lastname`='$ln',`firstname`='$fn',`middleinitial`='$mI',`company`='$company',
-    `branch`='$job',`department`='$address',`email`='$email',`contact`='$phone' WHERE `user_id` = '$userid'; ";
+    `branch`='$branch',`department`='$department',`contact`='$phone' WHERE `user_id` = '$userid'; ";
     $run =  mysqli_query($con, $sql);
 
-    $action ='Profile Detail Edited';
-    $atsql="INSERT INTO audit_trail (user_id,action) VALUES('$userid','$action');";
-    $atrun= mysqli_query($con,$atsql);
-
-
+    $action = 'Profile Detail Edited';
+    $atsql = "INSERT INTO audit_trail (user_id,action) VALUES('$userid','$action');";
+    $atrun = mysqli_query($con, $atsql);
 
     if ($run) {
         echo '<script>alert("Changes Saved.");</script>';
@@ -279,6 +278,4 @@ if (isset($_POST['add_company'])) {
         // PHP code failed to execute
         echo '<script>alert("Error Changing. Please try again.");</script>';
     }
-
 }
-
