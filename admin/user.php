@@ -50,6 +50,24 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
     <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="user.css">
+
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 10px;
+            /* Adjust the gap between inputs as needed */
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -61,20 +79,18 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="card-header">
                             <h4>Users</h4>
                             <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
-
-                            <!-- Filter dropdown -->
-                            <div class="dropdown float-end ms-2">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filter
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                                    <li><a class="dropdown-item" href="#" id="filterEmployee">Employee</a></li>
-                                    <li><a class="dropdown-item" href="#" id="filterAdmin">Admin</a></li>
-                                    <!-- Add more filter options as needed -->
-                                </ul>
-                            </div>
                         </div>
                         <div class="card-body">
+                            <div class="grid-container">
+                                <input type="text" class="search-input" data-column-index="0" placeholder="Search by Last Name...">
+                                <input type="text" class="search-input" data-column-index="1" placeholder="Search by First Name...">
+                                <input type="text" class="search-input" data-column-index="2" placeholder="Search by Company...">
+                                <input type="text" class="search-input" data-column-index="3" placeholder="Search by Branch...">
+                                <input type="text" class="search-input" data-column-index="4" placeholder="Search by Department...">
+                                <input type="text" class="search-input" data-column-index="5" placeholder="Search by Email...">
+                                <input type="text" class="search-input" data-column-index="6" placeholder="Search by Role...">
+                            </div>
+
                             <div class="table-responsive">
                                 <table id="example" class="table table-striped" style="width:100%">
                                     <thead>
@@ -432,6 +448,29 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
             input.value = numbersOnly;
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInputs = document.querySelectorAll('.search-input');
+            const dataTable = document.getElementById('example'); // Update table ID
+            const rows = dataTable.getElementsByTagName('tr');
+
+            searchInputs.forEach(function(input) {
+                input.addEventListener('input', function() {
+                    const columnIndex = input.dataset.columnIndex;
+                    const filter = input.value.toLowerCase();
+
+                    for (let i = 1; i < rows.length; i++) {
+                        let found = false;
+                        const cells = rows[i].getElementsByTagName('td');
+                        const cellValue = cells[columnIndex].textContent.toLowerCase();
+
+                        if (cellValue.indexOf(filter) > -1) {
+                            found = true;
+                        }
+                        rows[i].style.display = found ? '' : 'none';
+                    }
+                });
+            });
+        });
     </script>
 
     <!-- Bootstrap JS (optional) -->

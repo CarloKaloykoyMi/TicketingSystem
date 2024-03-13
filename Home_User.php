@@ -102,6 +102,14 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <center>Overall Ticket List </center>
                 </h3>
                 <table id="example" class="table table-responsive hover table-bordered">
+                <div class="grid-container" style="padding-left:100px;">
+                                <input type="text" class="search-input" data-column-index="0" placeholder="Search by Ticket...">
+                                <input type="text" class="search-input" data-column-index="1" placeholder="Search by Name...">
+                                <input type="text" class="search-input" data-column-index="2" placeholder="Search by To Department...">
+                                <input type="text" class="search-input" data-column-index="3" placeholder="Search by Subject...">
+                                <input type="text" class="search-input" data-column-index="4" placeholder="Search by Status...">
+                                <input type="text" class="search-input" data-column-index="5" placeholder="Search by Date...">
+                            </div>
                     <thead class="table-light">
                         <tr>
                             <th>Ticket ID</th>
@@ -330,6 +338,29 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     }
                 }
             });
+            document.addEventListener("DOMContentLoaded", function() {
+            const searchInputs = document.querySelectorAll('.search-input');
+            const dataTable = document.getElementById('example'); // Update table ID
+            const rows = dataTable.getElementsByTagName('tr');
+
+            searchInputs.forEach(function(input) {
+                input.addEventListener('input', function() {
+                    const columnIndex = input.dataset.columnIndex;
+                    const filter = input.value.toLowerCase();
+
+                    for (let i = 1; i < rows.length; i++) {
+                        let found = false;
+                        const cells = rows[i].getElementsByTagName('td');
+                        const cellValue = cells[columnIndex].textContent.toLowerCase();
+
+                        if (cellValue.indexOf(filter) > -1) {
+                            found = true;
+                        }
+                        rows[i].style.display = found ? '' : 'none';
+                    }
+                });
+            });
+        });
         </script>
 
 </body>

@@ -167,7 +167,7 @@ $atresult = mysqli_query($con, $atsql);
                                     <ul class="nav nav-tabs nav-tabs-bordered">
 
                                         <li class="nav-item">
-                                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
                                         </li>
                                         <li class="nav-item">
                                             <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
@@ -325,44 +325,33 @@ $atresult = mysqli_query($con, $atsql);
                                             </form><!-- End Profile Edit Form -->
                                         </div>
 
-                                        <div class="tab-pane fade pt-3" id="profile-settings">
-
-                                            <!-- Settings Form -->
-                                            <form>
-                                                <div class="text-center">
-                                                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form><!-- End settings Form -->
-
-                                        </div>
-
                                         <div class="tab-pane fade pt-3" id="profile-change-password">
                                             <!-- Change Password Form -->
-                                            <form>
-
-                                                <div class="row mb-3">
-                                                    <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fa-solid fa-lock"></i> Current Password:</label>
+                                            <form method="POST" action="code.php">
+                                            <div class="row mb-3">
+                                                    <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-lock"></i> Current Password:</label>
                                                     <div class="col-md-8 col-lg-8">
                                                         <input name="password" type="password" class="form-control" id="currentPassword">
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label for="newPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fa-solid fa-key"></i> New Password:</label>
+                                                    <label for="newPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-key"></i> New Password:</label>
                                                     <div class="col-md-8 col-lg-8">
                                                         <input name="newpassword" type="password" class="form-control" id="newPassword">
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label for="renewPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fa-solid fa-unlock"></i> Re-enter New Password:</label>
+                                                    <label for="renewPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-unlock"></i> Re-enter New Password:</label>
                                                     <div class="col-md-8 col-lg-8">
                                                         <input name="renewpassword" type="password" class="form-control" id="renewPassword">
                                                     </div>
                                                 </div>
 
                                                 <div class="text-center">
-                                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                                    <input type="hidden" name="userid" value="<?= $user_id ?>">
+                                                    <button type="submit" name="ChangePassword" class="btn btn-primary">Change Password</button>
                                                 </div>
                                             </form><!-- End Change Password Form -->
 
