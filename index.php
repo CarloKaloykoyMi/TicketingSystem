@@ -263,29 +263,42 @@
                         $phone = $_POST['phone'];
                         $email = $_POST['email'];
                         $message = $_POST['message'];
-
-                        // Prepare and execute the SQL query
-                        $stmt = $con->prepare("INSERT INTO contact_us (first_name, last_name, phone, email, message) VALUES (?, ?, ?, ?, ?)");
-                        $stmt->bind_param("sssss", $first_name, $last_name, $phone, $email, $message);
-                        $stmt->execute();
-
-                        // Close the statement
-                        $stmt->close();
-
-                        // Show SweetAlert2 after successful submission
-                        echo "<script>
-                            Swal.fire({
-                                title: 'Success!',
-                                text: 'Your message has been sent.',
-                                icon: 'success',
-                                confirmButtonText: 'OK'
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    // Redirect or perform any other action after the alert is closed
-                                    window.location.href = 'index.php';
-                                }
-                            });
-                        </script>";
+                        
+                        // Check if any of the fields are empty
+                        if (empty($first_name) || empty($last_name) || empty($phone) || empty($email) || empty($message)) {
+                            echo "<script>
+                                Swal.fire({
+                                    title: 'Error!',
+                                    text: 'Please fill up all the fields.',
+                                    icon: 'error',
+                                    confirmButtonText: 'OK'
+                                });
+                            </script>";
+                        } else {
+                            // Prepare and execute the SQL query
+                            $stmt = $con->prepare("INSERT INTO contact_us (first_name, last_name, phone, email, message) VALUES (?, ?, ?, ?, ?)");
+                            $stmt->bind_param("sssss", $first_name, $last_name, $phone, $email, $message);
+                            $stmt->execute();
+                        
+                            // Close the statement
+                            $stmt->close();
+                        
+                            // Show SweetAlert2 after successful submission
+                            echo "<script>
+                                Swal.fire({
+                                    title: 'Success!',
+                                    text: 'Your message has been sent.',
+                                    icon: 'success',
+                                    confirmButtonText: 'OK'
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        // Redirect or perform any other action after the alert is closed
+                                        window.location.href = 'index.php';
+                                    }
+                                });
+                            </script>";
+                        }
+                        
                     }
                     ?>
                     <div class="contact-form">
