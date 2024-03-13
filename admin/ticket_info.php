@@ -132,6 +132,24 @@ $reply_result = mysqli_query($con, $query);
     .text-justify {
         text-align: justify;
     }
+
+    .custom-dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.dropdown-icon {
+    position: absolute;
+    top: 50%;
+    right: 5px;
+    transform: translateY(-50%);
+}
+
 </style>
 
 <body>
@@ -189,17 +207,26 @@ $reply_result = mysqli_query($con, $query);
                                                                 <div class="modal-body">
                                                                     <form action="code.php" method="POST">
                                                                         <label for="Status" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
-                                                                        <select id="Status" name="status" class="form-control" required>
-                                                                            <option value="" disabled>Select your Status</option>
-                                                                            <?php
-                                                                            $currentStatus = $ticket_data['status'];
-                                                                            $statusOptions = array("Pending", "Unresolved", "Resolved", "Cancelled");
-                                                                            foreach ($statusOptions as $option) {
-                                                                                $selected = ($option == $currentStatus) ? 'selected' : '';
-                                                                                echo "<option value=\"$option\" $selected>$option</option>";
-                                                                            }
-                                                                            ?>
-                                                                        </select>
+                                                                        <div class="custom-dropdown">
+    <select id="Status" name="status" class="form-control" required>
+        <option value="" disabled>Select your Status</option>
+        <?php
+        $currentStatus = $ticket_data['status'];
+        $statusOptions = array("Pending", "Unresolved", "Resolved", "Cancelled");
+        foreach ($statusOptions as $option) {
+            $selected = ($option == $currentStatus) ? 'selected' : '';
+            echo "<option value=\"$option\" $selected>$option</option>";
+        }
+        ?> 
+    </select>
+    <div class="dropdown-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-caret-down" viewBox="0 0 16 16">
+            <path d="M14.795 5.553a1 1 0 0 0-1.416-.002l-5.879 5.416-5.879-5.416a1 1 0 1 0-1.414 1.436l6.295 5.788a1 1 0 0 0 1.414 0l6.295-5.788a1 1 0 0 0 .002-1.438z"/>
+        </svg>
+    </div>
+</div>
+                                                                    </div>
+                                                                    
                                                                         <!-- Add the ticket_id input field -->
                                                                         <input type="hidden" name="ticket_id" value="<?php echo $ticket_data['ticket_id']; ?>">
                                                                         <div class="modal-footer">
