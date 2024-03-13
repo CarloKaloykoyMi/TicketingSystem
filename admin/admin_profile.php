@@ -48,6 +48,12 @@ $atresult = mysqli_query($con, $atsql);
 
     <!--css -->
     <link rel="stylesheet" href="css/sidebar.css">
+        <!-- datatable css -->
+        <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
+    <script defer src="js/table.js"></script>
 </head>
 <style>
     body h2 {
@@ -145,7 +151,7 @@ $atresult = mysqli_query($con, $atsql);
                             <div class="card">
                                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                                <div class="card" style="width: 15rem; background-color:#555;">
+                                    <div class="card" style="width: 15rem; background-color:#555;">
                                         <img src='<?php echo "../Images/" . $user_id . "-" . $username . "/" . $img ?>' class="card-img-top" alt="Profile" style="max-width: 100%; max-height: 220px;">
                                     </div>
                                     <h2><?php echo $name ?></h2>
@@ -376,61 +382,65 @@ $atresult = mysqli_query($con, $atsql);
         </div>
     </div>
 
-    <div class="logs-container mt-4" style="padding: 10px;">
+    <div class="logs-container mt-4" style="padding: 20px;">
         <h3>User Action Logs</h3>
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>Action</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody id="userLogs">
-                <?php
-                while ($atrow = mysqli_fetch_array($atresult)) {
-                    $action = $atrow['Action'];
-                    $date = $atrow['Date'];
 
-                    echo "<tr>
+        <div class="table-responsive">
+            <table id="example" class="table table-striped" >
+                <thead>
+                    <tr>
+                        <th>Action</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody id="userLogs">
+                    <?php
+                    while ($atrow = mysqli_fetch_array($atresult)) {
+                        $action = $atrow['Action'];
+                        $date = date('F j, Y h:i:s A', strtotime($atrow['Date']));
+
+
+                        echo "<tr>
             <td>$action</td>
             <td>$date</td>
           </tr>";
-                }
+                    }
 
-                echo '    </tbody>
+                    echo '    </tbody>
     </table>
 </div>'; ?>
+</div>
 
-                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-                <script src="js/sidebar.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+                    <script src="js/sidebar.js"></script>
 
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-                <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-                <script>
-                    $(document).ready(function() {
-                        $('#company').change(function() {
-                            var companyName = $(this).val();
+                    <script>
+                        $(document).ready(function() {
+                            $('#company').change(function() {
+                                var companyName = $(this).val();
 
-                            $.ajax({
-                                url: 'get_branch.php',
-                                type: 'POST',
-                                data: {
-                                    company_name: companyName
-                                },
-                                success: function(response) {
-                                    console.log(response);
-                                    $('#branch').html(response);
-                                    $('#branchGroup').toggle(response.trim() !== '');
-                                },
-                                error: function() {
-                                    alert('Error fetching branches.');
-                                }
+                                $.ajax({
+                                    url: 'get_branch.php',
+                                    type: 'POST',
+                                    data: {
+                                        company_name: companyName
+                                    },
+                                    success: function(response) {
+                                        console.log(response);
+                                        $('#branch').html(response);
+                                        $('#branchGroup').toggle(response.trim() !== '');
+                                    },
+                                    error: function() {
+                                        alert('Error fetching branches.');
+                                    }
+                                });
                             });
                         });
-                    });
-                </script>
+                    </script>
 </body>
 
 </html>
