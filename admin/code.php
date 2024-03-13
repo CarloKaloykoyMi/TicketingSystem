@@ -278,4 +278,31 @@ if (isset($_POST['add_company'])) {
         // PHP code failed to execute
         echo '<script>alert("Error Changing. Please try again.");</script>';
     }
+}else if(isset($_POST['ChangePassword'])){
+    $user_id=$_POST['userid'];
+    $oldpass=$_POST['password'];
+    $newpass=$_POST['newpassword'];
+    $connewpass=$_POST['renewpassword'];
+
+    $sql="SELECT * FROM user WHERE password = '$oldpass' AND user_id='$user_id';";
+    $result = mysqli_query($con,$sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        if($newpass <> $connewpass){
+            echo "<script>alert('Errorrr')</script>";
+            echo '<script>window.location.href = "User_Profile.php"</script>';
+        }else{
+            $Usql="UPDATE USER SET password = '$newpass' WHERE password = '$oldpass' AND user_id='$user_id';";
+            $Uresult = mysqli_query($con,$Usql);
+            echo "<script>alert('Password:Change Successfully')</script>";
+            echo '<script>window.location.href = "admin_Profile.php"</script>'; 
+        }
+    }else{
+        echo "<script>alert('Wrong Current Password!')</script>";
+        echo '<script>window.location.href = "admin_Profile.php"</script>';
+
+    }
+    
+
 }
+

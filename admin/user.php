@@ -50,6 +50,24 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
     <link rel="stylesheet" href="css/sidebar.css">
     <link rel="stylesheet" href="user.css">
+
+    <style>
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, auto);
+            gap: 10px;
+            /* Adjust the gap between inputs as needed */
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
@@ -61,136 +79,136 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="card-header">
                             <h4>Users</h4>
                             <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
-
-                            <!-- Filter dropdown -->
-                            <div class="dropdown float-end ms-2">
-                                <button class="btn btn-secondary dropdown-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                    Filter
-                                </button>
-                                <ul class="dropdown-menu" aria-labelledby="filterDropdown">
-                                    <li><a class="dropdown-item" href="#" id="filterEmployee">Employee</a></li>
-                                    <li><a class="dropdown-item" href="#" id="filterAdmin">Admin</a></li>
-                                    <!-- Add more filter options as needed -->
-                                </ul>
-                            </div>
                         </div>
                         <div class="card-body">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>Last Name</th>
-                                        <th>First Name</th>
-                                        <th>Company</th>
-                                        <th>Branch</th>
-                                        <th>Department</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $company = getAll("user");
+                            <div class="grid-container">
+                                <input type="text" class="search-input" data-column-index="0" placeholder="Search by Last Name...">
+                                <input type="text" class="search-input" data-column-index="1" placeholder="Search by First Name...">
+                                <input type="text" class="search-input" data-column-index="2" placeholder="Search by Company...">
+                                <input type="text" class="search-input" data-column-index="3" placeholder="Search by Branch...">
+                                <input type="text" class="search-input" data-column-index="4" placeholder="Search by Department...">
+                                <input type="text" class="search-input" data-column-index="5" placeholder="Search by Email...">
+                                <input type="text" class="search-input" data-column-index="6" placeholder="Search by Role...">
+                            </div>
 
-                                    if (mysqli_num_rows($company) > 0) {
-                                        foreach ($company as $item) {
-                                    ?>
-                                            <tr>
-                                                <td><?= $item['lastname']; ?></td>
-                                                <td><?= $item['firstname']; ?></td>
-                                                <td><?= $item['company']; ?></td>
-                                                <td><?= $item['branch']; ?></td>
-                                                <td><?= $item['department']; ?></td>
-                                                <td><?= $item['email']; ?></td>
-                                                <td><?= $item['role'] == 0 ? 'Admin' : 'Employee'; ?></td>
-                                                <td>
-                                                    <div class="btn-group" role="group">
-                                                        <a href="#" class="btn btn-primary" style="width: 80px;" data-bs-toggle="modal" data-bs-target="#editUserModal<?= $item['user_id']; ?>"><i class="fas fa-pencil"></i>&nbsp;Edit</a>
-                                                        <button type="button" class="btn btn-sm btn-danger delete_category_btn" value="<?= $item['user_id']; ?>"><i class="fas fa-trash"></i> &nbsp; Delete</button>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                            <div class="table-responsive">
+                                <table id="example" class="table table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Last Name</th>
+                                            <th>First Name</th>
+                                            <th>Company</th>
+                                            <th>Branch</th>
+                                            <th>Department</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        $company = getAll("user");
 
-                                            <!-- Edit User Modal -->
-                                            <div class="modal fade" id="editUserModal<?= $item['user_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog">
-                                                    <div class="modal-content">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        if (mysqli_num_rows($company) > 0) {
+                                            foreach ($company as $item) {
+                                        ?>
+                                                <tr>
+                                                    <td><?= $item['lastname']; ?></td>
+                                                    <td><?= $item['firstname']; ?></td>
+                                                    <td><?= $item['company']; ?></td>
+                                                    <td><?= $item['branch']; ?></td>
+                                                    <td><?= $item['department']; ?></td>
+                                                    <td><?= $item['email']; ?></td>
+                                                    <td><?= $item['role'] == 0 ? 'Admin' : 'Employee'; ?></td>
+                                                    <td>
+                                                        <div class="btn-group" role="group">
+                                                            <a href="#" class="btn btn-primary" style="width: 80px;" data-bs-toggle="modal" data-bs-target="#editUserModal<?= $item['user_id']; ?>"><i class="fas fa-pencil"></i>&nbsp;Edit</a>
+                                                            <button type="button" class="btn btn-sm btn-danger delete_category_btn" value="<?= $item['user_id']; ?>"><i class="fas fa-trash"></i> &nbsp; Delete</button>
                                                         </div>
-                                                        <div class="modal-body">
-                                                            <!-- Your edit form content goes here -->
-                                                            <form action="code.php" method="POST">
-                                                                <input type="hidden" name="user_id" value="<?= $item['user_id']; ?>">
+                                                    </td>
+                                                </tr>
 
-                                                                <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fas fa-user"></i> Last Name</label>
-                                                                    <input type="text" name="lastname" value="<?= $item['lastname']; ?>" class="form-control">
-                                                                </div>
+                                                <!-- Edit User Modal -->
+                                                <div class="modal fade" id="editUserModal<?= $item['user_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <!-- Your edit form content goes here -->
+                                                                <form action="code.php" method="POST">
+                                                                    <input type="hidden" name="user_id" value="<?= $item['user_id']; ?>">
 
-                                                                <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fas fa-user"></i> First Name</label>
-                                                                    <input type="text" name="firstname" value="<?= $item['firstname']; ?>" class="form-control">
-                                                                </div>
+                                                                    <div class="col-md-12 mt-3">
+                                                                        <label for=""><i class="fas fa-user"></i> Last Name</label>
+                                                                        <input type="text" name="lastname" value="<?= $item['lastname']; ?>" class="form-control">
+                                                                    </div>
 
-                                                                <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fas fa-user"></i> Middle Initial</label>
-                                                                    <input type="text" name="middleinitial" value="<?= $item['middleinitial']; ?>" class="form-control">
-                                                                </div>
+                                                                    <div class="col-md-12 mt-3">
+                                                                        <label for=""><i class="fas fa-user"></i> First Name</label>
+                                                                        <input type="text" name="firstname" value="<?= $item['firstname']; ?>" class="form-control">
+                                                                    </div>
 
-                                                                <div class="col-md-12 mt-3">
-                                                                    <label for="company"><i class="fas fa-building"></i> Company</label>
-                                                                    <select name="company" id="company_edit" class="form-control">
-                                                                        <?php
-                                                                        $companies = getAll("company");
+                                                                    <div class="col-md-12 mt-3">
+                                                                        <label for=""><i class="fas fa-user"></i> Middle Initial</label>
+                                                                        <input type="text" name="middleinitial" value="<?= $item['middleinitial']; ?>" class="form-control">
+                                                                    </div>
 
-                                                                        foreach ($companies as $company) {
-                                                                            $selected = ($item['company'] == $company['company_name']) ? 'selected' : '';
-                                                                            echo '<option value="' . $company['company_name'] . '" ' . $selected . '>' . $company['company_name'] . '</option>';
-                                                                        }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
+                                                                    <div class="col-md-12 mt-3">
+                                                                        <label for="company"><i class="fas fa-building"></i> Company</label>
+                                                                        <select name="company" id="company_edit" class="form-control">
+                                                                            <?php
+                                                                            $companies = getAll("company");
 
-                                                                <div class="col-md-12 mt-3">    
-                                                                    <label for="department"><i class="fa-solid fa-users"></i> Department</label>
-                                                                    <select name="department" class="form-control">
-                                                                        <?php
-                                                                        $departments = getAll("department");
+                                                                            foreach ($companies as $company) {
+                                                                                $selected = ($item['company'] == $company['company_name']) ? 'selected' : '';
+                                                                                echo '<option value="' . $company['company_name'] . '" ' . $selected . '>' . $company['company_name'] . '</option>';
+                                                                            }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
 
-                                                                        foreach ($departments as $department) {
-                                                                            $selected = ($item['department'] == $department['department_name']) ? 'selected' : '';
-                                                                            echo '<option value="' . $department['department_name'] . '" ' . $selected . '>' . $department['department_name'] . '</option>';
-                                                                        }
-                                                                        ?>
-                                                                    </select>
-                                                                </div>
+                                                                    <div class="col-md-12 mt-3">
+                                                                        <label for="department"><i class="fa-solid fa-users"></i> Department</label>
+                                                                        <select name="department" class="form-control">
+                                                                            <?php
+                                                                            $departments = getAll("department");
 
-                                                                <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fas fa-envelope"></i> Email</label>
-                                                                    <input type="email" name="email" value="<?= $item['email']; ?>" class="form-control" disabled>
-                                                                </div>
+                                                                            foreach ($departments as $department) {
+                                                                                $selected = ($item['department'] == $department['department_name']) ? 'selected' : '';
+                                                                                echo '<option value="' . $department['department_name'] . '" ' . $selected . '>' . $department['department_name'] . '</option>';
+                                                                            }
+                                                                            ?>
+                                                                        </select>
+                                                                    </div>
 
-                                                                <!-- Add other form fields for editing as needed -->
-                                                                <hr>
-                                                                <div class="form-group pull-right">
-                                                                    <button class="btn btn-primary float-end" type="submit" name="edit_user">Save Changes</button>
-                                                                </div>
-                                                            </form>
+                                                                    <div class="col-md-12 mt-3">
+                                                                        <label for=""><i class="fas fa-envelope"></i> Email</label>
+                                                                        <input type="email" name="email" value="<?= $item['email']; ?>" class="form-control" disabled>
+                                                                    </div>
+
+                                                                    <!-- Add other form fields for editing as needed -->
+                                                                    <hr>
+                                                                    <div class="form-group pull-right">
+                                                                        <button class="btn btn-primary float-end" type="submit" name="edit_user">Save Changes</button>
+                                                                    </div>
+                                                                </form>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- End Edit User Modal -->
-                                    <?php
+                                                <!-- End Edit User Modal -->
+                                        <?php
+                                            }
+                                        } else {
+                                            echo "No Records Found!";
                                         }
-                                    } else {
-                                        echo "No Records Found!";
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -430,6 +448,29 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
             input.value = numbersOnly;
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const searchInputs = document.querySelectorAll('.search-input');
+            const dataTable = document.getElementById('example'); // Update table ID
+            const rows = dataTable.getElementsByTagName('tr');
+
+            searchInputs.forEach(function(input) {
+                input.addEventListener('input', function() {
+                    const columnIndex = input.dataset.columnIndex;
+                    const filter = input.value.toLowerCase();
+
+                    for (let i = 1; i < rows.length; i++) {
+                        let found = false;
+                        const cells = rows[i].getElementsByTagName('td');
+                        const cellValue = cells[columnIndex].textContent.toLowerCase();
+
+                        if (cellValue.indexOf(filter) > -1) {
+                            found = true;
+                        }
+                        rows[i].style.display = found ? '' : 'none';
+                    }
+                });
+            });
+        });
     </script>
 
     <!-- Bootstrap JS (optional) -->
