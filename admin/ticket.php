@@ -73,9 +73,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 <thead>
                                     <tr>
                                         <th>Dates</th>
+                                        <th>Requestor</th>
                                         <th>Subject</th>
                                         <th>To Department</th>
-                                        <th>Requestor</th>
+                                        <th>Ticket</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -87,9 +88,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     ?>
                                             <tr>
                                                 <td><?= date('F j, Y h:i:s A', strtotime($item['date'])); ?></td>
+                                                <td><?= $item['requestor']; ?></td>
                                                 <td><?= $item['subject']; ?></td>
                                                 <td><?= $item['to_dept']; ?></td>
-                                                <td><?= $item['requestor']; ?></td>
+                                                <td><center><?= $item['ticket_id']; ?></td></center>
                                                 <td>
                                                     <?php
                                                     $status = $item['status'];
@@ -128,6 +130,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+
 
     <script>
         $(document).ready(function() {

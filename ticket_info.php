@@ -17,7 +17,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $fname = $_SESSION['auth_user']['firstname'];
     $userid1 = $_SESSION['userid'];
     $email = $_SESSION['auth_user']['email'];
-
 }
 
 if (isset($_GET['ticket_id'])) {
@@ -116,9 +115,10 @@ $reply_result = mysqli_query($con, $query);
     .btn-custom:hover {
         color: #ffffff;
     }
+
     .text-justify {
-    text-align: justify;
-}
+        text-align: justify;
+    }
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -233,7 +233,7 @@ $reply_result = mysqli_query($con, $query);
                                                                                                 <hr>
                                                                                                 <b><i class="fas fa-comments"></i> Concern:</b><br>
                                                                                                 <br>
-                                                                                                <p class="text-justify"><?php echo $ticket_data['concern']; ?></p>
+                                                                                            <p class="text-justify"><?php echo $ticket_data['concern']; ?></p>
 
 
                                                                                             <?php

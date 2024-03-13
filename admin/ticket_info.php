@@ -128,9 +128,10 @@ $reply_result = mysqli_query($con, $query);
         align-self: flex-end;
         background-color: #dcf8c6;
     }
+
     .text-justify {
-    text-align: justify;
-}
+        text-align: justify;
+    }
 </style>
 
 <body>
@@ -228,7 +229,7 @@ $reply_result = mysqli_query($con, $query);
                                                 <p class="text-justify"><?php echo $ticket_data['concern']; ?></p>
 
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 200px; right: 10px;">
-                                                  Reply
+                                                    Reply
                                                 </button>
 
                                                 <!-- count of the attachment -->
@@ -311,27 +312,27 @@ $reply_result = mysqli_query($con, $query);
                                         $name = $row["Name"];
                                         $reply = $row["reply"];
                                         $useID = $row["user_id"];
-                                    
 
-                                    $dpSql ="SELECT * FROM user Where user_id = '$useID';";
-                                    $dpResult = mysqli_query($con,$dpSql);
-                                    while($row = $dpResult->fetch_assoc()){
-                                        $img=$row['image'];
-                                        $usename =$row['username'];
-                                        $foldername = $useID."-".$usename;
-                                    }
+
+                                        $dpSql = "SELECT * FROM user Where user_id = '$useID';";
+                                        $dpResult = mysqli_query($con, $dpSql);
+                                        while ($row = $dpResult->fetch_assoc()) {
+                                            $img = $row['image'];
+                                            $usename = $row['username'];
+                                            $foldername = $useID . "-" . $usename;
+                                        }
 
                                 ?>
-                                    <div class="dialog-header">
-                                        <img src=<?php echo "../Images/" . $foldername . "/". $img ?> alt="Profile Icon" class="dialog-profile-icon" style="background-color:#555;">
-                                        <p class="mb-0"><?php echo $name ?></p>
-                                    </div>
+                                        <div class="dialog-header">
+                                            <img src=<?php echo "../Images/" . $foldername . "/" . $img ?> alt="Profile Icon" class="dialog-profile-icon" style="background-color:#555;">
+                                            <p class="mb-0"><?php echo $name ?></p>
+                                        </div>
 
-                                <div class="dialog-body">
-                                    <p class="mb-0"><?php echo "" . $reply; ?></p>
-                                </div>
+                                        <div class="dialog-body">
+                                            <p class="mb-0"><?php echo "" . $reply; ?></p>
+                                        </div>
                                 <?php
-                                }
+                                    }
                                     echo "</table>";
                                 }
                                 ?>
@@ -350,6 +351,11 @@ $reply_result = mysqli_query($con, $query);
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
+    <script>
+        setTimeout(function() {
+            location.reload();
+        }, 45000);
+    </script>
 
 </body>
 
