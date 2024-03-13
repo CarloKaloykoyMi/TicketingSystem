@@ -259,7 +259,9 @@ $reply_result = mysqli_query($con, $query);
 
                                                                                                     // Check if the file name is an image
                                                                                                     if (preg_match('/\.(jpg|jpeg|png|gif)$/i', $item['file_name'])) {
-                                                                                                        echo '<img src="ticket_files/ticket_' . $ticket_id . '_' . $ticket_data['requestor'] . '_' . date("F j, Y") . '/' . $item['file_name'] . '" alt="Image Attachment" style="width:100%; height:250">';
+                                                                                                        $teDate= $ticket_data['date'];
+                                                                                                        $formatted_date = date("F d, Y", strtotime($teDate));
+                                                                                                        echo '<img src="ticket_files/ticket_' . $ticket_id . '_' . $ticket_data['requestor'] . '_' . $formatted_date . '/' . $item['file_name'] . '" alt="Image Attachment" style="width:100%; height:250">';
                                                                                                     } else {
                                                                                                         // Check if the file name is a document
                                                                                                         if (preg_match('/\.(doc|docx|pdf)$/i', $item['file_name'])) {
