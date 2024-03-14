@@ -82,14 +82,32 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         </div>
                         <div class="card-body">
                             <div class="grid-container">
-                                <input type="text" class="search-input" data-column-index="0" placeholder="Search by Last Name...">
-                                <input type="text" class="search-input" data-column-index="1" placeholder="Search by First Name...">
-                                <input type="text" class="search-input" data-column-index="2" placeholder="Search by Company...">
-                                <input type="text" class="search-input" data-column-index="3" placeholder="Search by Branch...">
-                                <input type="text" class="search-input" data-column-index="4" placeholder="Search by Department...">
+                                <input type="text" class="search-input" data-column-index="0,1" placeholder="Search by Last Name...">
+                                <select id="companySelect" class="search-input" data-column-index="2">
+                                    <option value="">Search by Company...</option>
+                                    <?php
+                                    $companies = getAll("company");
+                                    foreach ($companies as $company) {
+                                        echo '<option value="' . $company['company_name'] . '">' . $company['company_name'] . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                                <select id="branchSelect" class="search-input" data-column-index="3">
+                                    <option value="">Select Branch...</option>
+                                </select>
+                                <select class="search-input" data-column-index="4">
+                                    <option value="">Search by Department...</option>
+                                    <?php
+                                    $departments = getAll("department");
+                                    foreach ($departments as $department) {
+                                        echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
+                                    }
+                                    ?>
+                                </select>
                                 <input type="text" class="search-input" data-column-index="5" placeholder="Search by Email...">
                                 <input type="text" class="search-input" data-column-index="6" placeholder="Search by Role...">
                             </div>
+
 
                             <div class="table-responsive">
                                 <table id="example" class="table table-striped" style="width:100%">
@@ -448,13 +466,14 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
             input.value = numbersOnly;
         }
+
         document.addEventListener("DOMContentLoaded", function() {
             const searchInputs = document.querySelectorAll('.search-input');
-            const dataTable = document.getElementById('example'); // Update table ID
+            const dataTable = document.getElementById('example');
             const rows = dataTable.getElementsByTagName('tr');
 
             searchInputs.forEach(function(input) {
-                input.addEventListener('input', function() {
+                input.addEventListener('change', function() {
                     const columnIndex = input.dataset.columnIndex;
                     const filter = input.value.toLowerCase();
 
@@ -463,14 +482,16 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         const cells = rows[i].getElementsByTagName('td');
                         const cellValue = cells[columnIndex].textContent.toLowerCase();
 
-                        if (cellValue.indexOf(filter) > -1) {
+                        if (filter === '' || cellValue.indexOf(filter) > -1) {
                             found = true;
                         }
+
                         rows[i].style.display = found ? '' : 'none';
                     }
                 });
             });
         });
+
     </script>
 
     <!-- Bootstrap JS (optional) -->
