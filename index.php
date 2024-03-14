@@ -68,6 +68,15 @@
             height: auto;
             border-radius: 15px;
         }
+
+        .row {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-input {
+            margin-bottom: 5px;
+        }
     </style>
 </head>
 
@@ -263,7 +272,7 @@
                         $phone = $_POST['phone'];
                         $email = $_POST['email'];
                         $message = $_POST['message'];
-                        
+
                         // Check if any of the fields are empty
                         if (empty($first_name) || empty($last_name) || empty($phone) || empty($email) || empty($message)) {
                             echo "<script>
@@ -279,10 +288,10 @@
                             $stmt = $con->prepare("INSERT INTO contact_us (first_name, last_name, phone, email, message) VALUES (?, ?, ?, ?, ?)");
                             $stmt->bind_param("sssss", $first_name, $last_name, $phone, $email, $message);
                             $stmt->execute();
-                        
+
                             // Close the statement
                             $stmt->close();
-                        
+
                             // Show SweetAlert2 after successful submission
                             echo "<script>
                                 Swal.fire({
@@ -298,22 +307,28 @@
                                 });
                             </script>";
                         }
-                        
                     }
                     ?>
                     <div class="contact-form">
                         <h3 class="title">Contact Us</h3>
                         <form method="post" action="">
                             <div class="row">
-                                <input type="text" name="first_name" class="contact-input" placeholder="First Name" />
-                                <input type="text" name="last_name" class="contact-input" placeholder="Last Name" />
+                                <input type="text" name="first_name" class="contact-input" placeholder="First Name" oninput="restrictToLettersWithSingleSpace(this)" required>
+                                <span class="note" style="display: none; color: red; font-size: 12px;">Please enter letters only.</span>
                             </div>
                             <div class="row">
-                                <input type="text" name="phone" maxlength="11" class="contact-input" placeholder="Phone" />
-                                <input type="email" name="email" class="contact-input" placeholder="Email" />
+                                <input type="text" name="last_name" class="contact-input" placeholder="Last Name" oninput="restrictToLettersWithSingleSpace(this)" required>
+                                <span class="note" style="display: none; color: red; font-size: 12px;">Please enter letters only.</span>
                             </div>
                             <div class="row">
-                                <textarea name="message" class="contact-input textarea" placeholder="Message"></textarea>
+                                <input type="text" name="phone" maxlength="11" class="contact-input" placeholder="Phone" oninput="restrictToNumbers(this)" required>
+                                <span class="note" style="display: none; color: red; font-size: 12px;">Please enter a valid 11-digit numbers.</span>
+                            </div>
+                            <div class="row">
+                                <input type="email" name="email" class="contact-input" placeholder="Email" required>
+                            </div>
+                            <div class="row">
+                                <textarea name="message" class="contact-input textarea" placeholder="Message" required></textarea>
                             </div>
                             <input type="submit" name="submit" value="Send" class="btn">
                         </form>
@@ -365,6 +380,43 @@
     </footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-</body>
 
+
+    <script>
+        function restrictToLettersWithSingleSpace(input) {
+            var lastNameNote = input.parentNode.querySelector('.note');
+            var inputValue = input.value;
+
+            // Replace multiple spaces with a single space
+            inputValue = inputValue.replace(/  +/g, ' ');
+
+            // Remove any non-letter characters except spaces
+            var lettersOnly = inputValue.replace(/[^A-Za-z ]/g, '');
+
+            if (inputValue !== lettersOnly && inputValue.trim() !== '') {
+                lastNameNote.style.display = 'block';
+            } else {
+                lastNameNote.style.display = 'none';
+            }
+
+            input.value = lettersOnly;
+        }
+    </script>
+
+<script>
+        function restrictToNumbers(input) {
+            var phoneNumberNote = input.parentNode.querySelector('.note');
+            var inputValue = input.value;
+            var numbersOnly = inputValue.replace(/[^0-9]/g, '').slice(0, 11);
+
+            if (inputValue !== numbersOnly || inputValue.length !== 11) {
+                phoneNumberNote.style.display = 'block';
+            } else {
+                phoneNumberNote.style.display = 'none';
+            }
+
+            input.value = numbersOnly;
+        }
+    </script>
+</body>
 </html>
