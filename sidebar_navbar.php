@@ -1,3 +1,6 @@
+<head>
+    <link rel="icon" href="img/logo2.png" type="image/x-icon">
+</head>
 <?php
 $user_id = $_SESSION['userid'];
 $email = $_SESSION['auth_user']['email'];
