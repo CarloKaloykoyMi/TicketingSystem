@@ -48,8 +48,8 @@ $atresult = mysqli_query($con, $atsql);
 
     <!--css -->
     <link rel="stylesheet" href="css/sidebar.css">
-        <!-- datatable css -->
-        <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <!-- datatable css -->
+    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
@@ -93,7 +93,6 @@ $atresult = mysqli_query($con, $atsql);
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        width: 100%;
     }
 
     button:hover {
@@ -117,10 +116,8 @@ $atresult = mysqli_query($con, $atsql);
         /* Text color on hover */
     }
 </style>
-</head>
 
 <body>
-
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -328,7 +325,7 @@ $atresult = mysqli_query($con, $atsql);
                                         <div class="tab-pane fade pt-3" id="profile-change-password">
                                             <!-- Change Password Form -->
                                             <form method="POST" action="code.php">
-                                            <div class="row mb-3">
+                                                <div class="row mb-3">
                                                     <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-lock"></i> Current Password:</label>
                                                     <div class="col-md-8 col-lg-8">
                                                         <input name="password" type="password" class="form-control" id="currentPassword">
@@ -375,7 +372,7 @@ $atresult = mysqli_query($con, $atsql);
         <h3>User Action Logs</h3>
 
         <div class="table-responsive">
-            <table id="example" class="table table-striped" >
+            <table id="example" class="table table-striped">
                 <thead>
                     <tr>
                         <th>Action</th>
@@ -398,38 +395,38 @@ $atresult = mysqli_query($con, $atsql);
                     echo '    </tbody>
     </table>
 </div>'; ?>
-</div>
+        </div>
 
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-                    <script src="js/sidebar.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+        <script src="js/sidebar.js"></script>
 
-                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-                    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-                    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-                    <script>
-                        $(document).ready(function() {
-                            $('#company').change(function() {
-                                var companyName = $(this).val();
+        <script>
+            $(document).ready(function() {
+                $('#company').change(function() {
+                    var companyName = $(this).val();
 
-                                $.ajax({
-                                    url: 'get_branch.php',
-                                    type: 'POST',
-                                    data: {
-                                        company_name: companyName
-                                    },
-                                    success: function(response) {
-                                        console.log(response);
-                                        $('#branch').html(response);
-                                        $('#branchGroup').toggle(response.trim() !== '');
-                                    },
-                                    error: function() {
-                                        alert('Error fetching branches.');
-                                    }
-                                });
-                            });
-                        });
-                    </script>
+                    $.ajax({
+                        url: 'get_branch.php',
+                        type: 'POST',
+                        data: {
+                            company_name: companyName
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            $('#branch').html(response);
+                            $('#branchGroup').toggle(response.trim() !== '');
+                        },
+                        error: function() {
+                            alert('Error fetching branches.');
+                        }
+                    });
+                });
+            });
+        </script>
 </body>
 
 </html>
