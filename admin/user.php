@@ -489,7 +489,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
             });
         });
     </script>
-     <script>
+    <script>
         const togglePasswordButton = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
 
