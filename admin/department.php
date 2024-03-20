@@ -123,6 +123,25 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 <input type="hidden" name="department_id" value="<?= $item['id']; ?>">
 
                                                                 <div class="col-md-12 mt-3">
+                                                                    <label for="company_name" class="form-label"> <i class="fa-solid fa-location-dot"></i> Company</label>
+                                                                    <select id=company_name name="company_name" class="form-control">
+                                                                        <option value="<?= $item['company']; ?>"><?= $item['company']; ?></option>
+                                                                        <?php
+                                                                        $company = getAll("company");
+                                                                        if (mysqli_num_rows($company) > 0) {
+                                                                            foreach ($company as $company) {
+                                                                        ?>
+                                                                                <option value="<?= $company['company_name']; ?>"><?= $company['company_name']; ?></option>
+                                                                        <?php
+                                                                            }
+                                                                        } else {
+                                                                            echo "<option value=''>No Company available</option>";
+                                                                        }
+                                                                        ?>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fa-solid fa-users"></i> Department Name</label>
                                                                     <input type="text" name="department_name" value="<?= $item['department_name']; ?>" class="form-control">
                                                                 </div>

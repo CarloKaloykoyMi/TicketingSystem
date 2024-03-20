@@ -101,12 +101,13 @@ if (isset($_POST['add_company'])) {
     }
 } else if (isset($_POST['edit_department'])) {
     $id = $_POST['department_id'];
+    $company_name = $_POST['company_name'];
     $department_name = $_POST['department_name'];
     $department_head = $_POST['department_head'];
     $location = $_POST['location'];
 
 
-    $updateDepartment_query = "UPDATE department SET department_name='$department_name', department_head='$department_head', 
+    $updateDepartment_query = "UPDATE department SET company='$company_name', department_name='$department_name', department_head='$department_head', 
     location='$location' WHERE id='$id' ";
     $updateDepartment_query_run = mysqli_query($con, $updateDepartment_query);
 
