@@ -44,7 +44,7 @@ while ($row = mysqli_fetch_array($result)) {
 
                 <!-- User Name -->
                 <li class="nav-item">
-                    <a class="nav-link" href="User_Profile.php"><?php echo $fname . ' ' . $lname; ?></a>
+                    <a class="nav-link" href="User_Profile.php"><?php echo $name; ?></a>
                 </li>
             </ul>
         </div>

@@ -95,7 +95,6 @@ $atresult = mysqli_query($con, $atsql);
         border: none;
         border-radius: 4px;
         cursor: pointer;
-        width: 100%;
     }
 
     button:hover {
