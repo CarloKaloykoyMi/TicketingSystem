@@ -30,10 +30,15 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- icons -->
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <!-- bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <!-- css -->
     <link rel="stylesheet" href="css/sidebar_navbar.css">
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
@@ -44,9 +49,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="script.js"></script>
     <title>Home</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <style>
     .btn-custom {
@@ -55,12 +57,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
         transition: color 0.3s;
     }
 
-    .btn-custom:hover {
-        color: #ffffff;
-    }
-</style>
-</head>
-<style>
     .btn-custom:hover {
         background-color: gray;
         color: #fff;
@@ -97,19 +93,43 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <div class="main p-3">
         <div class="container-fluid">
             <div class="container1">
-                <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#myModal" style="position: absolute; top: 70px; right: 10px;">Create Ticket</button>
+                <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#myModal" style="position: absolute; top: 175px; right: 30px;">Create Ticket</button>
+                <div class="row mb-3">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="ticketNumberSearch" placeholder="Search by Ticket Number">
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="departmentFilter">
+                            <option value="">Filter by Department</option>
+                            <?php
+                            $departments = getAll("department");
+                            if (mysqli_num_rows($departments) > 0) {
+                                foreach ($departments as $department) {
+                                    echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
+                                }
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-select" id="statusFilter">
+                            <option value="">Filter by Status</option>
+                            <option value="Pending">Pending</option>
+                            <option value="Resolved">Resolved</option>
+                            <option value="Cancelled">Cancelled</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" id="requestorSearch" placeholder="Search by Requestor">
+                        <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 30px;padding-right:10px;padding-left:10px;">Reset Filters</button>
+
+                    </div>
+
+                </div>
                 <h3>
                     <center>Overall Ticket List </center>
                 </h3>
                 <table id="example" class="table table-responsive hover table-bordered">
-                <div class="grid-container" style="padding-left:100px;">
-                                <input type="text" class="search-input" data-column-index="0" placeholder="Search by Ticket...">
-                                <input type="text" class="search-input" data-column-index="1" placeholder="Search by Name...">
-                                <input type="text" class="search-input" data-column-index="2" placeholder="Search by To Department...">
-                                <input type="text" class="search-input" data-column-index="3" placeholder="Search by Subject...">
-                                <input type="text" class="search-input" data-column-index="4" placeholder="Search by Status...">
-                                <input type="text" class="search-input" data-column-index="5" placeholder="Search by Date...">
-                            </div>
                     <thead class="table-light">
                         <tr>
                             <th>Ticket ID</th>
@@ -151,13 +171,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 </tr>
                         <?php
                             }
-                        } else {
-                            echo "No Records Found!";
                         }
                         ?>
                     </tbody>
-
-
                 </table>
             </div>
 
@@ -298,10 +314,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </div>
                 </div>
             </div>
-
         </div>
 
         <script src="js/sidebar.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 
         <script>
             const fileInput = document.getElementById('example-fileinput');
@@ -339,28 +357,48 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 }
             });
             document.addEventListener("DOMContentLoaded", function() {
-            const searchInputs = document.querySelectorAll('.search-input');
-            const dataTable = document.getElementById('example'); // Update table ID
-            const rows = dataTable.getElementsByTagName('tr');
+                const departmentFilter = document.getElementById('departmentFilter');
+                const statusFilter = document.getElementById('statusFilter');
+                const requestorSearch = document.getElementById('requestorSearch');
+                const ticketNumberSearch = document.getElementById('ticketNumberSearch');
+                const resetFiltersButton = document.getElementById('resetFilters');
 
-            searchInputs.forEach(function(input) {
-                input.addEventListener('input', function() {
-                    const columnIndex = input.dataset.columnIndex;
-                    const filter = input.value.toLowerCase();
+                departmentFilter.addEventListener('change', filterTickets);
+                statusFilter.addEventListener('change', filterTickets);
+                requestorSearch.addEventListener('input', filterTickets);
+                ticketNumberSearch.addEventListener('input', filterTickets);
+                resetFiltersButton.addEventListener('click', resetFilters);
 
-                    for (let i = 1; i < rows.length; i++) {
-                        let found = false;
-                        const cells = rows[i].getElementsByTagName('td');
-                        const cellValue = cells[columnIndex].textContent.toLowerCase();
+                function filterTickets() {
+                    const tickets = document.querySelectorAll('#example tbody tr');
+                    const departmentValue = departmentFilter.value.toLowerCase();
+                    const statusValue = statusFilter.value.toLowerCase();
+                    const requestorValue = requestorSearch.value.toLowerCase();
+                    const ticketNumberValue = ticketNumberSearch.value.toLowerCase();
 
-                        if (cellValue.indexOf(filter) > -1) {
-                            found = true;
-                        }
-                        rows[i].style.display = found ? '' : 'none';
-                    }
-                });
+                    tickets.forEach(ticket => {
+                        const ticketID = ticket.querySelector('td:first-child').textContent.toLowerCase();
+                        const requestor = ticket.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                        const department = ticket.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                        const status = ticket.querySelector('td:nth-child(5)').textContent.toLowerCase();
+
+                        const shouldShow = ticketID.includes(ticketNumberValue) &&
+                            requestor.includes(requestorValue) &&
+                            department.includes(departmentValue) &&
+                            status.includes(statusValue);
+
+                        ticket.style.display = shouldShow ? 'table-row' : 'none';
+                    });
+                }
+
+                function resetFilters() {
+                    departmentFilter.value = ''; // Reset department filter
+                    statusFilter.value = ''; // Reset status filter
+                    requestorSearch.value = ''; // Reset requestor search
+                    ticketNumberSearch.value = ''; // Reset ticket number search
+                    filterTickets(); // Apply filters after resetting
+                }
             });
-        });
         </script>
 
 </body>

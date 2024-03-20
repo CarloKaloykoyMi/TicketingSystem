@@ -33,12 +33,12 @@ if (isset($_POST['add_company'])) {
     $updateCompany_query_run = mysqli_query($con, $updateCompany_query);
 
     if ($updateCompany_query_run) {
-        echo '<script>alert("Company status updated successfully.");</script>';
+        echo '<script>alert("Company updated successfully.");</script>';
         echo '<script>window.location.href = "company.php";</script>';
         exit();
     } else {
         // PHP code failed to execute
-        echo '<script>alert("Error updating order status. Please try again.");</script>';
+        echo '<script>alert("Error updating company. Please try again.");</script>';
     }
 } else if (isset($_POST['add_branch'])) {
     $company_name = $_POST['company_name'];
@@ -74,20 +74,21 @@ if (isset($_POST['add_company'])) {
     $updateBranch_query_run = mysqli_query($con, $updateBranch_query);
 
     if ($updateBranch_query_run) {
-        echo '<script>alert("Branch status updated successfully.");</script>';
+        echo '<script>alert("Branch updated successfully.");</script>';
         echo '<script>window.location.href = "branch.php";</script>';
         exit();
     } else {
         // PHP code failed to execute
-        echo '<script>alert("Error updating order status. Please try again.");</script>';
+        echo '<script>alert("Error updating. Please try again.");</script>';
     }
 } else if (isset($_POST['add_department'])) {
+    $company_name = $_POST['company_name'];
     $department_name = $_POST['department_name'];
     $department_head = $_POST['department_head'];
     $location = $_POST['location'];
 
-    $insert_department_query = "INSERT INTO department (department_name, department_head, location) 
-    VALUES ('$department_name','$department_head','$location')";
+    $insert_department_query = "INSERT INTO department (company,department_name, department_head, location) 
+    VALUES ('$company_name','$department_name','$department_head','$location')";
     $insert_department_query_run = mysqli_query($con, $insert_department_query);
 
     if ($insert_department_query_run) {
@@ -100,22 +101,23 @@ if (isset($_POST['add_company'])) {
     }
 } else if (isset($_POST['edit_department'])) {
     $id = $_POST['department_id'];
+    $company_name = $_POST['company_name'];
     $department_name = $_POST['department_name'];
     $department_head = $_POST['department_head'];
     $location = $_POST['location'];
 
 
-    $updateDepartment_query = "UPDATE department SET department_name='$department_name', department_head='$department_head', 
+    $updateDepartment_query = "UPDATE department SET company='$company_name', department_name='$department_name', department_head='$department_head', 
     location='$location' WHERE id='$id' ";
     $updateDepartment_query_run = mysqli_query($con, $updateDepartment_query);
 
     if ($updateDepartment_query_run) {
-        echo '<script>alert("Department status updated successfully.");</script>';
+        echo '<script>alert("Department updated successfully.");</script>';
         echo '<script>window.location.href = "department.php";</script>';
         exit();
     } else {
         // PHP code failed to execute
-        echo '<script>alert("Error updating order status. Please try again.");</script>';
+        echo '<script>alert("Error updating status. Please try again.");</script>';
     }
 } else if (isset($_POST['edit_user'])) {
     $user_id = $_POST['user_id'];
@@ -188,16 +190,43 @@ if (isset($_POST['add_company'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
     $contact = $_POST['contact'];
-    $username = $_POST['username'];
+    $username = $_POST['username']; // Changed variable name to $username
     $role = $_POST['role'];
 
+    // Insert the user into the database
     $insert_user_query = mysqli_query($con, "INSERT INTO user (lastName, firstName, middleinitial, company, branch, department, email, contact, username, password, verification_status, role) 
     VALUES('$lastName', '$firstName', '$middleinitial', '$company', '$branch', '$department', '$email', '$contact', '$username', '$password', '1', $role)");
 
     if ($insert_user_query) {
-        echo '<script>alert("User added successfully.");</script>';
-        echo '<script>window.location.href = "user.php";</script>';
-        exit();
+            // Get the last inserted user_id
+    $user_id = mysqli_insert_id($con);
+    echo "User ID from database: " . $user_id; // Add this line to check the user ID
+
+    // Set the path to the folder where default profile images are stored
+    $profile_image_folder = '../Images/';
+    $new_folder_path = $profile_image_folder . $user_id . '-' . $username;
+
+        // Create the folder if it doesn't exist
+        if (!file_exists($new_folder_path)) {
+            mkdir($new_folder_path, 0777, true);
+        }
+
+        // Create the default profile image filename
+        $profile_image_filename = 'user2.png';
+
+        // Copy the default profile image to the user's folder
+        $default_profile_image = '../img/user2.png';
+        $destination = $new_folder_path . '/' . $profile_image_filename;
+        if (copy($default_profile_image, $destination)) {
+            // Update the user's profile image filename in the database
+            mysqli_query($con, "UPDATE user SET image = '$profile_image_filename' WHERE user_id = $user_id");
+
+            echo '<script>alert("User added successfully.");</script>';
+            echo '<script>window.location.href = "user.php";</script>';
+            exit();
+        } else {
+            echo '<script>alert("Error copying default profile image.");</script>';
+        }
     } else {
         // PHP code failed to execute
         echo '<script>alert("Error adding user. Please try again.");</script>';
@@ -234,8 +263,6 @@ if (isset($_POST['add_company'])) {
     $sql = "INSERT INTO audit_trail (user_id,action) VALUES('$user_id','$action');";
     $atrun = mysqli_query($con, $sql);
     echo "<script> location.href='admin_profile.php'; </script>";
-
-
 } elseif (isset($_POST['delete_department'])) {
     $id = $_POST['department_id'];
     $sql = "DELETE FROM department WHERE id = '$id';";
@@ -251,7 +278,6 @@ if (isset($_POST['add_company'])) {
     $sql = "DELETE FROM branch WHERE id = '$id';";
     $sqlRun =  mysqli_query($con, $sql);
     echo "<script> location.href='../admin/branch.php'; </script>";
-
 } elseif (isset($_POST['saveChanges'])) {
     $userid = $_POST['userid'];
     $fn = $_POST['firstName'];
@@ -278,31 +304,27 @@ if (isset($_POST['add_company'])) {
         // PHP code failed to execute
         echo '<script>alert("Error Changing. Please try again.");</script>';
     }
-}else if(isset($_POST['ChangePassword'])){
-    $user_id=$_POST['userid'];
-    $oldpass=$_POST['password'];
-    $newpass=$_POST['newpassword'];
-    $connewpass=$_POST['renewpassword'];
+} else if (isset($_POST['ChangePassword'])) {
+    $user_id = $_POST['userid'];
+    $oldpass = $_POST['password'];
+    $newpass = $_POST['newpassword'];
+    $connewpass = $_POST['renewpassword'];
 
-    $sql="SELECT * FROM user WHERE password = '$oldpass' AND user_id='$user_id';";
-    $result = mysqli_query($con,$sql);
+    $sql = "SELECT * FROM user WHERE password = '$oldpass' AND user_id='$user_id';";
+    $result = mysqli_query($con, $sql);
 
     if (mysqli_num_rows($result) > 0) {
-        if($newpass <> $connewpass){
+        if ($newpass <> $connewpass) {
             echo "<script>alert('Errorrr')</script>";
             echo '<script>window.location.href = "User_Profile.php"</script>';
-        }else{
-            $Usql="UPDATE USER SET password = '$newpass' WHERE password = '$oldpass' AND user_id='$user_id';";
-            $Uresult = mysqli_query($con,$Usql);
+        } else {
+            $Usql = "UPDATE USER SET password = '$newpass' WHERE password = '$oldpass' AND user_id='$user_id';";
+            $Uresult = mysqli_query($con, $Usql);
             echo "<script>alert('Password:Change Successfully')</script>";
-            echo '<script>window.location.href = "admin_Profile.php"</script>'; 
+            echo '<script>window.location.href = "admin_Profile.php"</script>';
         }
-    }else{
+    } else {
         echo "<script>alert('Wrong Current Password!')</script>";
         echo '<script>window.location.href = "admin_Profile.php"</script>';
-
     }
-    
-
 }
-

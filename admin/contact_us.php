@@ -79,7 +79,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 <td><?= $item['phone']; ?></td>
                                                 <td><?= $item['email']; ?></td>
                                                 <td>
-                                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal<?= $item['id']; ?>"><i class="fas fa-pencil"></i>&nbsp;View</a>
+                                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal<?= $item['id']; ?>"><i class="fas fa-eye"></i>&nbsp;View</a>
                                                 </td>
                                             </tr>
 
