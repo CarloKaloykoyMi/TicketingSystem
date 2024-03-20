@@ -90,6 +90,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 </td>
                                             </tr>
 
+                                            <!-- delete modal -->
                                             <div class="modal fade" id="branchDepartmentModal<?= $item['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
@@ -160,7 +161,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fas fa-envelope"></i> Email</label>
-                                                                    <input type="text" name="email" value="<?= $item['email']; ?>" class="form-control">
+                                                                    <input type="email" name="email" value="<?= $item['email']; ?>" class="form-control">
                                                                 </div>
 
                                                                 <!-- Add other form fields for editing as needed -->
@@ -192,6 +193,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
     </div>
 
 
+    <!-- add modal -->
     <div class="modal fade" id="addBranchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -238,7 +240,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                         <div class="col-md-12 mt-3">
                             <label for=""><i class="fas fa-envelope"></i> Email</label>
-                            <input type="text" name="email" placeholder="Enter Email" class="form-control" required>
+                            <input type="email" name="email" placeholder="Enter Email" class="form-control" required>
                         </div>
 
                         <hr>

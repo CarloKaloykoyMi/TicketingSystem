@@ -33,12 +33,12 @@ if (isset($_POST['add_company'])) {
     $updateCompany_query_run = mysqli_query($con, $updateCompany_query);
 
     if ($updateCompany_query_run) {
-        echo '<script>alert("Company status updated successfully.");</script>';
+        echo '<script>alert("Company updated successfully.");</script>';
         echo '<script>window.location.href = "company.php";</script>';
         exit();
     } else {
         // PHP code failed to execute
-        echo '<script>alert("Error updating order status. Please try again.");</script>';
+        echo '<script>alert("Error updating company. Please try again.");</script>';
     }
 } else if (isset($_POST['add_branch'])) {
     $company_name = $_POST['company_name'];
@@ -74,12 +74,12 @@ if (isset($_POST['add_company'])) {
     $updateBranch_query_run = mysqli_query($con, $updateBranch_query);
 
     if ($updateBranch_query_run) {
-        echo '<script>alert("Branch status updated successfully.");</script>';
+        echo '<script>alert("Branch updated successfully.");</script>';
         echo '<script>window.location.href = "branch.php";</script>';
         exit();
     } else {
         // PHP code failed to execute
-        echo '<script>alert("Error updating order status. Please try again.");</script>';
+        echo '<script>alert("Error updating. Please try again.");</script>';
     }
 } else if (isset($_POST['add_department'])) {
     $company_name = $_POST['company_name'];
@@ -112,12 +112,12 @@ if (isset($_POST['add_company'])) {
     $updateDepartment_query_run = mysqli_query($con, $updateDepartment_query);
 
     if ($updateDepartment_query_run) {
-        echo '<script>alert("Department status updated successfully.");</script>';
+        echo '<script>alert("Department updated successfully.");</script>';
         echo '<script>window.location.href = "department.php";</script>';
         exit();
     } else {
         // PHP code failed to execute
-        echo '<script>alert("Error updating order status. Please try again.");</script>';
+        echo '<script>alert("Error updating status. Please try again.");</script>';
     }
 } else if (isset($_POST['edit_user'])) {
     $user_id = $_POST['user_id'];

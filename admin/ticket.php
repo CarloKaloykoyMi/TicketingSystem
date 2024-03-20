@@ -19,9 +19,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $role = $_SESSION['auth_user']['role'];
     $lname = $_SESSION['auth_user']['lastname'];
     $fname = $_SESSION['auth_user']['firstname'];
-    
 }
-
 ?>
 
 
@@ -91,7 +89,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 <td><?= $item['requestor']; ?></td>
                                                 <td><?= $item['subject']; ?></td>
                                                 <td><?= $item['to_dept']; ?></td>
-                                                <td><center><?= $item['ticket_id']; ?></td></center>
+                                                <td>
+                                                    <center><?= $item['ticket_id']; ?>
+                                                </td>
+                                                </center>
                                                 <td>
                                                     <?php
                                                     $status = $item['status'];
@@ -130,31 +131,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-
-
-    <script>
-        $(document).ready(function() {
-            // Handle the click event for the "Accept Changes" button
-            $('.btn-accept-changes').click(function() {
-                // Close the current modal
-                $('#editCompanyModal').modal('hide');
-
-                // Open the new modal for accepting changes
-                $('#acceptChangesModal').modal('show');
-            });
-
-            // Handle the click event for the "Decline Changes" button
-            $('.btn-decline-changes').click(function() {
-                // Close the current modal
-                $('#editCompanyModal').modal('hide');
-
-                // Open the new modal for declining changes
-                $('#declineChangesModal').modal('show');
-            });
-        });
-    </script>
-
 </body>
 
 </html>
