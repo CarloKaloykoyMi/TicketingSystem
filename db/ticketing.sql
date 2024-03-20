@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2024 at 10:41 AM
+-- Generation Time: Mar 20, 2024 at 06:44 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -85,7 +85,45 @@ INSERT INTO `audit_trail` (`at_id`, `user_id`, `Action`, `Date`) VALUES
 (44, 35, 'Logged In', '2024-03-12 08:23:25'),
 (45, 1, 'Logged In', '2024-03-12 08:26:41'),
 (46, 35, 'Logout', '2024-03-12 08:36:50'),
-(47, 35, 'Logged In', '2024-03-12 08:37:13');
+(47, 35, 'Logged In', '2024-03-12 08:37:13'),
+(48, 36, 'Logged In', '2024-03-13 06:45:31'),
+(49, 36, 'Logout', '2024-03-13 06:47:20'),
+(50, 36, 'Logged In', '2024-03-13 06:47:32'),
+(51, 1, 'Logged In', '2024-03-14 01:51:35'),
+(52, 37, 'Logged In', '2024-03-14 02:06:27'),
+(53, 1, 'Logged In', '2024-03-15 01:04:11'),
+(54, 1, 'Logout', '2024-03-15 01:06:32'),
+(55, 38, 'Logged In', '2024-03-15 01:06:48'),
+(56, 38, 'Logout', '2024-03-15 01:07:13'),
+(57, 38, 'Logged In', '2024-03-15 01:07:43'),
+(58, 38, 'Logout', '2024-03-15 01:08:16'),
+(59, 37, 'Logged In', '2024-03-15 01:08:43'),
+(60, 37, 'Logged In', '2024-03-18 00:48:50'),
+(61, 37, 'Logout', '2024-03-18 01:22:36'),
+(62, 37, 'Logged In', '2024-03-18 01:28:10'),
+(63, 37, 'Logout', '2024-03-18 01:30:55'),
+(64, 37, 'Logged In', '2024-03-18 01:30:56'),
+(65, 37, 'Logout', '2024-03-18 01:31:19'),
+(66, 36, 'Logged In', '2024-03-18 01:32:55'),
+(67, 36, 'Logout', '2024-03-18 01:34:34'),
+(68, 37, 'Logged In', '2024-03-18 01:34:51'),
+(69, 36, 'Logged In', '2024-03-19 05:06:05'),
+(70, 37, 'Logged In', '2024-03-19 05:06:53'),
+(71, 37, 'Logout', '2024-03-19 05:09:08'),
+(72, 37, 'Logged In', '2024-03-19 05:10:08'),
+(73, 36, 'Logged In', '2024-03-20 02:44:11'),
+(74, 36, 'Profile Detail Edited', '2024-03-20 02:44:48'),
+(75, 37, 'Logged In', '2024-03-20 02:45:59'),
+(76, 38, 'Logged In', '2024-03-20 03:14:03'),
+(77, 38, 'Logout', '2024-03-20 03:21:32'),
+(78, 36, 'Logout', '2024-03-20 03:21:34'),
+(79, 36, 'Logged In', '2024-03-20 03:22:24'),
+(80, 38, 'Logged In', '2024-03-20 03:26:56'),
+(81, 38, 'Logged In', '2024-03-20 05:34:13'),
+(82, 38, 'Logout', '2024-03-20 05:34:32'),
+(83, 36, 'Logged In', '2024-03-20 05:34:50'),
+(84, 36, 'Logout', '2024-03-20 05:37:17'),
+(85, 39, 'Logged In', '2024-03-20 05:37:44');
 
 -- --------------------------------------------------------
 
@@ -155,6 +193,17 @@ CREATE TABLE `contact_us` (
   `message` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `contact_us`
+--
+
+INSERT INTO `contact_us` (`id`, `first_name`, `last_name`, `phone`, `email`, `message`) VALUES
+(1, 'kim', 'babas', '09261518139', 'babaskim09@gmail.com', 'testing testing'),
+(2, 'kyla marie', 'tamayo', '09773555302', 'kylamarietamayo@gmail.com', 'Can i ask questions?'),
+(3, 'mhargielyn ', 'mineque', '09773555302', 'mhargielyn.mineque@my.jru.edu', 'testing'),
+(4, 'John', 'Carlo', '09261518139', 'john@gmail.com', 'testing'),
+(5, 'norman jake', 'alain', '09773555302', 'normanjakealain@gmail.com', 'testing lang');
+
 -- --------------------------------------------------------
 
 --
@@ -163,6 +212,7 @@ CREATE TABLE `contact_us` (
 
 CREATE TABLE `department` (
   `id` int(50) NOT NULL,
+  `company` varchar(50) NOT NULL,
   `department_name` varchar(191) NOT NULL,
   `department_head` varchar(191) NOT NULL,
   `location` varchar(191) NOT NULL,
@@ -173,16 +223,18 @@ CREATE TABLE `department` (
 -- Dumping data for table `department`
 --
 
-INSERT INTO `department` (`id`, `department_name`, `department_head`, `location`, `created_at`) VALUES
-(1, 'MIS-Department', 'Jun edmund', '3rd Floor', '2024-02-12 06:40:50'),
-(3, 'Accounting', 'Kim', '3rd floor', '2024-02-15 04:46:51'),
-(4, 'Management Info', 'Carlo', '2ndFloor', '2024-02-15 04:47:21'),
-(5, 'Purchasing', 'Kyla', '4th Floor', '2024-02-15 04:48:03'),
-(6, 'System Installation', 'Andrea', '5th Floor', '2024-02-15 04:48:27'),
-(7, 'Building Management System(BMS)', 'Rommel', '2nd Floor', '2024-02-15 04:49:01'),
-(8, 'Systems Mechanical', 'Norman', '2ndFloor', '2024-02-15 04:49:30'),
-(9, 'Field Service', 'Mharg', '3rd floor', '2024-02-15 04:52:18'),
-(11, 'HR', 'John', '2nd Floor', '2024-03-08 02:15:15');
+INSERT INTO `department` (`id`, `company`, `department_name`, `department_head`, `location`, `created_at`) VALUES
+(12, 'Cornersteel Systems Corporation', 'MIS-Department', 'Jun Edmund', '3rd Floor', '2024-03-20 03:02:34'),
+(13, 'Energy Specialist Company(ESCO)', 'Accounting', 'Peter', '3rd Floor', '2024-03-20 03:05:58'),
+(14, 'Cornersteel Systems Corporation', 'HR', 'Joaquin', '2nd Floor', '2024-03-20 03:07:14'),
+(15, 'Comfac Technology Options (CTO)', 'System installation', 'Rein ', '3rd Floor', '2024-03-20 03:12:42'),
+(16, 'Cornersteel Systems Corporation', 'Accounting', 'Andrea', '2nd Floor', '2024-03-20 03:14:57'),
+(17, 'Energy Specialist Company(ESCO)', 'HR', 'Karen', '3rd Floor', '2024-03-20 03:15:36'),
+(18, 'Comfac Technology Options (CTO)', 'Purchasing', 'Kyla', '4th Floor', '2024-03-20 03:17:25'),
+(19, 'Comfac Global Group', 'System Mechanical', 'Norman', '2nd Floor', '2024-03-20 03:18:13'),
+(20, 'Cornersteel Systems Corporation', 'Field Service', 'Jasmin', '3rd Floor', '2024-03-20 03:19:07'),
+(21, 'Energy Specialist Company(ESCO)', 'Building Management System (BMS)', 'Rommel', '2nd Floor', '2024-03-20 03:19:59'),
+(22, 'Comfac Global Group', 'Management Info', 'Grace', '2nd Floor', '2024-03-20 03:20:37');
 
 -- --------------------------------------------------------
 
@@ -295,11 +347,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `middleinitial`, `company`, `branch`, `department`, `email`, `contact`, `username`, `password`, `verification_status`, `role`, `created_at`, `image`) VALUES
-(1, 'Estrera', 'Evalyn Grace', 'P', 'comfac', 'Mandaluyong', 'IT- MIS', 'rogaka9738@rohoza.com', '09234234233', 'aaa', '@Dar1234', 1, 0, '2024-02-08 09:05:22', 'OIP.jpg'),
 (33, 'Babas', 'Kim', 'M', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'HR', 'regipelo@imagepoet.net', '09721515551', 'kimpoy', '@Qwerty123', 1, 1, '2024-03-08 07:21:30', 'user2.png'),
 (34, 'Tamayo', 'Kyla Andrea', 'A', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'Management Info', 'zoguqoma@citmo.net', '09714414211', 'kyang', '@Qwerty123', 1, 1, '2024-03-08 07:24:04', 'user2.png'),
 (35, 'Miñeque', 'Mhargielyn', 'D', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'Management Info', 'mhargielyn.mineque@my.jru.edu', '09165255651', 'mharg', '@Qwerty123', 1, 1, '2024-03-08 07:46:49', 'user2.png'),
-(36, 'Estrera', 'Evalyn Grace', 'P.', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'MIS-Department', 'eva@gmail.com', '09454515566', 'evagraceest', '123456', 1, 0, '2024-03-08 07:49:56', NULL);
+(37, 'Astoveza', 'John Carlo', 'L', 'Cornersteel Systems Corporation', 'Cabuyao', 'MIS-Department', 'laguinlinastovezajocar@gmail.com', '09773555302', 'Carlokaloykoy', '@Qwerty123', 1, 1, '2024-03-14 02:05:55', 'user2.png'),
+(39, 'Estrera', 'Evalyn Grace', 'P', 'Cornersteel Systems Corporation', 'Libertad', 'MIS-Department', 'estrera.evalyngrace@gmail.com', '09655662351', 'evagraceest', '@Qwerty123', 1, 0, '2024-03-20 05:37:00', 'user2.png');
 
 --
 -- Indexes for dumped tables
@@ -367,7 +419,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `audit_trail`
 --
 ALTER TABLE `audit_trail`
-  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT for table `branch`
@@ -385,13 +437,13 @@ ALTER TABLE `company`
 -- AUTO_INCREMENT for table `contact_us`
 --
 ALTER TABLE `contact_us`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `file_attachment`
@@ -415,7 +467,7 @@ ALTER TABLE `ticket_reply`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
