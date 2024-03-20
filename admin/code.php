@@ -82,12 +82,13 @@ if (isset($_POST['add_company'])) {
         echo '<script>alert("Error updating order status. Please try again.");</script>';
     }
 } else if (isset($_POST['add_department'])) {
+    $company_name = $_POST['company_name'];
     $department_name = $_POST['department_name'];
     $department_head = $_POST['department_head'];
     $location = $_POST['location'];
 
-    $insert_department_query = "INSERT INTO department (department_name, department_head, location) 
-    VALUES ('$department_name','$department_head','$location')";
+    $insert_department_query = "INSERT INTO department (company,department_name, department_head, location) 
+    VALUES ('$company_name','$department_name','$department_head','$location')";
     $insert_department_query_run = mysqli_query($con, $insert_department_query);
 
     if ($insert_department_query_run) {

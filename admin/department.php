@@ -45,13 +45,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="js/table.js"></script>
     <link rel="stylesheet" href="css/sidebar.css">
-
-    <style>
-        .fa-trash {
-            font-family: FontAwesome;
-        }
-    </style>
-
 </head>
 
 <body>
@@ -68,6 +61,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
+                                        <th>Company Name</th>
                                         <th>Department Name</th>
                                         <th>Department Head</th>
                                         <th>Location</th>
@@ -82,6 +76,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         foreach ($department as $item) {
                                     ?>
                                             <tr>
+                                                <td><?= $item['company']; ?></td>
                                                 <td><?= $item['department_name']; ?></td>
                                                 <td><?= $item['department_head']; ?></td>
                                                 <td><?= $item['location']; ?></td>
@@ -182,6 +177,25 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <form action="code.php" method="POST">
 
                         <div class="col-md-12 mt-3">
+                            <label for="company_name" class="form-label"> <i class="fa-solid fa-location-dot"></i> Company</label>
+                            <select id=company_name name="company_name" class="form-control" required>
+                                <option value="" disabled selected>Select your Company</option>
+                                <?php
+                                $company = getAll("company");
+                                if (mysqli_num_rows($company) > 0) {
+                                    foreach ($company as $company) {
+                                ?>
+                                        <option value="<?= $company['company_name']; ?>"><?= $company['company_name']; ?></option>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<option value=''>No Company available</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
                             <label for=""><i class="fa-solid fa-users"></i> Department Name</label>
                             <input type="text" name="department_name" placeholder="Enter Department Name" class="form-control" required>
                         </div>
@@ -208,12 +222,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
-
-    <script>
-        $(".btn-primary").click(function() {
-            $("#myModal").modal("show");
-        });
-    </script>
 </body>
 
 </html>
