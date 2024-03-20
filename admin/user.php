@@ -34,17 +34,18 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
+    <!-- datatable css -->
+    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script defer src="js/table.js"></script>
+
     <!-- icon css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
-    <!-- datatable css -->
-    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
-    <script defer src="js/table.js"></script>
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
 
@@ -59,32 +60,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
                         </div>
                         <div class="card-body">
-                            <div class="grid-container">
-                                <input type="text" class="search-input" data-column-index="0,1" placeholder="Search by Last Name...">
-                                <select id="companySelect" class="search-input" data-column-index="2">
-                                    <option value="">Search by Company...</option>
-                                    <?php
-                                    $companies = getAll("company");
-                                    foreach ($companies as $company) {
-                                        echo '<option value="' . $company['company_name'] . '">' . $company['company_name'] . '</option>';
-                                    }
-                                    ?>
-                                </select>
-                                <select id="branchSelect" class="search-input" data-column-index="3">
-                                    <option value="">Select Branch...</option>
-                                </select>
-                                <select class="search-input" data-column-index="4">
-                                    <option value="">Search by Department...</option>
-                                    <?php
-                                    $departments = getAll("department");
-                                    foreach ($departments as $department) {
-                                        echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
-                                    }
-                                    ?>
-                                </select>
-                                <input type="text" class="search-input" data-column-index="5" placeholder="Search by Email...">
-                                <input type="text" class="search-input" data-column-index="6" placeholder="Search by Role...">
-                            </div>
                             <div class="table-responsive">
                                 <table id="example" class="table table-striped" style="width:100%">
                                     <thead>
@@ -400,8 +375,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-    <script src="js/sidebar.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="js/sidebar.js"></script>
 
 
     <script>
@@ -463,31 +438,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
             input.value = numbersOnly;
         }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            const searchInputs = document.querySelectorAll('.search-input');
-            const dataTable = document.getElementById('example');
-            const rows = dataTable.getElementsByTagName('tr');
-
-            searchInputs.forEach(function(input) {
-                input.addEventListener('change', function() {
-                    const columnIndex = input.dataset.columnIndex;
-                    const filter = input.value.toLowerCase();
-
-                    for (let i = 1; i < rows.length; i++) {
-                        let found = false;
-                        const cells = rows[i].getElementsByTagName('td');
-                        const cellValue = cells[columnIndex].textContent.toLowerCase();
-
-                        if (filter === '' || cellValue.indexOf(filter) > -1) {
-                            found = true;
-                        }
-
-                        rows[i].style.display = found ? '' : 'none';
-                    }
-                });
-            });
-        });
     </script>
     <script>
         const togglePasswordButton = document.getElementById('togglePassword');
@@ -500,8 +450,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
             togglePasswordButton.querySelector('i').classList.toggle('fa-eye-slash');
         });
     </script>
-
-
 </body>
 
 </html>
