@@ -21,23 +21,22 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
 ?>
 
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Users</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Users</title>
 
     <!-- datatable css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <!-- icon css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     <!-- datatable css -->
@@ -46,28 +45,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
     <script defer src="js/table.js"></script>
-
-
     <link rel="stylesheet" href="css/sidebar.css">
-    <link rel="stylesheet" href="user.css">
-
-    <style>
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(2, auto);
-            gap: 10px;
-            /* Adjust the gap between inputs as needed */
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 10px;
-            box-sizing: border-box;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-    </style>
 </head>
 
 <body>
@@ -107,8 +85,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 <input type="text" class="search-input" data-column-index="5" placeholder="Search by Email...">
                                 <input type="text" class="search-input" data-column-index="6" placeholder="Search by Role...">
                             </div>
-
-
                             <div class="table-responsive">
                                 <table id="example" class="table table-striped" style="width:100%">
                                     <thead>
@@ -125,10 +101,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $company = getAll("user");
+                                        $user = getAll("user");
 
-                                        if (mysqli_num_rows($company) > 0) {
-                                            foreach ($company as $item) {
+                                        if (mysqli_num_rows($user) > 0) {
+                                            foreach ($user as $item) {
                                         ?>
                                                 <tr>
                                                     <td><?= $item['lastname']; ?></td>
@@ -141,10 +117,30 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                     <td>
                                                         <div class="btn-group" role="group">
                                                             <a href="#" class="btn btn-primary" style="width: 80px;" data-bs-toggle="modal" data-bs-target="#editUserModal<?= $item['user_id']; ?>"><i class="fas fa-pencil"></i>&nbsp;Edit</a>
-                                                            <button type="button" class="btn btn-sm btn-danger delete_category_btn" value="<?= $item['user_id']; ?>"><i class="fas fa-trash"></i> &nbsp; Delete</button>
                                                         </div>
                                                     </td>
                                                 </tr>
+
+                                                <div class="modal fade" id="companyDepartmentModal<?= $item['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Department</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                Are you sure you want to delete this Company?
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <form action="code.php" method="POST">
+                                                                    <input type="hidden" name="company_id" value="<?= $item['id']; ?>">
+                                                                    <button type="submit" class="btn btn-danger" name="delete_company">Delete</button>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
 
                                                 <!-- Edit User Modal -->
                                                 <div class="modal fade" id="editUserModal<?= $item['user_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -218,10 +214,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                     </div>
                                                 </div>
                                                 <!-- End Edit User Modal -->
+
                                         <?php
                                             }
-                                        } else {
-                                            echo "No Records Found!";
                                         }
                                         ?>
                                     </tbody>
@@ -243,7 +238,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 </div>
                 <div class="modal-body">
                     <form action="code.php" method="POST">
-
                         <div class="col-md-12 mt-3">
                             <div class="input-group">
                                 <span class="input-group-prepend">
@@ -252,151 +246,153 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 <label for="" class="sr-only"> Username</label>
                                 <input type="text" name="username" placeholder="Enter Username" class="form-control" required>
                             </div>
+                        </div>
 
-                            <div class="col-md-12 mt-3">
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fas fa-user input-group-text"></i>
+                                </span>
+                                <label for="" class="sr-only"> Last Name</label>
+                                <input type="text" name="lastname" placeholder="Enter Last Name" id="lastNameInput" class="form-control" oninput="restrictToLettersWithSingleSpace(this)" required>
+                                <span class="note" style="display: none; color: red;">Please enter letters only.</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fas fa-user input-group-text"></i>
+                                </span>
+                                <label for="" class="sr-only"> First Name</label>
+                                <input type="text" name="firstname" placeholder="Enter First Name" id="firstNameInput" class="form-control" oninput="restrictToLettersWithSingleSpace(this)" required>
+                                <span class="note" style="display: none; color: red;">Please enter letters only.</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fas fa-user input-group-text"></i>
+                                </span>
+                                <label for="" class="sr-only">Middle Initial</label>
+                                <input type="text" name="middleinitial" id="middleNameInput" placeholder="Enter Middle Initial" class="form-control">
+                                <span class=" note" style="display: none; color: red;">Please enter letters only.</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+
+                                    <i class="fa fa-phone input-group-text"></i>
+                                </span>
+                                <label for="" class="sr-only">Contact Number</label>
+                                <input type="text" name="contact" id="phoneNumberInput" placeholder="Enter Contact Number" oninput="restrictToNumbers(this)" class="form-control" required>
+                                <span class="note" style="display: none; color: red;">Please enter a valid 11-digit numbers.</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fas fa-user-friends input-group-text"></i>
+                                </span>
+                                <label for="role" class="sr-only">Role</label>
+                                <select class="form-control" id="role" name="role" required>
+                                    <option value="">Select Role:</option>
+                                    <option value="0">Admin</option>
+                                    <option value="1">Employee</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fa-solid fa-building input-group-text"></i>
+                                </span>
+                                <label for="company" class="sr-only">Company</label>
+                                <select class="form-control" id="company" name="company" required>
+                                    <option value="">Select Company:</option>
+                                    <?php
+                                    $company = getAll("company");
+                                    if (mysqli_num_rows($company) > 0) {
+                                        foreach ($company as $company) {
+                                    ?>
+                                            <option value="<?= $company['company_name']; ?>"><?= $company['company_name']; ?></option>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "<option value=''>No Company available</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="form-group" style="display: none;" id="branchGroup">
                                 <div class="input-group">
-                                    <span class="input-group-prepend">
-                                        <i class="fas fa-user input-group-text"></i>
+                                    <i class="fa-solid fa-location-dot input-group-text"></i>
                                     </span>
-                                    <label for="" class="sr-only"> Last Name</label>
-                                    <input type="text" name="lastname" placeholder="Enter Last Name" id="lastNameInput" class="form-control" oninput="restrictToLettersWithSingleSpace(this)" required>
-                                    <span class="note" style="display: none; color: red;">Please enter letters only.</span>
+                                    <label for="branch" class="sr-only">Branch:</label>
+                                    <select class="form-control" id="branch" name="branch" required>
+                                        <option value="">Select Branch:</option>
+                                    </select>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="col-md-12 mt-3">
-                                    <div class="input-group">
-                                        <span class="input-group-prepend">
-                                            <i class="fas fa-user input-group-text"></i>
-                                        </span>
-                                        <label for="" class="sr-only"> First Name</label>
-                                        <input type="text" name="firstname" placeholder="Enter First Name" id="firstNameInput" class="form-control" oninput="restrictToLettersWithSingleSpace(this)" required>
-                                        <span class="note" style="display: none; color: red;">Please enter letters only.</span>
-                                    </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fa-solid fa-building input-group-text"></i>
 
-                                    <div class="col-md-12 mt-3">
-                                        <div class="input-group">
-                                            <span class="input-group-prepend">
-                                                <i class="fas fa-user input-group-text"></i>
-                                            </span>
-                                            <label for="" class="sr-only">Middle Initial</label>
-                                            <input type="text" name="middleinitial" id="middleNameInput" placeholder="Enter Middle Initial" class="form-control">
-                                            <span class=" note" style="display: none; color: red;">Please enter letters only.</span>
-                                        </div>
+                                </span>
+                                <label for="department" class="sr-only">Department:</label>
+                                <select class="form-control" id="department" name="department" required>
+                                    <option value="">Select Department:</option>
+                                    <?php
+                                    $department = getAll("department");
+                                    if (mysqli_num_rows($department) > 0) {
+                                        foreach ($department as $department) {
+                                    ?>
+                                            <option value="<?= $department['department_name']; ?>"><?= $department['department_name']; ?></option>
+                                    <?php
+                                        }
+                                    } else {
+                                        echo "<option value=''>No Department available</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
 
-                                        <div class="col-md-12 mt-3">
-                                            <div class="input-group">
-                                                <span class="input-group-prepend">
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fa fa-envelope input-group-text"></i>
+                                </span>
+                                <label for="" class="sr-only"> Email</label>
+                                <input type="email" name="email" placeholder="Enter Email" class="form-control">
+                            </div>
+                        </div>
 
-                                                    <i class="fa fa-phone input-group-text"></i>
-                                                </span>
-                                                <label for="" class="sr-only">Contact Number</label>
-                                                <input type="text" name="contact" id="phoneNumberInput" placeholder="Enter Contact Number" oninput="restrictToNumbers(this)" class="form-control" required>
-                                                <span class="note" style="display: none; color: red;">Please enter a valid 11-digit numbers.</span>
-
-                                            </div>
-
-                                            <div class="col-md-12 mt-3">
-                                                <div class="input-group">
-                                                    <span class="input-group-prepend">
-                                                        <i class="fas fa-user-friends input-group-text"></i>
-                                                    </span>
-                                                    <label for="role" class="sr-only">Role</label>
-                                                    <select class="form-control" id="role" name="role" required>
-                                                        <option value="">Select Role:</option>
-                                                        <option value="0">Admin</option>
-                                                        <option value="1">Employee</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12 mt-3">
-                                                <div class="input-group">
-                                                    <span class="input-group-prepend">
-                                                        <i class="fa-solid fa-building input-group-text"></i>
-                                                    </span>
-                                                    <label for="company" class="sr-only">Company</label>
-                                                    <select class="form-control" id="company" name="company" required>
-                                                        <option value="">Select Company:</option>
-                                                        <?php
-                                                        $company = getAll("company");
-                                                        if (mysqli_num_rows($company) > 0) {
-                                                            foreach ($company as $company) {
-                                                        ?>
-                                                                <option value="<?= $company['company_name']; ?>"><?= $company['company_name']; ?></option>
-                                                        <?php
-                                                            }
-                                                        } else {
-                                                            echo "<option value=''>No Company available</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12 mt-3">
-                                                <div class="form-group" style="display: none;" id="branchGroup">
-                                                    <div class="input-group">
-                                                        <i class="fa-solid fa-location-dot input-group-text"></i>
-                                                        </span>
-                                                        <label for="branch" class="sr-only">Branch:</label>
-                                                        <select class="form-control" id="branch" name="branch" required>
-                                                            <option value="">Select Branch:</option>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12 mt-3">
-                                                <div class="input-group">
-                                                    <span class="input-group-prepend">
-                                                        <i class="fa-solid fa-building input-group-text"></i>
-
-                                                    </span>
-                                                    <label for="department" class="sr-only">Department:</label>
-                                                    <select class="form-control" id="department" name="department" required>
-                                                        <option value="">Select Department:</option>
-                                                        <?php
-                                                        $department = getAll("department");
-                                                        if (mysqli_num_rows($department) > 0) {
-                                                            foreach ($department as $department) {
-                                                        ?>
-                                                                <option value="<?= $department['department_name']; ?>"><?= $department['department_name']; ?></option>
-                                                        <?php
-                                                            }
-                                                        } else {
-                                                            echo "<option value=''>No Department available</option>";
-                                                        }
-                                                        ?>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="col-md-12 mt-3">
-                                                <div class="input-group">
-                                                    <span class="input-group-prepend">
-                                                        <i class="fa fa-envelope input-group-text"></i>
-                                                    </span>
-                                                    <label for="" class="sr-only"> Email</label>
-                                                    <input type="email" name="email" placeholder="Enter Email" class="form-control">
-                                                </div>
-
-
-                                                <div class="col-md-12 mt-3">
-                                                    <div class="input-group">
-                                                        <span class="input-group-prepend">
-                                                            <i class="fa fa-lock input-group-text"></i>
-                                                        </span>
-                                                        <label for="password" class="sr-only"> Password</label>
-                                                        <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" required>
-                                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="fas fa-eye"></i></button>
-                                                    </div>
-                                                </div>
-
-
-                                                <hr>
-                                                <div class="form-group pull-right">
-                                                    <button class="btn btn-primary float-end" type="submit" name="add_user">Submit</button>
-                                                </div>
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fa fa-lock input-group-text"></i>
+                                </span>
+                                <label for="password" class="sr-only"> Password</label>
+                                <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" required>
+                                <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="fas fa-eye"></i></button>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="form-group pull-right">
+                            <button class="btn btn-primary float-end" type="submit" name="add_user">Submit</button>
+                        </div>
                     </form>
                 </div>
             </div>
@@ -406,6 +402,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
 
     <script>
         $(document).ready(function() {
@@ -491,12 +488,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 });
             });
         });
-
     </script>
-
-    <!-- Bootstrap JS (optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
+     <script>
         const togglePasswordButton = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
 
@@ -507,7 +500,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
             togglePasswordButton.querySelector('i').classList.toggle('fa-eye-slash');
         });
     </script>
-
 
 
 </body>
