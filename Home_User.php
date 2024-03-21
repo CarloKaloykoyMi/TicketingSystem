@@ -127,7 +127,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                 </div>
                 <h3>
-                    <center>Overall Ticket List </center>
+                    <center>Overall Ticket Lis</center>
                 </h3>
                 <table id="example" class="table table-responsive hover table-bordered">
                     <thead class="table-light">
