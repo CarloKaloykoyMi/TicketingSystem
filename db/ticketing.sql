@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2024 at 06:44 AM
+-- Generation Time: Mar 25, 2024 at 06:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -123,7 +123,36 @@ INSERT INTO `audit_trail` (`at_id`, `user_id`, `Action`, `Date`) VALUES
 (82, 38, 'Logout', '2024-03-20 05:34:32'),
 (83, 36, 'Logged In', '2024-03-20 05:34:50'),
 (84, 36, 'Logout', '2024-03-20 05:37:17'),
-(85, 39, 'Logged In', '2024-03-20 05:37:44');
+(85, 39, 'Logged In', '2024-03-20 05:37:44'),
+(86, 39, 'Logout', '2024-03-20 06:11:02'),
+(87, 37, 'Logged In', '2024-03-20 06:12:30'),
+(88, 37, 'Logout', '2024-03-20 06:34:29'),
+(89, 39, 'Logged In', '2024-03-20 06:34:39'),
+(90, 39, 'Logout', '2024-03-20 06:57:47'),
+(91, 37, 'Logged In', '2024-03-20 06:57:52'),
+(92, 37, 'Logout', '2024-03-20 06:57:58'),
+(93, 39, 'Logged In', '2024-03-20 06:58:09'),
+(94, 37, 'Logged In', '2024-03-21 01:17:39'),
+(95, 39, 'Logged In', '2024-03-21 02:50:05'),
+(96, 37, 'Logged In', '2024-03-21 02:52:47'),
+(97, 37, 'Profile Picture Changed', '2024-03-21 03:02:14'),
+(98, 37, 'Logout', '2024-03-21 03:02:47'),
+(99, 39, 'Logged In', '2024-03-22 01:04:38'),
+(100, 37, 'Logged In', '2024-03-22 01:06:30'),
+(101, 39, 'Logged In', '2024-03-25 00:53:49'),
+(102, 39, 'Logout', '2024-03-25 00:54:23'),
+(103, 37, 'Logged In', '2024-03-25 00:55:26'),
+(104, 37, 'Logout', '2024-03-25 01:01:13'),
+(105, 35, 'Logged In', '2024-03-25 01:01:40'),
+(106, 35, 'Logout', '2024-03-25 01:03:27'),
+(107, 34, 'Logged In', '2024-03-25 01:03:58'),
+(108, 39, 'Logged In', '2024-03-25 01:08:18'),
+(109, 39, 'Logout', '2024-03-25 01:08:25'),
+(110, 37, 'Logged In', '2024-03-25 01:08:47'),
+(111, 37, 'Profile Picture Changed', '2024-03-25 01:15:46'),
+(112, 37, 'Logged In', '2024-03-25 01:57:52'),
+(113, 37, 'Logout', '2024-03-25 02:20:56'),
+(114, 37, 'Logged In', '2024-03-25 02:20:57');
 
 -- --------------------------------------------------------
 
@@ -190,19 +219,21 @@ CREATE TABLE `contact_us` (
   `last_name` varchar(50) NOT NULL,
   `phone` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `message` text NOT NULL
+  `message` text NOT NULL,
+  `created_at` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `contact_us`
 --
 
-INSERT INTO `contact_us` (`id`, `first_name`, `last_name`, `phone`, `email`, `message`) VALUES
-(1, 'kim', 'babas', '09261518139', 'babaskim09@gmail.com', 'testing testing'),
-(2, 'kyla marie', 'tamayo', '09773555302', 'kylamarietamayo@gmail.com', 'Can i ask questions?'),
-(3, 'mhargielyn ', 'mineque', '09773555302', 'mhargielyn.mineque@my.jru.edu', 'testing'),
-(4, 'John', 'Carlo', '09261518139', 'john@gmail.com', 'testing'),
-(5, 'norman jake', 'alain', '09773555302', 'normanjakealain@gmail.com', 'testing lang');
+INSERT INTO `contact_us` (`id`, `first_name`, `last_name`, `phone`, `email`, `message`, `created_at`) VALUES
+(1, 'kim', 'babas', '09261518139', 'babaskim09@gmail.com', 'testing testing', ''),
+(2, 'kyla marie', 'tamayo', '09773555302', 'kylamarietamayo@gmail.com', 'Can i ask questions?', ''),
+(3, 'mhargielyn ', 'mineque', '09773555302', 'mhargielyn.mineque@my.jru.edu', 'testing', ''),
+(4, 'John', 'Carlo', '09261518139', 'john@gmail.com', 'testing', ''),
+(5, 'norman jake', 'alain', '09773555302', 'normanjakealain@gmail.com', 'testing lang', ''),
+(6, 'Angelaaaaaaaaaa', 'iceee', '09232354555', 'mimasur@gmail.com', 'dsasds', '');
 
 -- --------------------------------------------------------
 
@@ -254,12 +285,8 @@ CREATE TABLE `file_attachment` (
 --
 
 INSERT INTO `file_attachment` (`file_id`, `user_id`, `ticket_id`, `file_name`) VALUES
-(1, 35, 2, 'aaaa.pdf'),
-(2, 35, 2, 'Capture.PNG'),
-(3, 34, 3, 'CamScanner 03-08-2024 16.22_6.jpg'),
-(4, 34, 4, 'CamScanner 03-08-2024 16.22_6.jpg'),
-(5, 35, 5, 'Screenshot (1).png'),
-(6, 35, 6, 'Screenshot (2).png');
+(21, 37, 15, 'example.pdf'),
+(22, 37, 15, 'example.docx');
 
 -- --------------------------------------------------------
 
@@ -286,12 +313,7 @@ CREATE TABLE `ticket` (
 --
 
 INSERT INTO `ticket` (`ticket_id`, `user_id`, `date`, `subject`, `to_company`, `requestor`, `concern`, `status`, `date_created`, `to_dept`, `email`) VALUES
-(1, 35, '2024-03-08 08:00:23.149807', 'example', 'Comfac Global Group', 'Mhargielyn Miñeque', 'lorem ipsum', 'Resolved', '2024-03-11 06:24:59', 'MIS-Department', ''),
-(2, 35, '2024-03-08 08:02:12.160295', 'exampleee', 'Comfac Technology Options (CTO)', 'Mhargielyn Miñeque', 'lorefaa', 'Pending', '2024-03-12 08:45:18', 'Management Info', ''),
-(3, 34, '2024-03-11 05:50:59.482337', 'example', 'Comfac Technology Options (CTO)', 'Kyla Andrea Tamayo', 'aaa', 'Unresolved', '2024-03-12 08:27:11', 'Accounting', ''),
-(4, 34, '2024-03-11 06:47:15.876799', 'ZZ', 'Comfac Global Group', 'Kyla Andrea Tamayo', 'AA', 'Resolved', '2024-03-12 07:39:12', 'Management Info', ''),
-(5, 35, '2024-03-12 08:53:03.868637', 'aaa', 'Comfac Global Group', 'Mhargielyn Miñeque', 'aaa', 'Pending', '2024-03-12 08:53:03', 'Accounting', ''),
-(6, 35, '2024-03-12 08:53:26.403573', 'aaa', 'Comfac Technology Options (CTO)', 'Mhargielyn Miñeque', 'aaa', 'Unresolved', '2024-03-12 08:54:56', 'Management Info', 'mhargielyn.mineque@my.jru.edu');
+(15, 37, '2024-03-25 02:22:04.828501', 'Change Docu', 'Cornersteel Systems Corporation', 'John Carlo Astoveza', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lectus magna, facilisis et scelerisque id, fermentum eu tellus. Pellentesque facilisis libero eget ligula volutpat, et gravida neque dictum. Sed id ullamcorper diam. Pellentesque luctus, nisl vel venenatis finibus, eros arcu maximus nisl, at euismod elit ipsum non magna. Aenean laoreet rutrum mi, ultricies varius enim lacinia sed. Maecenas tortor ante, varius at facilisis et, pulvinar ac nulla. Nulla vitae lacus at quam faucibus imperdiet. Praesent at congue orci, eget placerat mauris. Nulla facilisi. Nam varius elementum nunc quis elementum.', 'Pending', '2024-03-25 02:22:04', 'Accounting', 'laguinlinastovezajocar@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -306,17 +328,6 @@ CREATE TABLE `ticket_reply` (
   `reply` text NOT NULL,
   `Name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ticket_reply`
---
-
-INSERT INTO `ticket_reply` (`id`, `ticket_id`, `user_id`, `reply`, `Name`) VALUES
-(1, 3, 33, 'aaa', 'Kim Babas'),
-(2, 3, 33, 'aaa', 'Kim Babas'),
-(3, 2, 33, 'a', 'Kim Babas'),
-(4, 2, 34, 'ddd', 'Kyla Andrea Tamayo'),
-(5, 3, 34, 'yyy', 'Kyla Andrea Tamayo');
 
 -- --------------------------------------------------------
 
@@ -350,7 +361,7 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `middleinitial`, `compan
 (33, 'Babas', 'Kim', 'M', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'HR', 'regipelo@imagepoet.net', '09721515551', 'kimpoy', '@Qwerty123', 1, 1, '2024-03-08 07:21:30', 'user2.png'),
 (34, 'Tamayo', 'Kyla Andrea', 'A', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'Management Info', 'zoguqoma@citmo.net', '09714414211', 'kyang', '@Qwerty123', 1, 1, '2024-03-08 07:24:04', 'user2.png'),
 (35, 'Miñeque', 'Mhargielyn', 'D', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'Management Info', 'mhargielyn.mineque@my.jru.edu', '09165255651', 'mharg', '@Qwerty123', 1, 1, '2024-03-08 07:46:49', 'user2.png'),
-(37, 'Astoveza', 'John Carlo', 'L', 'Cornersteel Systems Corporation', 'Cabuyao', 'MIS-Department', 'laguinlinastovezajocar@gmail.com', '09773555302', 'Carlokaloykoy', '@Qwerty123', 1, 1, '2024-03-14 02:05:55', 'user2.png'),
+(37, 'Astoveza', 'John Carlo', 'L', 'Cornersteel Systems Corporation', 'Cabuyao', 'MIS-Department', 'laguinlinastovezajocar@gmail.com', '09773555302', 'Carlokaloykoy', '@Qwerty123', 1, 1, '2024-03-14 02:05:55', 'pexels-juan-gomez-2589650.jpg'),
 (39, 'Estrera', 'Evalyn Grace', 'P', 'Cornersteel Systems Corporation', 'Libertad', 'MIS-Department', 'estrera.evalyngrace@gmail.com', '09655662351', 'evagraceest', '@Qwerty123', 1, 0, '2024-03-20 05:37:00', 'user2.png');
 
 --
@@ -419,49 +430,49 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `audit_trail`
 --
 ALTER TABLE `audit_trail`
-  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
 
 --
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `contact_us`
 --
 ALTER TABLE `contact_us`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `file_attachment`
 --
 ALTER TABLE `file_attachment`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `ticket_reply`
 --
 ALTER TABLE `ticket_reply`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `user`
