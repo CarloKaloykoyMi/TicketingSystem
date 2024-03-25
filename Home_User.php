@@ -185,7 +185,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <h4 class="modal-title"><i class="fas fa-ticket"></i> Submit a Ticket</h4>
                         </div>
                         <div class="modal-body">
-                            <form action="crud.php" method="POST" enctype="multipart/form-data">
+                            <form id="ticket-form" action="crud.php" method="POST" enctype="multipart/form-data">
                                 <div class="form-group">
                                     <h5>
                                         <div class="sender">
@@ -303,6 +303,15 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         <div id="image-preview">
                                             <img id="preview-image" src="img/empty.png" height="200" alt="Image Preview">
                                         </div>
+
+                                        <!-- Spinner -->
+                                        <div id="loading-spinner" class="text-center d-none">
+                                            <div class="spinner-border text-primary" role="status">
+                                                <span class="visually-hidden">Submitting...</span>
+                                            </div>
+                                            <div>Submitting...</div>
+                                        </div>
+                                        <!-- End Spinner -->
                                     </div>
 
                                     <div class="modal-footer">
@@ -398,6 +407,14 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     ticketNumberSearch.value = ''; // Reset ticket number search
                     filterTickets(); // Apply filters after resetting
                 }
+            });
+        </script>
+        <script>
+            document.getElementById('ticket-form').addEventListener('submit', function() {
+                // Show spinner when form is submitted
+                document.getElementById('loading-spinner').classList.remove('d-none');
+                // Disable submit button to prevent multiple submissions
+                document.getElementById('submit-btn').setAttribute('disabled', 'true');
             });
         </script>
 
