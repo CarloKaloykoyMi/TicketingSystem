@@ -204,7 +204,7 @@ $reply_result = mysqli_query($con, $query);
                                                                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                                                                             </div>
                                                                                                             <div class="modal-body">
-                                                                                                                <form action="crud.php" method="POST">
+                                                                                                                <form id="status-form" action="crud.php" method="POST">
                                                                                                                     <label for="Status" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
                                                                                                                     <select id="Status" name="status" class="form-control" required>
                                                                                                                         <option value="" disabled>Select your Status</option>
@@ -217,13 +217,21 @@ $reply_result = mysqli_query($con, $query);
                                                                                                                         }
                                                                                                                         ?>
                                                                                                                     </select>
+
+                                                                                                                    <!-- Spinner -->
+                                                                                                                    <div id="loading-spinner" class="text-center d-none">
+                                                                                                                        <div class="spinner-border text-primary" role="status">
+                                                                                                                            <span class="visually-hidden">Submitting...</span>
+                                                                                                                        </div>
+                                                                                                                        <div>Submitting...</div>
+                                                                                                                    </div>
+                                                                                                                    <!-- End Spinner -->
+
                                                                                                                     <!-- Add the ticket_id input field -->
                                                                                                                     <input type="hidden" name="ticket_id" value="<?php echo $ticket_data['ticket_id']; ?>">
                                                                                                                     <input type="hidden" name="email" value="<?php echo $email; ?>">
 
                                                                                                                     <div class="modal-footer">
-
-                                                                                                                        <!-- Move the submit button inside the form -->
                                                                                                                         <button class="btn btn-primary float-end" type="submit" name="change_status">Save Changes</button>
                                                                                                                         <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                                                                                                                     </div>
@@ -293,7 +301,7 @@ $reply_result = mysqli_query($con, $query);
                                                                                                 Reply
                                                                                             </button>
 
-                                                                                            <!-- Modal -->
+                                                                                            <!-- Reply Modal -->
                                                                                             <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                                                                 <div class="modal-dialog">
                                                                                                     <div class="modal-content">
@@ -368,6 +376,14 @@ $reply_result = mysqli_query($con, $query);
                                                 function goBack() {
                                                     history.back();
                                                 }
+                                            </script>
+                                            <script>
+                                                document.getElementById('status-form').addEventListener('submit', function() {
+                                                    // Show spinner when form is submitted
+                                                    document.getElementById('loading-spinner').classList.remove('d-none');
+                                                    // Disable submit button to prevent multiple submissions
+                                                    document.getElementById('submit-btn').setAttribute('disabled', 'true');
+                                                });
                                             </script>
 
 </html>
