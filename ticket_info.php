@@ -259,13 +259,15 @@ $reply_result = mysqli_query($con, $query);
 
                                                                                                     // Check if the file name is an image
                                                                                                     if (preg_match('/\.(jpg|jpeg|png|gif)$/i', $item['file_name'])) {
-                                                                                                        $teDate= $ticket_data['date'];
+                                                                                                        $teDate = $ticket_data['date'];
                                                                                                         $formatted_date = date("F d, Y", strtotime($teDate));
                                                                                                         echo '<img src="ticket_files/ticket_' . $ticket_id . '_' . $ticket_data['requestor'] . '_' . $formatted_date . '/' . $item['file_name'] . '" alt="Image Attachment" style="width:100%; height:250">';
                                                                                                     } else {
                                                                                                         // Check if the file name is a document
                                                                                                         if (preg_match('/\.(doc|docx|pdf)$/i', $item['file_name'])) {
-                                                                                                            echo '<a href="ticket_files/' . $item['file_name'] . '" download="' . $item['file_name'] . '">Document Attachment: ' . $item['file_name'] . '</a>';
+                                                                                                            $teDate = $ticket_data['date']; // Ensure $teDate is defined
+                                                                                                            $formatted_date = date("F d, Y", strtotime($teDate)); // Define $formatted_date
+                                                                                                            echo '<a href="ticket_files/ticket_' . $ticket_id . '_' . $ticket_data['requestor'] . '_' . $formatted_date . '/' . $item['file_name'] . '" download="' . $item['file_name'] . '">Document Attachment: ' . $item['file_name'] . '</a>';
                                                                                                         } else {
                                                                                                             // If neither image nor document, just display the file name
                                                                                                             echo 'Attachment: ' . $item['file_name'] . ' goes here';
@@ -276,6 +278,8 @@ $reply_result = mysqli_query($con, $query);
                                                                                                 }
                                                                                             }
                                                                                             ?>
+
+
 
                                                                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 198px; right: 10px;">
                                                                                                 Reply
