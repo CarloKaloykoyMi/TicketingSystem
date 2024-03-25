@@ -57,6 +57,14 @@ $reply_result = mysqli_query($con, $query);
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <!-- Include the Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+
+    <!-- Include jQuery (required) and Lightbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+
+
     <title>User Ticket Info</title>
 </head>
 <style>
@@ -261,7 +269,9 @@ $reply_result = mysqli_query($con, $query);
                                                                                                     if (preg_match('/\.(jpg|jpeg|png|gif)$/i', $item['file_name'])) {
                                                                                                         $teDate = $ticket_data['date'];
                                                                                                         $formatted_date = date("F d, Y", strtotime($teDate));
+                                                                                                        echo '<a href="ticket_files/ticket_' . $ticket_id . '_' . $ticket_data['requestor'] . '_' . $formatted_date . '/' . $item['file_name'] . '" data-lightbox="image">';
                                                                                                         echo '<img src="ticket_files/ticket_' . $ticket_id . '_' . $ticket_data['requestor'] . '_' . $formatted_date . '/' . $item['file_name'] . '" alt="Image Attachment" style="width:100%; height:250">';
+                                                                                                        echo '</a>';
                                                                                                     } else {
                                                                                                         // Check if the file name is a document
                                                                                                         if (preg_match('/\.(doc|docx|pdf)$/i', $item['file_name'])) {
@@ -278,8 +288,6 @@ $reply_result = mysqli_query($con, $query);
                                                                                                 }
                                                                                             }
                                                                                             ?>
-
-
 
                                                                                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 198px; right: 10px;">
                                                                                                 Reply
