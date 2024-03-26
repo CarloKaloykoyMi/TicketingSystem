@@ -193,6 +193,36 @@ $reply_result = mysqli_query($con, $query);
                                                                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 10px;">
                                                                                                     Update Status
                                                                                                 </button>
+                                                                                                <!-- Delete Button (visible only if status is "Cancelled") -->
+                                                                                                <?php if ($status == 'Cancelled') : ?>
+                                                                                                    <form id="deleteForm" action="crud.php" method="POST" style="display: inline;">
+                                                                                                        <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
+                                                                                                        <button type="button" class="btn btn-danger" style="padding: 5px 10px; font-size: 10px;" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Delete Ticket</button>
+                                                                                                    </form>
+
+                                                                                                    <!-- Confirm Delete Modal -->
+                                                                                                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                                                                                        <div class="modal-dialog">
+                                                                                                            <div class="modal-content">
+                                                                                                                <div class="modal-header">
+                                                                                                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                                                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                                </div>
+                                                                                                                <div class="modal-body">
+                                                                                                                    <form action="crud.php" method="POST">
+                                                                                                                        <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
+                                                                                                                        Are you sure you want to delete this ticket?
+                                                                                                                        </div>
+                                                                                                                    <div class="modal-footer">
+                                                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                                                                                    <button type="submit" name="delete_ticket" class="btn btn-danger">Delete</button>
+                                                                                                                    </div>
+                                                                                                                </form>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                <?php endif; ?>
+
                                                                                                 <br>
 
                                                                                                 <!-- Modal -->

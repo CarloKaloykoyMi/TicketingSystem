@@ -83,24 +83,22 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     } else {
         echo '<script>alert("Error submitting ticket. Please try again.");</script>';
     }
-
-    
 } else if (isset($_POST['add_reply'])) { // Check if the form is submitted
-    if(empty($_POST['reply'])){ // Check if the reply is empty
+    if (empty($_POST['reply'])) { // Check if the reply is empty
         $ticket_id = $_POST['ticket_id']; // Retrieve the ticket_id from the input tag
         echo '<script>alert("Empty Reply. Please try again.");</script>';
         echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '"</script>'; // Redirect to the ticket_info page
-    }else{ 
-        $reply = $_POST['reply']; 
+    } else {
+        $reply = $_POST['reply'];
         $ticket_id = $_POST['ticket_id'];
         $userid = $_POST['userid'];
         $name = $_POST['sender'];
-    
+
         // Insert the reply into the ticket_reply table
         $insert_reply = "INSERT INTO ticket_reply (reply, ticket_id,user_id,Name) 
         VALUES ('$reply', '$ticket_id','$userid', '$name')";
         $insert_reply_run = mysqli_query($con, $insert_reply);
-    
+
         if ($insert_reply_run) {
             echo '<script>alert("Reply added.");</script>';
             echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '"</script>';
@@ -138,12 +136,11 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         $msg = "There was a problem uploading Image";
     }
 
-    $action ='Profile Picture Changed'; // Set the action for the audit trail
-    $sql="INSERT INTO audit_trail (user_id,action) VALUES('$user_id','$action');"; // Insert the action into the audit trail table
-    $atrun= mysqli_query($con,$sql);
+    $action = 'Profile Picture Changed'; // Set the action for the audit trail
+    $sql = "INSERT INTO audit_trail (user_id,action) VALUES('$user_id','$action');"; // Insert the action into the audit trail table
+    $atrun = mysqli_query($con, $sql);
     echo "<script> location.href='User_Profile.php'; </script>";
-    
-} elseif (isset($_POST['saveChanges'])) { 
+} elseif (isset($_POST['saveChanges'])) {
     $userid = $_POST['userid'];
     $fn = $_POST['firstName'];
     $mI = $_POST['middleInitial'];
@@ -231,32 +228,50 @@ else if (isset($_POST['change_status'])) {
         // PHP code failed to execute
         echo '<script>alert("Error updating ticket status. Please try again.");</script>';
     }
+} else if (isset($_POST['delete_ticket'])) {
+    session_start(); // Start the session to access session variables
 
+    
+    if ($_SESSION['user_id'] == $userid) { 
+        $ticket_id = $_POST['ticket_id'];
 
-}else if(isset($_POST['ChangePassword'])){
-        $user_id=$_POST['userid'];
-        $oldpass=$_POST['password'];
-        $newpass=$_POST['newpassword'];
-        $connewpass=$_POST['renewpassword'];
+        // Perform the deletion only if the user is the requestor
+        $sql = "DELETE FROM ticket WHERE ticket_id='$ticket_id';";
+        $run = mysqli_query($con, $sql);
 
-        $sql="SELECT * FROM user WHERE password = '$oldpass' AND user_id='$user_id';";
-        $result = mysqli_query($con,$sql);
-
-        if (mysqli_num_rows($result) > 0) {
-            if($newpass <> $connewpass){
-                echo "<script>alert('Errorrr')</script>";
-                echo '<script>window.location.href = "User_Profile.php"</script>';
-            }else{
-                $Usql="UPDATE USER SET password = '$newpass' WHERE password = '$oldpass' AND user_id='$user_id';";
-                $Uresult = mysqli_query($con,$Usql);
-                echo "<script>alert('Password:Change Successfully')</script>";
-                echo '<script>window.location.href = "User_Profile.php"</script>'; 
-            }
-        }else{
-            echo "<script>alert('Wrong Current Password!')</script>";
-            echo '<script>window.location.href = "User_Profile.php"</script>';
-
+        if ($run) {
+            echo '<script>alert("Ticket Deleted.");</script>';
+            echo '<script>window.location.href = "home_user.php";</script>';
+            exit();
+        } else {
+            // PHP code failed to execute
+            echo '<script>alert("Error deleting ticket. Please try again.");</script>';
         }
-        
+    } else {
+        // If the user is not the requestor, display an error message
+        echo '<script>alert("You are not authorized to delete this ticket.");</script>';
+    }
+} else if (isset($_POST['ChangePassword'])) {
+    $user_id = $_POST['userid'];
+    $oldpass = $_POST['password'];
+    $newpass = $_POST['newpassword'];
+    $connewpass = $_POST['renewpassword'];
 
+    $sql = "SELECT * FROM user WHERE password = '$oldpass' AND user_id='$user_id';";
+    $result = mysqli_query($con, $sql);
+
+    if (mysqli_num_rows($result) > 0) {
+        if ($newpass <> $connewpass) {
+            echo "<script>alert('Errorrr')</script>";
+            echo '<script>window.location.href = "User_Profile.php"</script>';
+        } else {
+            $Usql = "UPDATE USER SET password = '$newpass' WHERE password = '$oldpass' AND user_id='$user_id';";
+            $Uresult = mysqli_query($con, $Usql);
+            echo "<script>alert('Password:Change Successfully')</script>";
+            echo '<script>window.location.href = "User_Profile.php"</script>';
+        }
+    } else {
+        echo "<script>alert('Wrong Current Password!')</script>";
+        echo '<script>window.location.href = "User_Profile.php"</script>';
+    }
 }
