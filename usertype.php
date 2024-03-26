@@ -118,7 +118,7 @@
             <a href="emplogin.php" class="btn btn-primary">
                 <div class="button-option">
                     <img src="img/user2.png" alt="Staff Individual User">
-                    Employee
+                    User
                 </div>
             </a>
         </div>

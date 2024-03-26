@@ -203,16 +203,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </div>
                                 </div>
                                 <br>
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <span class="icon-container">
-                                            <i class="fa-solid fa-file"></i>
-                                        </span>
-                                        <label for="subject" class="sr-only">Subject</label>
-                                        <input type="text" class="form-control" name="subject" placeholder="Subject" required>
-                                    </div>
-                                </div>
-                                <br>
 
                                 <div class="input-group">
                                     <span class="icon-container">
@@ -236,6 +226,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     <div class="sender">
                                         RECEIVER:
                                     </div>
+
                                     <div class="input-group">
                                         <span class="icon-container">
                                             <i class="fa-solid fa-building"></i>
@@ -279,14 +270,26 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             ?>
                                         </select>
                                     </div>
+                                    <div class="form-group">
+                                    <div class="sender">
+                                        SUBJECT:
+                                    </div>
+                                        <div class="input-group">
+                                            <span class="icon-container">
+                                                <i class="fa-solid fa-file"></i>
+                                            </span>
+                                            <label for="subject" class="sr-only">Subject</label>
+                                            <input type="text" class="form-control" name="subject" placeholder="Subject" required>
+                                        </div>
+                                    </div>
                                     <br>
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="icon-container">
                                                 <i class="fa-solid fa-comment-alt"></i>
                                             </span>
-                                            <label for="concerns" class="sr-only">Concerns/Questions/Inquiries:</label>
-                                            <textarea class="form-control" name="concern" rows="4" placeholder="Concerns" required></textarea>
+                                            <label for="concerns" class="sr-only">Details</label>
+                                            <textarea class="form-control" name="concern" rows="4" placeholder="Details" required></textarea>
                                         </div>
                                     </div>
                                     <br>
@@ -300,6 +303,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             <label for="file" class="sr-only">Attach File:</label>
                                             <input type="file" id="example-fileinput" class="form-control" name="files[]" multiple>
                                         </div>
+                                        <br>
                                         <div id="image-preview">
                                             <img id="preview-image" src="img/empty.png" height="200" alt="Image Preview">
                                         </div>
