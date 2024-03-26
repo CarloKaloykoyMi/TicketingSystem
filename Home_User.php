@@ -116,6 +116,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <option value="">Filter by Status</option>
                             <option value="Pending">Pending</option>
                             <option value="Resolved">Resolved</option>
+                            <option value="Unresolved">Unresolved</option>
                             <option value="Cancelled">Cancelled</option>
                         </select>
                     </div>
@@ -393,12 +394,16 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         const ticketID = ticket.querySelector('td:first-child').textContent.toLowerCase();
                         const requestor = ticket.querySelector('td:nth-child(2)').textContent.toLowerCase();
                         const department = ticket.querySelector('td:nth-child(3)').textContent.toLowerCase();
-                        const status = ticket.querySelector('td:nth-child(5)').textContent.toLowerCase();
+                        const status = ticket.querySelector('td:nth-child(5) span').textContent.toLowerCase(); // Modified to select only the text content within <span>
 
-                        const shouldShow = ticketID.includes(ticketNumberValue) &&
+                        let shouldShow = ticketID.includes(ticketNumberValue) &&
                             requestor.includes(requestorValue) &&
-                            department.includes(departmentValue) &&
-                            status.includes(statusValue);
+                            department.includes(departmentValue);
+
+                        // Check if status matches selected status or if no status is selected
+                        if (statusValue !== '' && status !== statusValue) {
+                            shouldShow = false;
+                        }
 
                         ticket.style.display = shouldShow ? 'table-row' : 'none';
                     });
