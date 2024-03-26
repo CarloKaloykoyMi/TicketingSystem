@@ -297,9 +297,11 @@ $reply_result = mysqli_query($con, $query);
                                                                                             }
                                                                                             ?>
 
-                                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 198px; right: 10px;">
+                                                                                            <!-- Reply Button -->
+                                                                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" style="position: absolute; top: 198px; right: 10px;" <?php echo ($status == 'Cancelled') ? 'disabled' : ''; ?>>
                                                                                                 Reply
                                                                                             </button>
+
 
                                                                                             <!-- Reply Modal -->
                                                                                             <div class="modal fade" id="replyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
