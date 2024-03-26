@@ -17,6 +17,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $fname = $_SESSION['auth_user']['firstname'];
     $userid1 = $_SESSION['userid'];
     $email = $_SESSION['auth_user']['email'];
+    $requestor = $fname . " " . $lname;
+
 }
 
 if (isset($_GET['ticket_id'])) {
@@ -210,13 +212,14 @@ $reply_result = mysqli_query($con, $query);
                                                                                                                 </div>
                                                                                                                 <div class="modal-body">
                                                                                                                     <form action="crud.php" method="POST">
+                                                                                                                        <input type="hidden" class="form-control" name="requestor" placeholder="Requestor" value="<?php echo $requestor ?>">
                                                                                                                         <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
                                                                                                                         Are you sure you want to delete this ticket?
-                                                                                                                        </div>
-                                                                                                                    <div class="modal-footer">
+                                                                                                                </div>
+                                                                                                                <div class="modal-footer">
                                                                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                                                                                     <button type="submit" name="delete_ticket" class="btn btn-danger">Delete</button>
-                                                                                                                    </div>
+                                                                                                                </div>
                                                                                                                 </form>
                                                                                                             </div>
                                                                                                         </div>

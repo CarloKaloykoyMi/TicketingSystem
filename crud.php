@@ -229,27 +229,44 @@ else if (isset($_POST['change_status'])) {
         echo '<script>alert("Error updating ticket status. Please try again.");</script>';
     }
 } else if (isset($_POST['delete_ticket'])) {
-    session_start(); // Start the session to access session variables
+    $ticket_id = $_POST['ticket_id'];
+    $requestor = $_POST['requestor'];
 
-    
-    if ($_SESSION['user_id'] == $userid) { 
-        $ticket_id = $_POST['ticket_id'];
+    // Fetch requestor name from the ticket
+    $sql = "SELECT requestor FROM ticket WHERE ticket_id = ?";
+    $stmt = mysqli_prepare($con, $sql);
 
-        // Perform the deletion only if the user is the requestor
-        $sql = "DELETE FROM ticket WHERE ticket_id='$ticket_id';";
-        $run = mysqli_query($con, $sql);
+    if (!$stmt) {
+        die('Error in preparing SQL query: ' . mysqli_error($con));
+    }
 
-        if ($run) {
-            echo '<script>alert("Ticket Deleted.");</script>';
-            echo '<script>window.location.href = "home_user.php";</script>';
-            exit();
-        } else {
-            // PHP code failed to execute
-            echo '<script>alert("Error deleting ticket. Please try again.");</script>';
+    mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $db_requestor);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    // Check if the requestor matches the currently authenticated user
+    if ($db_requestor === $requestor) {
+        // Delete the ticket
+        $sql_delete = "DELETE FROM ticket WHERE ticket_id = ?";
+        $stmt_delete = mysqli_prepare($con, $sql_delete);
+
+        if (!$stmt_delete) {
+            die('Error in preparing SQL query: ' . mysqli_error($con));
         }
+
+        mysqli_stmt_bind_param($stmt_delete, "i", $ticket_id);
+        mysqli_stmt_execute($stmt_delete);
+        mysqli_stmt_close($stmt_delete);
+
+        echo '<script>alert("Ticket Deleted.");</script>';
+        echo '<script>window.location.href = "home_user.php";</script>';
+        exit();
     } else {
-        // If the user is not the requestor, display an error message
+        // Unauthorized access
         echo '<script>alert("You are not authorized to delete this ticket.");</script>';
+        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
     }
 } else if (isset($_POST['ChangePassword'])) {
     $user_id = $_POST['userid'];
