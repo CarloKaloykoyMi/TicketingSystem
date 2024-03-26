@@ -268,7 +268,49 @@ else if (isset($_POST['change_status'])) {
         echo '<script>alert("You are not authorized to delete this ticket.");</script>';
         echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
     }
-} else if (isset($_POST['ChangePassword'])) {
+    
+} else if  (isset($_POST['cancel_ticket'])) {
+    $ticket_id = $_POST['ticket_id'];
+    $requestor = $_POST['requestor'];
+
+    // Fetch requestor name from the ticket
+    $sql = "SELECT requestor FROM ticket WHERE ticket_id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+
+    if (!$stmt) {
+        die('Error in preparing SQL query: ' . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $db_requestor);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    // Check if the requestor matches the currently authenticated user
+    if ($db_requestor === $requestor) {
+        // Update the ticket status to 'cancelled'
+        $sql_update = "UPDATE ticket SET status = 'Cancelled' WHERE ticket_id = ?";
+        $stmt_update = mysqli_prepare($con, $sql_update);
+
+        if (!$stmt_update) {
+            die('Error in preparing SQL query: ' . mysqli_error($con));
+        }
+
+        mysqli_stmt_bind_param($stmt_update, "i", $ticket_id);
+        mysqli_stmt_execute($stmt_update);
+        mysqli_stmt_close($stmt_update);
+
+        echo '<script>alert("Ticket Cancelled.");</script>';
+        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
+        exit();
+    } else {
+        // Unauthorized access
+        echo '<script>alert("You are not authorized to cancel this ticket.");</script>';
+        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
+    }
+}
+else if (isset($_POST['ChangePassword'])) {
     $user_id = $_POST['userid'];
     $oldpass = $_POST['password'];
     $newpass = $_POST['newpassword'];

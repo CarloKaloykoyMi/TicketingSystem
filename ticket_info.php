@@ -18,7 +18,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $userid1 = $_SESSION['userid'];
     $email = $_SESSION['auth_user']['email'];
     $requestor = $fname . " " . $lname;
-
 }
 
 if (isset($_GET['ticket_id'])) {
@@ -156,6 +155,10 @@ $reply_result = mysqli_query($con, $query);
                                     <div class="card">
                                         <div class="card-header">
                                             <h4 style="color: black;"><i class="fas fa-ticket"></i> Tickets </h4>
+                                            <form action="crud.php" method="POST" style="display: inline;">
+                                                <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
+                                                <button type="button" class="btn btn-danger" style="position: absolute; top: 5px; right: 15px;" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel Ticket</button>
+                                            </form>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
@@ -173,6 +176,29 @@ $reply_result = mysqli_query($con, $query);
                                                                                             <div>
                                                                                                 <div class="text-right">
                                                                                                     <a href="Home_User.php" class="btn btn-secondary mb-3" style="position: absolute; top: 5px; right: 15px;">Go Back</a>
+
+                                                                                                    <div class="modal fade" id="cancelModal" tabindex="-1" aria-labelledby="cancelModalLabel" aria-hidden="true">
+                                                                                                        <div class="modal-dialog">
+                                                                                                            <div class="modal-content">
+                                                                                                                <div class="modal-header">
+                                                                                                                    <h5 class="modal-title" id="cancelModalLabel">Confirm Cancel</h5>
+                                                                                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                                                                </div>
+                                                                                                                <div class="modal-body">
+                                                                                                                    <form action="crud.php" method="POST">
+                                                                                                                        <input type="hidden" class="form-control" name="requestor" placeholder="Requestor" value="<?php echo $requestor ?>">
+                                                                                                                        <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
+                                                                                                                        Are you sure you want to cancel this ticket?
+                                                                                                                </div>
+                                                                                                                <div class="modal-footer">
+                                                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLose</button>
+                                                                                                                    <button type="submit" name="cancel_ticket" class="btn btn-danger">Confirm</button>
+                                                                                                                </div>
+                                                                                                                </form>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+
                                                                                                 </div>
                                                                                                 <span class="number pull-right"><strong>Ticket #<?php echo $ticket_data['ticket_id']; ?></strong></span> <br>
                                                                                                 <span class="number pull-right"><b>Status:
@@ -243,7 +269,7 @@ $reply_result = mysqli_query($con, $query);
                                                                                                                         <option value="" disabled>Select your Status</option>
                                                                                                                         <?php
                                                                                                                         $currentStatus = $ticket_data['status'];
-                                                                                                                        $statusOptions = array("Pending", "Unresolved", "Resolved", "Cancelled");
+                                                                                                                        $statusOptions = array("Pending", "Unresolved", "Resolved");
                                                                                                                         foreach ($statusOptions as $option) {
                                                                                                                             $selected = ($option == $currentStatus) ? 'selected' : '';
                                                                                                                             echo "<option value=\"$option\" $selected>$option</option>";
