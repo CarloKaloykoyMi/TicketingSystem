@@ -7,6 +7,7 @@ if (isset($_POST['register'])) { // check if the form has been submitted
     $lastName = $_POST['lastName'];
     $firstName = $_POST['firstName'];
     $middleinitial = $_POST['middleinitial'];
+    $suffix = $_POST['suffix'];
     $company = $_POST['company'];
     $branch = $_POST['branch'];
     $department = $_POST['department'];
@@ -31,8 +32,8 @@ if (isset($_POST['register'])) { // check if the form has been submitted
         } else {
             $verification_status = 0; // Set the verification status to 0
             // Insert the data into the database
-            $query = mysqli_query($con, "INSERT INTO user (lastName,firstName,middleinitial,company,branch,department,email,contact,username,password,verification_status,role) 
-            VALUES('$lastName','$firstName','$middleinitial','$company','$branch','$department','$email','$contact','$username','$password','$verification_status','1')");
+            $query = mysqli_query($con, "INSERT INTO user (lastName,firstName,middleinitial,suffix,company,branch,department,email,contact,username,password,verification_status,role) 
+            VALUES('$lastName','$firstName','$middleinitial','$suffix','$company','$branch','$department','$email','$contact','$username','$password','$verification_status','1')");
 
             if ($query) {
                 $otp = rand(100000, 999999); // Generate a random 6 digit number

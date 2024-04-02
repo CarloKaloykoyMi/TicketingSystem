@@ -145,6 +145,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     $fn = $_POST['firstName'];
     $mI = $_POST['middleInitial'];
     $ln = $_POST['lastName'];
+    $suffix = $_POST['suffix'];
     $company = $_POST['company'];
     $branch = isset($_POST['branch']) ? $_POST['branch'] : ''; // Check if branch is set, if not, set it to empty
     $department = $_POST['department'];
@@ -153,7 +154,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     // Check if branch is not empty before including it in the SQL update
     $branchUpdate = !empty($branch) ? "`branch`='$branch'," : '';
 
-    $sql = "UPDATE `user` SET `lastname`='$ln',`firstname`='$fn',`middleinitial`='$mI',`company`='$company',
+    $sql = "UPDATE `user` SET `lastname`='$ln',`firstname`='$fn',`middleinitial`='$mI',`suffix`='$suffix',`company`='$company',
     $branchUpdate `department`='$department',`contact`='$phone' WHERE `user_id` = '$userid'; ";
 
     $run =  mysqli_query($con, $sql);

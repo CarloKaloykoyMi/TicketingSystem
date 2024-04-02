@@ -26,6 +26,7 @@ while ($row = mysqli_fetch_array($result)) {
     $ml = $row['middleinitial'];
     $ln = $row['lastname'];
     $name = $fn . " " . ($ml ? $ml . ". " : "") . $ln; // check if middle initial is not empty, if not, include it in the name
+    $suffix = $row['suffix'];
     $company = $row['company'];
     $branch = $row['branch'];
     $department = $row['department'];
@@ -200,6 +201,11 @@ $atresult = mysqli_query($con, $atsql);
                                             </div>
 
                                             <div class="row">
+                                                <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> Suffix:</div>
+                                                <div class="col-lg-3 col-md-5"><?php echo $suffix ?></div>
+                                            </div>
+
+                                            <div class="row">
                                                 <div class="col-lg-4 col-md-5 label"><i class="fas fa-building"></i> Company:</div>
                                                 <div class="col-lg-3 col-md-5"><?php echo $company ?></div>
                                             </div>
@@ -237,7 +243,7 @@ $atresult = mysqli_query($con, $atsql);
                                                 <div class="row mb-3">
                                                     <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-user"></i> First Name</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="firstName" type="text" class="form-control" id="fullName" value="<?php echo $fn ?>">
+                                                        <input name="firstName" type="text" class="form-control" id="fullName" value="<?php echo $fn ?>" required>
                                                         <input type="hidden" name="userid" value="<?= $userid ?>">
                                                     </div>
                                                 </div>
@@ -250,7 +256,13 @@ $atresult = mysqli_query($con, $atsql);
                                                 <div class="row mb-3">
                                                     <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-user"></i> Last Name</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="lastName" type="text" class="form-control" id="fullName" value="<?php echo $ln ?>">
+                                                        <input name="lastName" type="text" class="form-control" id="fullName" value="<?php echo $ln ?>" required>
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
+                                                    <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-user"></i> Suffix</label>
+                                                    <div class="col-md-8 col-lg-8">
+                                                        <input name="suffix" type="text" class="form-control" value="<?php echo $suffix ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">

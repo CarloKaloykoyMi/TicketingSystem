@@ -112,12 +112,29 @@
                         <span class="note" style="display: none; color: red;">Please enter letters only.</span>
                     </div>
 
-                    <div class="col-md-4 mt-2">
+                    <div class="col-md-2 mt-2">
                         <label for="middlename" class="form-label"> <i class="fas fa-user"></i> Middle Initial</label>
-                        <input class="form-control" type="text" name="middleinitial" id="middleNameInput" placeholder="Enter your Middle Initial (Optional)" oninput="restrictToLettersWithSingleSpace(this)" maxlength="2">
+                        <input class="form-control" type="text" name="middleinitial" id="middleNameInput" placeholder="Optional" oninput="restrictToLettersWithSingleSpace(this)" maxlength="2">
                         <span class=" note" style="display: none; color: red;">Please enter letters only.</span>
-
                     </div>
+
+                    <div class="col-md-2 mt-2">
+                        <label for="suffix" class="form-label"> <i class="fas fa-user"></i> Suffix</label>
+                        <input class="form-control" type="text" name="suffix" id="suffixInput" placeholder="Optional" oninput="restrictToLettersWithSingleSpace(this)" maxlength="2">
+                        <span class=" note" style="display: none; color: red;">Please enter letters only.</span>
+                    </div>
+
+                    <!-- <div class="col-md-2 mt-2">
+                        <label for="suffix" class="form-label"><i class="fas fa-user"></i> Suffix</label>
+                        <select class="form-select" name="suffix" id="suffix">
+                            <option value="">Select Suffix</option>
+                            <option value="Jr.">Jr.</option>
+                            <option value="Sr.">Sr.</option>
+                            <option value="I">I</option>
+                            <option value="II">II</option>
+                            <option value="III">III</option>
+                        </select>
+                    </div> -->
 
                     <div class="col-md-4 mt-2">
                         <label for="company" class="form-label"><i class="fa-solid fa-building"></i> Company</label>
