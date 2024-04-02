@@ -96,27 +96,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                     </td>
                                                 </tr>
 
-                                                <div class="modal fade" id="companyDepartmentModal<?= $item['id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header">
-                                                                <h5 class="modal-title" id="exampleModalLabel">Delete Department</h5>
-                                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                            </div>
-                                                            <div class="modal-body">
-                                                                Are you sure you want to delete this Company?
-                                                            </div>
-                                                            <div class="modal-footer">
-                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <form action="code.php" method="POST">
-                                                                    <input type="hidden" name="company_id" value="<?= $item['id']; ?>">
-                                                                    <button type="submit" class="btn btn-danger" name="delete_company">Delete</button>
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-
                                                 <!-- Edit User Modal -->
                                                 <div class="modal fade" id="editUserModal<?= $item['user_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -132,12 +111,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                     <div class="col-md-12 mt-3">
                                                                         <label for=""><i class="fas fa-user"></i> Last Name</label>
-                                                                        <input type="text" name="lastname" value="<?= $item['lastname']; ?>" class="form-control">
+                                                                        <input type="text" name="lastname" value="<?= $item['lastname']; ?>" class="form-control" required>
                                                                     </div>
 
                                                                     <div class="col-md-12 mt-3">
                                                                         <label for=""><i class="fas fa-user"></i> First Name</label>
-                                                                        <input type="text" name="firstname" value="<?= $item['firstname']; ?>" class="form-control">
+                                                                        <input type="text" name="firstname" value="<?= $item['firstname']; ?>" class="form-control" required>
                                                                     </div>
 
                                                                     <div class="col-md-12 mt-3">
@@ -171,11 +150,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                             }
                                                                             ?>
                                                                         </select>
-                                                                    </div>
-
-                                                                    <div class="col-md-12 mt-3">
-                                                                        <label for=""><i class="fas fa-envelope"></i> Email</label>
-                                                                        <input type="email" name="email" value="<?= $item['email']; ?>" class="form-control" disabled>
                                                                     </div>
 
                                                                     <!-- Add other form fields for editing as needed -->
@@ -252,6 +226,17 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 </span>
                                 <label for="" class="sr-only">Middle Initial</label>
                                 <input type="text" name="middleinitial" id="middleNameInput" placeholder="Enter Middle Initial" class="form-control">
+                                <span class=" note" style="display: none; color: red;">Please enter letters only.</span>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <div class="input-group">
+                                <span class="input-group-prepend">
+                                    <i class="fas fa-user input-group-text"></i>
+                                </span>
+                                <label for="" class="sr-only">Suffix</label>
+                                <input type="text" name="suffix" placeholder="Enter Suffix" class="form-control">
                                 <span class=" note" style="display: none; color: red;">Please enter letters only.</span>
                             </div>
                         </div>

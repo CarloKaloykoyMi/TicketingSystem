@@ -148,12 +148,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fas fa-user"></i> Department Head</label>
-                                                                    <input type="text" name="department_head" value="<?= $item['department_head']; ?>" class="form-control">
+                                                                    <input type="text" name="department_head" value="<?= $item['department_head']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fa-solid fa-location-dot"></i> Location</label>
-                                                                    <input type="text" name="location" value="<?= $item['location']; ?>" class="form-control">
+                                                                    <input type="text" name="location" value="<?= $item['location']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <!-- Add other form fields for editing as needed -->

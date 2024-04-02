@@ -146,22 +146,23 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fas fa-building"></i> Branch Name</label>
-                                                                    <input type="text" name="branch_name" value="<?= $item['branch_name']; ?>" class="form-control">
+                                                                    <input type="text" name="branch_name" value="<?= $item['branch_name']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fa-solid fa-location-dot"></i> Branch Address</label>
-                                                                    <input type="text" name="branch_address" value="<?= $item['branch_address']; ?>" class="form-control">
+                                                                    <input type="text" name="branch_address" value="<?= $item['branch_address']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
-                                                                    <input type="text" name="contact" value="<?= $item['contact']; ?>" class="form-control">
+                                                                    <input type="text" name="contact" value="<?= $item['contact']; ?>" class="form-control" oninput="restrictToNumbers(this)" required>
+                                                                    <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fas fa-envelope"></i> Email</label>
-                                                                    <input type="email" name="email" value="<?= $item['email']; ?>" class="form-control">
+                                                                    <input type="email" name="email" value="<?= $item['email']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <!-- Add other form fields for editing as needed -->
@@ -235,7 +236,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                         <div class="col-md-12 mt-3">
                             <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
-                            <input type="text" name="contact" placeholder="Enter Contact" class="form-control" required>
+                            <input type="text" name="contact" placeholder="Enter Contact" class="form-control" oninput="restrictToNumbers(this)" required>
+                            <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                         </div>
 
                         <div class="col-md-12 mt-3">
@@ -255,6 +257,22 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
+
+    <script>
+        function restrictToNumbers(input) {
+            var phoneNumberNote = input.parentNode.querySelector('.note');
+            var inputValue = input.value;
+            var numbersOnly = inputValue.replace(/[^0-9]/g, '').slice(0, 11);
+
+            if (inputValue !== numbersOnly || inputValue.length !== 11) {
+                phoneNumberNote.style.display = 'block';
+            } else {
+                phoneNumberNote.style.display = 'none';
+            }
+
+            input.value = numbersOnly;
+        }
+    </script>
 </body>
 
 </html>

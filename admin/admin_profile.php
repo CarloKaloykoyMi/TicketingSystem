@@ -233,20 +233,23 @@ $atresult = mysqli_query($con, $atsql);
                                                 <div class="row mb-3">
                                                     <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-user"></i> First Name</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="firstName" type="text" class="form-control" id="fullName" value="<?php echo $fn ?>">
+                                                        <input name="firstName" type="text" class="form-control" id="fullName" value="<?php echo $fn ?>" oninput="restrictToLettersWithSingleSpace(this)" required>
+                                                        <span class="note" style="display: none; color: red; font-size: 13px;">Please enter letters only.</span>
                                                         <input type="hidden" name="userid" value="<?= $user_id ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
                                                     <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-user"></i> Middle Initial</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="middleInitial" type="text" class="form-control" id="fullName" value="<?php echo $ml ?>">
+                                                        <input name="middleInitial" type="text" class="form-control" id="fullName" value="<?php echo $ml ?>" oninput="restrictToLettersWithSingleSpace(this)">
+                                                        <span class="note" style="display: none; color: red; font-size: 13px;">Please enter letters only.</span>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
                                                     <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-user"></i> Last Name</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="lastName" type="text" class="form-control" id="fullName" value="<?php echo $ln ?>">
+                                                        <input name="lastName" type="text" class="form-control" id="fullName" value="<?php echo $ln ?>" oninput="restrictToLettersWithSingleSpace(this)" required>
+                                                        <span class="note" style="display: none; color: red; font-size: 13px;">Please enter letters only.</span>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -299,14 +302,15 @@ $atresult = mysqli_query($con, $atsql);
                                                 <div class="row mb-3">
                                                     <label for="Phone" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-phone"></i> Contact Number</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="phone" type="text" class="form-control" maxlength="11" value="<?php echo $contact ?>">
+                                                        <input name="phone" type="text" class="form-control" maxlength="11" value="<?php echo $contact ?>" oninput="restrictToNumbers(this)" required>
+                                                        <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
                                                     <label for="Email" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-envelope"></i> Email</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="email" type="email" class="form-control" disabled value="<?php echo $email ?>">
+                                                        <input name="email" type="email" class="form-control" disabled value="<?php echo $email ?>" required>
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -427,6 +431,43 @@ $atresult = mysqli_query($con, $atsql);
                 });
             });
         </script>
+
+<script>
+        function restrictToLettersWithSingleSpace(input) {
+            var lastNameNote = input.parentNode.querySelector('.note');
+            var inputValue = input.value;
+
+            // Replace multiple spaces with a single space
+            inputValue = inputValue.replace(/  +/g, ' ');
+
+            // Remove any non-letter characters except spaces
+            var lettersOnly = inputValue.replace(/[^A-Za-zñÑ ]/g, '');
+
+            if (inputValue !== lettersOnly && inputValue.trim() !== '') {
+                lastNameNote.style.display = 'block';
+            } else {
+                lastNameNote.style.display = 'none';
+            }
+
+            input.value = lettersOnly;
+        }
+    </script>
+
+<script>
+        function restrictToNumbers(input) {
+            var phoneNumberNote = input.parentNode.querySelector('.note');
+            var inputValue = input.value;
+            var numbersOnly = inputValue.replace(/[^0-9]/g, '').slice(0, 11);
+
+            if (inputValue !== numbersOnly || inputValue.length !== 11) {
+                phoneNumberNote.style.display = 'block';
+            } else {
+                phoneNumberNote.style.display = 'none';
+            }
+
+            input.value = numbersOnly;
+        }
+    </script>
 </body>
 
 </html>

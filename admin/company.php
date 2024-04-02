@@ -125,22 +125,24 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fas fa-building"></i> Company Name</label>
-                                                                    <input type="text" name="company_name" value="<?= $item['company_name']; ?>" class="form-control">
+                                                                    <input type="text" name="company_name" value="<?= $item['company_name']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fa-solid fa-location-dot"></i> Company Address</label>
-                                                                    <input type="text" name="company_address" value="<?= $item['company_address']; ?>" class="form-control">
+                                                                    <input type="text" name="company_address" value="<?= $item['company_address']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
-                                                                    <input type="text" name="contact" value="<?= $item['contact']; ?>" maxlength="11" class="form-control">
+                                                             
+                                                                    <input name="contact" type="text" class="form-control" maxlength="11" value="<?php echo $contact ?>" oninput="restrictToNumbers(this)" required>
+                                                                    <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fas fa-envelope"></i> Email</label>
-                                                                    <input type="text" name="email" value="<?= $item['email']; ?>" class="form-control">
+                                                                    <input type="text" name="email" value="<?= $item['email']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <!-- Add other form fields for editing as needed -->
@@ -167,7 +169,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
             </div>
         </div>
     </div>
-
     <!-- add modal -->
     <div class="modal fade" id="addCompanyModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -191,7 +192,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                         <div class="col-md-12 mt-3">
                             <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
-                            <input type="text" name="contact" placeholder="Enter Contact" maxlength="11" class="form-control" required>
+                            <input type="text" name="contact" placeholder="Enter Contact" maxlength="11" class="form-control" oninput="restrictToNumbers(this)" required>
+                            <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                         </div>
 
                         <div class="col-md-12 mt-3">
@@ -208,7 +210,21 @@ if (!isset($_SESSION['auth_user']['username'])) {
             </div>
         </div>
     </div>
+    <script>
+        function restrictToNumbers(input) {
+            var phoneNumberNote = input.parentNode.querySelector('.note');
+            var inputValue = input.value;
+            var numbersOnly = inputValue.replace(/[^0-9]/g, '').slice(0, 11);
 
+            if (inputValue !== numbersOnly || inputValue.length !== 11) {
+                phoneNumberNote.style.display = 'block';
+            } else {
+                phoneNumberNote.style.display = 'none';
+            }
+
+            input.value = numbersOnly;
+        }
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
 </body>
