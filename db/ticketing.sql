@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 25, 2024 at 06:11 AM
+-- Generation Time: Apr 05, 2024 at 02:54 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -152,7 +152,97 @@ INSERT INTO `audit_trail` (`at_id`, `user_id`, `Action`, `Date`) VALUES
 (111, 37, 'Profile Picture Changed', '2024-03-25 01:15:46'),
 (112, 37, 'Logged In', '2024-03-25 01:57:52'),
 (113, 37, 'Logout', '2024-03-25 02:20:56'),
-(114, 37, 'Logged In', '2024-03-25 02:20:57');
+(114, 37, 'Logged In', '2024-03-25 02:20:57'),
+(115, 37, 'Logout', '2024-03-25 05:42:16'),
+(116, 37, 'Logged In', '2024-03-25 05:42:21'),
+(117, 37, 'Logout', '2024-03-25 06:16:01'),
+(118, 35, 'Logged In', '2024-03-25 06:16:17'),
+(119, 37, 'Logged In', '2024-03-25 08:05:59'),
+(120, 39, 'Logged In', '2024-03-25 09:19:17'),
+(121, 39, 'Logout', '2024-03-25 09:19:38'),
+(122, 39, 'Logged In', '2024-03-26 01:28:24'),
+(123, 39, 'Logout', '2024-03-26 01:50:36'),
+(124, 37, 'Logged In', '2024-03-26 01:50:41'),
+(125, 37, 'Logout', '2024-03-26 01:54:42'),
+(126, 40, 'Logged In', '2024-03-26 01:57:56'),
+(127, 40, 'Logout', '2024-03-26 01:58:27'),
+(128, 40, 'Logged In', '2024-03-26 01:58:36'),
+(129, 37, 'Logged In', '2024-03-26 02:06:11'),
+(130, 37, 'Logout', '2024-03-26 02:16:17'),
+(131, 39, 'Logged In', '2024-03-26 02:18:33'),
+(132, 39, 'Logout', '2024-03-26 02:22:26'),
+(133, 37, 'Logged In', '2024-03-26 02:22:31'),
+(134, 40, 'Profile Detail Edited', '2024-03-26 02:37:40'),
+(135, 37, 'Logout', '2024-03-26 02:38:15'),
+(136, 37, 'Logged In', '2024-03-26 02:38:16'),
+(137, 37, 'Logout', '2024-03-26 02:52:18'),
+(138, 37, 'Logged In', '2024-03-26 02:53:53'),
+(139, 37, 'Logout', '2024-03-26 02:55:13'),
+(140, 37, 'Logged In', '2024-03-26 03:03:34'),
+(141, 37, 'Logout', '2024-03-26 03:03:36'),
+(142, 37, 'Logged In', '2024-03-26 03:05:03'),
+(143, 37, 'Logout', '2024-03-26 03:05:04'),
+(144, 37, 'Logged In', '2024-03-26 03:06:03'),
+(145, 37, 'Logout', '2024-03-26 03:08:52'),
+(146, 37, 'Logged In', '2024-03-26 03:27:08'),
+(147, 37, 'Logout', '2024-03-26 03:48:51'),
+(148, 35, 'Logged In', '2024-03-26 03:49:10'),
+(149, 35, 'Logged In', '2024-03-27 02:49:18'),
+(150, 35, 'Logout', '2024-03-27 02:54:00'),
+(151, 37, 'Logged In', '2024-03-27 03:01:54'),
+(152, 41, 'Logged In', '2024-04-01 08:00:38'),
+(153, 41, 'Profile Picture Changed', '2024-04-01 08:05:17'),
+(154, 41, 'Profile Detail Edited', '2024-04-01 08:05:30'),
+(155, 41, 'Profile Detail Edited', '2024-04-01 08:05:56'),
+(156, 41, 'Profile Detail Edited', '2024-04-01 08:06:21'),
+(157, 41, 'Profile Detail Edited', '2024-04-01 08:07:08'),
+(158, 41, 'Logout', '2024-04-01 08:09:10'),
+(159, 39, 'Logged In', '2024-04-01 08:09:49'),
+(160, 39, 'Profile Detail Edited', '2024-04-01 08:15:28'),
+(161, 39, 'Profile Detail Edited', '2024-04-01 08:15:34'),
+(162, 39, 'Profile Detail Edited', '2024-04-01 08:15:39'),
+(163, 39, 'Profile Detail Edited', '2024-04-01 08:15:54'),
+(164, 39, 'Profile Detail Edited', '2024-04-01 08:15:59'),
+(165, 39, 'Profile Detail Edited', '2024-04-01 08:16:11'),
+(166, 39, 'Profile Detail Edited', '2024-04-01 08:16:16'),
+(167, 39, 'Logout', '2024-04-01 08:24:02'),
+(168, 41, 'Logged In', '2024-04-02 06:54:12'),
+(169, 41, 'Logout', '2024-04-02 06:54:18'),
+(170, 39, 'Logged In', '2024-04-02 06:55:36'),
+(171, 39, 'Logout', '2024-04-02 07:01:50'),
+(172, 42, 'Logged In', '2024-04-02 07:27:07'),
+(173, 42, 'Profile Detail Edited', '2024-04-02 07:45:45'),
+(174, 42, 'Logout', '2024-04-02 07:46:09'),
+(175, 43, 'Logged In', '2024-04-02 07:52:06'),
+(176, 43, 'Logout', '2024-04-02 07:58:33'),
+(177, 39, 'Logged In', '2024-04-02 07:59:21'),
+(178, 39, 'Logout', '2024-04-02 08:05:32'),
+(179, 43, 'Logged In', '2024-04-02 08:06:00'),
+(180, 43, 'Profile Detail Edited', '2024-04-02 08:12:03'),
+(181, 43, 'Logout', '2024-04-02 08:36:13'),
+(182, 39, 'Logged In', '2024-04-02 08:38:22'),
+(183, 39, 'Logout', '2024-04-02 08:48:15'),
+(184, 43, 'Logged In', '2024-04-02 08:48:34'),
+(185, 43, 'Profile Detail Edited', '2024-04-02 08:50:34'),
+(186, 43, 'Profile Detail Edited', '2024-04-02 08:55:04'),
+(187, 43, 'Logout', '2024-04-02 08:55:27'),
+(188, 39, 'Logged In', '2024-04-02 08:55:50'),
+(189, 39, 'Profile Detail Edited', '2024-04-02 08:55:59'),
+(190, 39, 'Profile Detail Edited', '2024-04-02 08:56:12'),
+(191, 39, 'Logout', '2024-04-02 08:58:02'),
+(192, 39, 'Logged In', '2024-04-02 08:59:11'),
+(193, 39, 'Logout', '2024-04-02 09:36:07'),
+(194, 39, 'Logged In', '2024-04-03 01:25:19'),
+(195, 39, 'Logout', '2024-04-03 01:26:41'),
+(196, 37, 'Logged In', '2024-04-03 01:26:46'),
+(197, 37, 'Logout', '2024-04-03 03:12:30'),
+(198, 37, 'Logged In', '2024-04-03 03:13:32'),
+(199, 37, 'Logged In', '2024-04-04 07:08:53'),
+(200, 37, 'Logout', '2024-04-04 07:09:25'),
+(201, 39, 'Logged In', '2024-04-04 07:10:29'),
+(202, 39, 'Logout', '2024-04-04 07:10:38'),
+(203, 37, 'Logged In', '2024-04-04 07:14:58'),
+(204, 39, 'Logged In', '2024-04-04 07:34:38');
 
 -- --------------------------------------------------------
 
@@ -175,7 +265,7 @@ CREATE TABLE `branch` (
 --
 
 INSERT INTO `branch` (`id`, `company`, `branch_name`, `branch_address`, `contact`, `email`, `created_at`) VALUES
-(7, 'Cornersteel Systems Corporation', 'Libertad', 'Mandaluyong', '0945456555551', 'cornersteel@gmail.com', '2024-03-08 07:52:52'),
+(7, 'Cornersteel Systems Corporation', 'Libertad', 'Mandaluyong City', '0945456555551', 'cornersteel@gmail.com', '2024-03-08 07:52:52'),
 (8, 'Comfac Global Group', 'Libertad', 'Mandaluyong', '0965655556555', 'comfac@gmail.com', '2024-03-08 07:53:27'),
 (9, 'Cornersteel Systems Corporation', 'Makati', 'Makati City', '09515156555', 'cornersteelmakati@gmail.com', '2024-03-08 07:54:56'),
 (10, 'Cornersteel Systems Corporation', 'Cabuyao', 'Laguna', '092535656545', 'cabuyao@gmail.com', '2024-03-08 07:55:29'),
@@ -202,7 +292,7 @@ CREATE TABLE `company` (
 --
 
 INSERT INTO `company` (`id`, `company_name`, `company_address`, `contact`, `email`, `created_at`) VALUES
-(4, 'Comfac Global Group', 'Mandaluyong City', '09546123146', 'comfac@gmail.com', '2024-02-15 02:49:02'),
+(4, 'Comfac Global Group', 'Mandaluyong City', '09656555565', 'comfac@gmail.com', '2024-02-15 02:49:02'),
 (5, 'Comfac Technology Options (CTO)', 'Mandaluyong City', '09586123146', 'comfac_cto@gmail.com', '2024-02-15 02:49:48'),
 (6, 'Cornersteel Systems Corporation', 'Mandaluyong City', '09546127746', 'cornersteel@gmail.com', '2024-02-15 02:50:16'),
 (7, 'Energy Specialist Company(ESCO)', 'Mandaluyong City', '09776123146', 'esco@gmail.com', '2024-02-15 02:50:47');
@@ -255,7 +345,7 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`id`, `company`, `department_name`, `department_head`, `location`, `created_at`) VALUES
-(12, 'Cornersteel Systems Corporation', 'MIS-Department', 'Jun Edmund', '3rd Floor', '2024-03-20 03:02:34'),
+(12, 'Cornersteel Systems Corporation', 'MIS-Department', 'Jun Edmund', '3rd floor', '2024-03-20 03:02:34'),
 (13, 'Energy Specialist Company(ESCO)', 'Accounting', 'Peter', '3rd Floor', '2024-03-20 03:05:58'),
 (14, 'Cornersteel Systems Corporation', 'HR', 'Joaquin', '2nd Floor', '2024-03-20 03:07:14'),
 (15, 'Comfac Technology Options (CTO)', 'System installation', 'Rein ', '3rd Floor', '2024-03-20 03:12:42'),
@@ -286,7 +376,16 @@ CREATE TABLE `file_attachment` (
 
 INSERT INTO `file_attachment` (`file_id`, `user_id`, `ticket_id`, `file_name`) VALUES
 (21, 37, 15, 'example.pdf'),
-(22, 37, 15, 'example.docx');
+(22, 37, 15, 'example.docx'),
+(23, 37, 16, 'example.PNG'),
+(24, 40, 32, 'Jhesryl S. Gucila-Endorsement-form (F2F).pdf'),
+(25, 40, 32, 'Jhesryl S. Gucila-Recommendation-Letter.pdf'),
+(26, 40, 32, 'Jhesryl-S.-Gucila-Endorsement-form-F2F.pdf'),
+(27, 40, 32, 'Jhesryl-S.-Gucila-Recommendation-Letter.pdf'),
+(28, 40, 32, 'OJT-MOA.pdf'),
+(29, 37, 34, 'WAR-WEEK 8.pdf'),
+(30, 37, 34, 'WAR_Estrera (1).pdf'),
+(31, 37, 34, 'JD_Estrera_EvalynGrace.jpg');
 
 -- --------------------------------------------------------
 
@@ -313,7 +412,12 @@ CREATE TABLE `ticket` (
 --
 
 INSERT INTO `ticket` (`ticket_id`, `user_id`, `date`, `subject`, `to_company`, `requestor`, `concern`, `status`, `date_created`, `to_dept`, `email`) VALUES
-(15, 37, '2024-03-25 02:22:04.828501', 'Change Docu', 'Cornersteel Systems Corporation', 'John Carlo Astoveza', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lectus magna, facilisis et scelerisque id, fermentum eu tellus. Pellentesque facilisis libero eget ligula volutpat, et gravida neque dictum. Sed id ullamcorper diam. Pellentesque luctus, nisl vel venenatis finibus, eros arcu maximus nisl, at euismod elit ipsum non magna. Aenean laoreet rutrum mi, ultricies varius enim lacinia sed. Maecenas tortor ante, varius at facilisis et, pulvinar ac nulla. Nulla vitae lacus at quam faucibus imperdiet. Praesent at congue orci, eget placerat mauris. Nulla facilisi. Nam varius elementum nunc quis elementum.', 'Pending', '2024-03-25 02:22:04', 'Accounting', 'laguinlinastovezajocar@gmail.com');
+(15, 37, '2024-03-25 02:22:04.828501', 'Change Docu', 'Cornersteel Systems Corporation', 'John Carlo Astoveza', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lectus magna, facilisis et scelerisque id, fermentum eu tellus. Pellentesque facilisis libero eget ligula volutpat, et gravida neque dictum. Sed id ullamcorper diam. Pellentesque luctus, nisl vel venenatis finibus, eros arcu maximus nisl, at euismod elit ipsum non magna. Aenean laoreet rutrum mi, ultricies varius enim lacinia sed. Maecenas tortor ante, varius at facilisis et, pulvinar ac nulla. Nulla vitae lacus at quam faucibus imperdiet. Praesent at congue orci, eget placerat mauris. Nulla facilisi. Nam varius elementum nunc quis elementum.', 'Cancelled', '2024-03-26 04:18:03', 'Accounting', 'laguinlinastovezajocar@gmail.com'),
+(16, 37, '2024-03-25 05:21:49.511949', 'Import', 'Energy Specialist Company(ESCO)', 'John Carlo Astoveza', 'Ut ultricies viverra orci non semper. Vestibulum pretium blandit leo, in auctor diam vulputate vitae. Nam vitae lorem sed ex dignissim sagittis eu non quam. Sed aliquam enim nec ligula bibendum, non condimentum lacus accumsan. Proin dapibus justo ut metus placerat, vitae tincidunt eros pellentesque. In eget orci bibendum leo aliquam euismod.', 'Unresolved', '2024-04-03 01:29:53', 'Purchasing', 'laguinlinastovezajocar@gmail.com'),
+(17, 37, '2024-03-25 05:43:27.132086', 'Import', 'Comfac Technology Options (CTO)', 'John Carlo Astoveza', 'Please Install', 'Resolved', '2024-04-03 01:29:26', 'System installation', 'laguinlinastovezajocar@gmail.com'),
+(19, 37, '2024-03-25 05:53:07.427681', 'Import', 'Comfac Technology Options (CTO)', 'John Carlo Astoveza', 'aa', 'Cancelled', '2024-03-26 05:21:05', 'Purchasing', 'laguinlinastovezajocar@gmail.com'),
+(27, 35, '2024-03-25 07:47:55.352923', 'Change the content', 'Comfac Technology Options (CTO)', 'Mhargielyn Miñeque', 'Nullam consequat massa nec tempus ultrices. Duis scelerisque lectus at quam sagittis, ut posuere velit tempor. Sed a nulla gravida, hendrerit nisl quis, iaculis massa. In hac habitasse platea dictumst. Aliquam nec pulvinar nisi. ', 'Cancelled', '2024-03-26 05:50:07', 'HR', 'mhargielyn.mineque@my.jru.edu'),
+(34, 37, '2024-04-04 07:22:48.582058', 'Sample Presentation', 'Energy Specialist Company(ESCO)', 'John Carlo Astoveza', 'Helloo', 'Pending', '2024-04-04 07:22:48', 'HR', 'laguinlinastovezajocar@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -329,6 +433,15 @@ CREATE TABLE `ticket_reply` (
   `Name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `ticket_reply`
+--
+
+INSERT INTO `ticket_reply` (`id`, `ticket_id`, `user_id`, `reply`, `Name`) VALUES
+(8, 30, 37, 'sss', 'John Carlo Astoveza'),
+(9, 34, 37, 'Cancelling', 'John Carlo Astoveza'),
+(10, 17, 37, 'hello', 'John Carlo Astoveza');
+
 -- --------------------------------------------------------
 
 --
@@ -340,6 +453,7 @@ CREATE TABLE `user` (
   `lastname` varchar(191) NOT NULL,
   `firstname` varchar(191) NOT NULL,
   `middleinitial` varchar(191) NOT NULL,
+  `suffix` varchar(50) NOT NULL,
   `company` varchar(191) NOT NULL,
   `branch` varchar(191) NOT NULL,
   `department` varchar(191) NOT NULL,
@@ -357,12 +471,14 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `middleinitial`, `company`, `branch`, `department`, `email`, `contact`, `username`, `password`, `verification_status`, `role`, `created_at`, `image`) VALUES
-(33, 'Babas', 'Kim', 'M', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'HR', 'regipelo@imagepoet.net', '09721515551', 'kimpoy', '@Qwerty123', 1, 1, '2024-03-08 07:21:30', 'user2.png'),
-(34, 'Tamayo', 'Kyla Andrea', 'A', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'Management Info', 'zoguqoma@citmo.net', '09714414211', 'kyang', '@Qwerty123', 1, 1, '2024-03-08 07:24:04', 'user2.png'),
-(35, 'Miñeque', 'Mhargielyn', 'D', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'Management Info', 'mhargielyn.mineque@my.jru.edu', '09165255651', 'mharg', '@Qwerty123', 1, 1, '2024-03-08 07:46:49', 'user2.png'),
-(37, 'Astoveza', 'John Carlo', 'L', 'Cornersteel Systems Corporation', 'Cabuyao', 'MIS-Department', 'laguinlinastovezajocar@gmail.com', '09773555302', 'Carlokaloykoy', '@Qwerty123', 1, 1, '2024-03-14 02:05:55', 'pexels-juan-gomez-2589650.jpg'),
-(39, 'Estrera', 'Evalyn Grace', 'P', 'Cornersteel Systems Corporation', 'Libertad', 'MIS-Department', 'estrera.evalyngrace@gmail.com', '09655662351', 'evagraceest', '@Qwerty123', 1, 0, '2024-03-20 05:37:00', 'user2.png');
+INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `middleinitial`, `suffix`, `company`, `branch`, `department`, `email`, `contact`, `username`, `password`, `verification_status`, `role`, `created_at`, `image`) VALUES
+(34, 'Tamayo', 'Kyla Andrea', 'A', '', 'Comfac Technology Options (CTO)', '', 'Management Info', 'kylaandrea.tamayo@my.jru.edu', '09714414211', 'kyang', '@Qwerty123', 1, 1, '2024-03-08 07:24:04', 'user2.png'),
+(35, 'Miñeque', 'Mhargielyn', 'D', '', 'Comfac Technology Options (CTO)', 'Libertad Branch', 'Management Info', 'mhargielyn.mineque@my.jru.edu', '09165255651', 'mharg', '@Qwerty123', 1, 1, '2024-03-08 07:46:49', 'user2.png'),
+(37, 'Astoveza', 'John Carlo', 'L', '', 'Cornersteel Systems Corporation', 'Cabuyao', 'MIS-Department', 'laguinlinastovezajocar@gmail.com', '09773555302', 'Carlokaloykoy', '@Qwerty123', 1, 1, '2024-03-14 02:05:55', 'pexels-juan-gomez-2589650.jpg'),
+(39, 'Estrera', 'Evalyn Grace', 'P', '', 'Cornersteel Systems Corporation', '', 'MIS-Department', 'estrera.evalyngrace@gmail.com', '09655662351', 'evagraceest', '@Qwerty123', 1, 0, '2024-03-20 05:37:00', 'user2.png'),
+(40, 'Valen', 'Edmund', 'F', '', 'Cornersteel Systems Corporation', 'Libertad', 'MIS-Department', 'edmund@cornersteel.com', '09235877287', 'edmund', 'Comf@c123', 1, 1, '2024-03-26 01:57:09', 'user2.png'),
+(42, 'Santos', 'John', '', 'Sr.', 'Comfac Global Group', 'Libertad', 'Management Info', 'mipepo5677@evimzo.com', '09565654581', 'john.santos', '@Qwerty123', 1, 1, '2024-04-02 07:26:16', 'user2.png'),
+(43, 'Gonzales', 'Carlo', 'J', 'I', 'Comfac Global Group', 'Libertad', 'Purchasing', 'tefonitetu@rungel.net', '09785244451', 'carlo', '@Gawegh12', 1, 1, '2024-04-02 07:50:42', 'user2.png');
 
 --
 -- Indexes for dumped tables
@@ -430,7 +546,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `audit_trail`
 --
 ALTER TABLE `audit_trail`
-  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=115;
+  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
 
 --
 -- AUTO_INCREMENT for table `branch`
@@ -460,25 +576,25 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `file_attachment`
 --
 ALTER TABLE `file_attachment`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `ticket_reply`
 --
 ALTER TABLE `ticket_reply`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
