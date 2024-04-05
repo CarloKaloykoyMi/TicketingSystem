@@ -188,7 +188,8 @@ $reply_result = mysqli_query($con, $query);
                                                                                                                     <form action="crud.php" method="POST">
                                                                                                                         <input type="hidden" class="form-control" name="requestor" placeholder="Requestor" value="<?php echo $requestor ?>">
                                                                                                                         <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
-                                                                                                                        Are you sure you want to cancel this ticket?
+                                                                                                                        Are you sure you want to cancel this ticket? <br> <br>
+                                                                                                                        <textarea class="form-control" name="cancel_reason" rows="4" placeholder="Reason to Cancel" required></textarea>
                                                                                                                 </div>
                                                                                                                 <div class="modal-footer">
                                                                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLose</button>

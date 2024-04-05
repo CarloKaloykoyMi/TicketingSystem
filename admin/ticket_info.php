@@ -329,8 +329,6 @@ $reply_result = mysqli_query($con, $query);
 
                                         </div>
                             </div>
-                            </li>
-                            </ul>
                             <?php
                             // Check if there's any result
                             if ($reply_result->num_rows > 0) {

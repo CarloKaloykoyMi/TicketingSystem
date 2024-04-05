@@ -77,22 +77,19 @@ while ($row = mysqli_fetch_array($result)) {
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="company.php" class="sidebar-link">
-                    <i class="fa-solid fa-building"></i>
-                    <span>Company</span>
+                <a href="#" class="sidebar-link">
+                    <i class="fa-solid fa-tools"></i>
+                    <span><strong>Manage</strong></span>
+                    <i class="lni lni-arrow-down"></i>
                 </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="department.php" class="sidebar-link">
-                    <i class="fa-solid fa-users"></i>
-                    <span>Department</span>
-                </a>
-            </li>
-            <li class="sidebar-item">
-                <a href="branch.php" class="sidebar-link">
-                <i class="fa-solid fa-location-dot"></i>
-                    <span>Branch</span>
-                </a>
+                <ul class="sub-menu">
+                    <li><a href="company.php"><i class="fa-solid fa-building"></i>
+                            <span class="nav-item">Company</span></a></li>
+                    <li><a href="department.php"><i class="fa-solid fa-users"></i>
+                            <span class="nav-item">Department</span></a></li>
+                    <li><a href="branch.php"><i class="fa-solid fa-location-dot"></i>
+                            <span class="nav-item">Branch </span></a></li>
+                </ul>
             </li>
             <li class="sidebar-item">
                 <a href="user.php" class="sidebar-link">
@@ -102,7 +99,7 @@ while ($row = mysqli_fetch_array($result)) {
             </li>
             <li class="sidebar-item">
                 <a href="contact_us.php" class="sidebar-link">
-                <i class="fa-solid fa-envelope"></i>
+                    <i class="fa-solid fa-envelope"></i>
                     <span>Contact Us</span>
                 </a>
             </li>
