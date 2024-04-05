@@ -6,27 +6,28 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     $requestor = $_POST['requestor']; // Retrieve the requestor's name from the input tag
     $email = $_POST['email'];
     $subject = $_POST['subject'];
-    $company = $_POST['company'];
+    $company = $_POST['tocompany'];
     $todepartment = $_POST['todepartment'];
     $concern = $_POST['concern'];
     $status = "Pending";
     $email = $_POST['email'];
+    $tobranch = $_POST['tobranch'];
 
     // Insert ticket information into the ticket table
-    $insert_ticket_query = "INSERT INTO ticket (user_id, subject, to_company, to_dept, requestor, concern, status, email) 
-    VALUES ('$userid','$subject','$company','$todepartment','$requestor','$concern','$status','$email')";
+    $insert_ticket_query = "INSERT INTO ticket (user_id, subject, to_company, to_dept, requestor, concern, status, email,to_branch) 
+    VALUES ('$userid','$subject','$company','$todepartment','$requestor','$concern','$status','$email','$tobranch')";
 
     $insert_ticket_query_run = mysqli_query($con, $insert_ticket_query); // Run the query
 
     if ($insert_ticket_query_run) { // Check if the query was executed
         $ticket_id = mysqli_insert_id($con); // Get the last inserted ticket_id
-
+    
         // Create folder for the ticket and user
         $folder_path = "ticket_files/ticket_" . $ticket_id . "_" . $requestor . "_" . date("F j, Y"); // Set desired folder path based on ticket_id and requestor's name
-
+    
         if (!file_exists($folder_path)) { // Check if the folder exists
             mkdir($folder_path, 0777, true); // Create the folder
-        }
+        }    
 
         // Handle file uploads
         if (!empty($_FILES['files']['name'][0])) { // Check if files are uploaded

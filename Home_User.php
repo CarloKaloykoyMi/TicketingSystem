@@ -202,27 +202,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             <label for="requestor" class="sr-only">Requestor</label>
                                             <input type="text" class="form-control" name="requestor" placeholder="Requestor" value="<?php echo $fname . ' ' . $lname; ?>" readonly>
                                         </div>
+                                    </h5>
                                 </div>
-                                <br>
-
-                                <div class="input-group">
-                                    <span class="icon-container">
-                                        <i class="fa-solid fa-building"></i>
-                                    </span>
-                                    <label for="company" class="sr-only">Company</label>
-                                    <input type="text" class="form-control" name="fromcompany" value="<?php echo $fromcompany; ?>" disabled required>
-                                </div>
-
-                                <br>
-                                <div class="input-group">
-                                    <span class="icon-container">
-                                        <i class="fa-solid fa-building"></i>
-                                    </span>
-                                    <label for="deparment" class="sr-only">Deparment</label>
-                                    <input type="text" class="form-control" name="fromDeparment" value="<?php echo $fromdept; ?>" disabled required>
-                                </div>
-
-                                <br>
                                 <h5>
                                     <div class="sender">
                                         RECEIVER:
@@ -232,9 +213,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         <span class="icon-container">
                                             <i class="fa-solid fa-building"></i>
                                         </span>
-                                        <label for="company" class="sr-only">Company</label>
-                                        <select class="form-control" name="company" required>
-                                            <option value=""> To Company:</option>
+                                        <label for="tocompany" class="sr-only">To Company</label>
+                                        <select class="form-control" name="tocompany" id="company" required>
+                                            <option value="" disabled selected>Select To Company</option>
                                             <?php
                                             $companies = getAll("company");
                                             if (mysqli_num_rows($companies) > 0) {
@@ -248,13 +229,23 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             }
                                             ?>
                                         </select>
+                                    </div> <br> 
+                                    <div class="input-group">
+                                        <span class="icon-container">
+                                            <i class="fa-solid fa-code-branch"></i>
+                                        </span>
+                                        <label for="branch" class="sr-only">Branch</label>
+                                        <select class="form-control" name="tobranch" id="branch" required>
+                                            <option value="">Select To Branch</option>
+                                        </select>
                                     </div> <br>
+
                                     <div class="input-group">
                                         <span class="icon-container">
                                             <i class="fa-solid fa-building"></i>
 
                                         </span>
-                                        <label for="department" class="sr-only">Department</label>
+                                        <label for="todepartment" class="sr-only">To Department</label>
                                         <select class="form-control" name="todepartment" required>
                                             <option value="" data-icon="fas fa-users">To Department:</option>
                                             <?php
@@ -272,9 +263,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                    <div class="sender">
-                                        SUBJECT:
-                                    </div>
+                                        <div class="sender">
+                                            SUBJECT:
+                                        </div>
                                         <div class="input-group">
                                             <span class="icon-container">
                                                 <i class="fa-solid fa-file"></i>
@@ -289,7 +280,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             <span class="icon-container">
                                                 <i class="fa-solid fa-comment-alt"></i>
                                             </span>
-                                            <label for="concerns" class="sr-only">Details</label>
+                                            <label for="concern" class="sr-only">Details</label>
                                             <textarea class="form-control" name="concern" rows="4" placeholder="Details" required></textarea>
                                         </div>
                                     </div>
@@ -328,6 +319,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </div>
                 </div>
             </div>
+
         </div>
 
         <script src="js/sidebar.js"></script>
@@ -426,6 +418,30 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 document.getElementById('submit-btn').setAttribute('disabled', 'true');
             });
         </script>
+        <script>
+            $(document).ready(function() {
+                $('#company').change(function() {
+                    var companyName = $(this).val();
+
+                    $.ajax({
+                        url: 'get_branches.php',
+                        type: 'POST',
+                        data: {
+                            company_name: companyName
+                        },
+                        success: function(response) {
+                            console.log(response);
+                            $('#branch').html(response);
+                            $('#branchGroup').toggle(response.trim() !== '');
+                        },
+                        error: function() {
+                            alert('Error fetching branches.');
+                        }
+                    });
+                });
+            });
+        </script>
+
 
 </body>
 
