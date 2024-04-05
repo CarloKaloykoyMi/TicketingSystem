@@ -1,3 +1,48 @@
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<style>
+    /* The message box is shown when the user clicks on the password field */
+    #message {
+        display: none;
+        background: #f1f1f1;
+        color: #000;
+        position: relative;
+        padding: 15px;
+        margin-top: 9px;
+    }
+
+    #message p {
+        padding: 9px 30px;
+        font-size: 14px;
+    }
+
+    /* Add a green text color and a checkmark when the requirements are right */
+    .valid {
+        color: green;
+    }
+
+    .valid:before {
+        position: relative;
+        left: -35px;
+        content: "✅";
+    }
+
+    /*copy & paste symbol*/
+    /* Add a red text color and an "x" when the requirements are wrong */
+    .invalid {
+        color: red;
+    }
+
+    .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "❌";
+    }
+</style>
+
 <?php include('function/myfunction.php');
 include 'sidebar_navbar.php';
 include('crud.php');
@@ -354,11 +399,21 @@ $atresult = mysqli_query($con, $atsql);
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label for="newPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-key"></i> New Password:</label>
+                                                    <label for="newPassword" class="form-label"><i class="fas fa-lock"></i> New Password</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                                        <input type="password" class="form-control" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Enter your password" required>
+                                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="fas fa-eye"></i></button>
+                                                    </div>
+                                                    <div id="message">
+                                                        <h6>Password must contain:</h6>
+                                                        <p id="letter" class="invalid">At least one letter</ p>
+                                                        <p id="capital" class="invalid">At least one capital letter</p>
+                                                        <p id="number" class="invalid">At least one number</p>
+                                                        <p id="special" class="invalid">At least one special character</p>
+                                                        <p id="length" class="invalid">Minimum 8 characters</p>
                                                     </div>
                                                 </div>
+
 
                                                 <div class="row mb-3">
                                                     <label for="renewPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-unlock"></i> Re-enter New Password:</label>
@@ -441,8 +496,8 @@ $atresult = mysqli_query($con, $atsql);
             input.value = lettersOnly;
         }
     </script>
-    
-<script>
+
+    <script>
         function restrictToNumbers(input) {
             var phoneNumberNote = input.parentNode.querySelector('.note');
             var inputValue = input.value;
@@ -457,6 +512,104 @@ $atresult = mysqli_query($con, $atsql);
             input.value = numbersOnly;
         }
     </script>
+
+    <script>
+        var myInput = document.getElementById("password");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var length = document.getElementById("length");
+
+        // When the user clicks on the password field, show the message box
+        myInput.onfocus = function() {
+            document.getElementById("message").style.display = "block";
+        }
+
+        // When the user clicks outside of the password field, hide the message box
+        myInput.onblur = function() {
+            document.getElementById("message").style.display = "none";
+        }
+
+        // When the user starts to type something inside the password field
+        myInput.onkeyup = function() {
+            // Validate lowercase letters
+            var lowerCaseLetters = /[a-z]/g;
+            if (myInput.value.match(lowerCaseLetters)) {
+                letter.classList.remove("invalid");
+                letter.classList.add("valid");
+            } else {
+                letter.classList.remove("valid");
+                letter.classList.add("invalid");
+            }
+
+            // Validate capital letters
+            var upperCaseLetters = /[A-Z]/g;
+            if (myInput.value.match(upperCaseLetters)) {
+                capital.classList.remove("invalid");
+                capital.classList.add("valid");
+            } else {
+                capital.classList.remove("valid");
+                capital.classList.add("invalid");
+            }
+
+            // Validate numbers
+            var numbers = /[0-9]/g;
+            if (myInput.value.match(numbers)) {
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+
+            var specialCharacters = /[!@#$%^&*(),.?\:{}|<>]/g;
+            if (myInput.value.match(specialCharacters)) {
+                special.classList.remove("invalid");
+                special.classList.add("valid");
+            } else {
+                special.classList.remove("valid");
+                special.classList.add("invalid");
+            }
+
+            // Validate length
+            if (myInput.value.length >= 8) {
+                length.classList.remove("invalid");
+                length.classList.add("valid");
+            } else {
+                length.classList.remove("valid");
+                length.classList.add("invalid");
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        const togglePasswordButton = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePasswordButton.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePasswordButton.querySelector('i').classList.toggle('fa-eye');
+            togglePasswordButton.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <script>
+        const toggleConfirmPasswordButton = document.getElementById('toggleConfirmPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        toggleConfirmPasswordButton.addEventListener('click', function() {
+            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPasswordInput.setAttribute('type', type);
+            toggleConfirmPasswordButton.querySelector('i').classList.toggle('fa-eye');
+            toggleConfirmPasswordButton.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    </script>
+
 </body>
 
 </html>
