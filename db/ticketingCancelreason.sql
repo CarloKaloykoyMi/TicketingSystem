@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 05, 2024 at 02:54 AM
+-- Generation Time: Apr 06, 2024 at 08:07 PM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -242,7 +242,18 @@ INSERT INTO `audit_trail` (`at_id`, `user_id`, `Action`, `Date`) VALUES
 (201, 39, 'Logged In', '2024-04-04 07:10:29'),
 (202, 39, 'Logout', '2024-04-04 07:10:38'),
 (203, 37, 'Logged In', '2024-04-04 07:14:58'),
-(204, 39, 'Logged In', '2024-04-04 07:34:38');
+(204, 39, 'Logged In', '2024-04-04 07:34:38'),
+(205, 35, 'Logged In', '2024-04-05 02:21:13'),
+(206, 37, 'Logout', '2024-04-06 17:27:00'),
+(207, 35, 'Logged In', '2024-04-06 17:27:27'),
+(208, 35, 'Logout', '2024-04-06 17:28:20'),
+(209, 37, 'Logged In', '2024-04-06 17:28:24'),
+(210, 37, 'Logout', '2024-04-06 17:28:55'),
+(211, 35, 'Logged In', '2024-04-06 17:28:58'),
+(212, 35, 'Logout', '2024-04-06 17:30:07'),
+(213, 37, 'Logged In', '2024-04-06 17:30:10'),
+(214, 37, 'Logout', '2024-04-06 17:34:51'),
+(215, 35, 'Logged In', '2024-04-06 17:34:53');
 
 -- --------------------------------------------------------
 
@@ -375,17 +386,14 @@ CREATE TABLE `file_attachment` (
 --
 
 INSERT INTO `file_attachment` (`file_id`, `user_id`, `ticket_id`, `file_name`) VALUES
-(21, 37, 15, 'example.pdf'),
-(22, 37, 15, 'example.docx'),
-(23, 37, 16, 'example.PNG'),
-(24, 40, 32, 'Jhesryl S. Gucila-Endorsement-form (F2F).pdf'),
-(25, 40, 32, 'Jhesryl S. Gucila-Recommendation-Letter.pdf'),
-(26, 40, 32, 'Jhesryl-S.-Gucila-Endorsement-form-F2F.pdf'),
-(27, 40, 32, 'Jhesryl-S.-Gucila-Recommendation-Letter.pdf'),
-(28, 40, 32, 'OJT-MOA.pdf'),
-(29, 37, 34, 'WAR-WEEK 8.pdf'),
-(30, 37, 34, 'WAR_Estrera (1).pdf'),
-(31, 37, 34, 'JD_Estrera_EvalynGrace.jpg');
+(1, 37, 1000, 'Screenshot 2024-04-06 171649.png'),
+(2, 37, 1000, 'example.docx'),
+(3, 37, 1000, 'example.pdf'),
+(4, 35, 1001, 'Screenshot 2024-04-06 171649.png'),
+(5, 35, 1001, 'example.docx'),
+(6, 35, 1001, 'example.pdf'),
+(7, 35, 1002, 'example.pdf'),
+(8, 35, 1003, 'example.docx');
 
 -- --------------------------------------------------------
 
@@ -397,27 +405,26 @@ CREATE TABLE `ticket` (
   `ticket_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `date` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
-  `subject` varchar(30) NOT NULL,
+  `subject` varchar(990) NOT NULL,
   `to_company` varchar(50) NOT NULL,
   `requestor` varchar(50) NOT NULL,
   `concern` text NOT NULL,
   `status` varchar(50) NOT NULL DEFAULT 'Pending',
   `date_created` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `to_dept` varchar(250) NOT NULL,
-  `email` varchar(50) NOT NULL
+  `email` varchar(50) NOT NULL,
+  `to_branch` varchar(550) NOT NULL,
+  `cancel_reason` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `ticket`
 --
 
-INSERT INTO `ticket` (`ticket_id`, `user_id`, `date`, `subject`, `to_company`, `requestor`, `concern`, `status`, `date_created`, `to_dept`, `email`) VALUES
-(15, 37, '2024-03-25 02:22:04.828501', 'Change Docu', 'Cornersteel Systems Corporation', 'John Carlo Astoveza', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas lectus magna, facilisis et scelerisque id, fermentum eu tellus. Pellentesque facilisis libero eget ligula volutpat, et gravida neque dictum. Sed id ullamcorper diam. Pellentesque luctus, nisl vel venenatis finibus, eros arcu maximus nisl, at euismod elit ipsum non magna. Aenean laoreet rutrum mi, ultricies varius enim lacinia sed. Maecenas tortor ante, varius at facilisis et, pulvinar ac nulla. Nulla vitae lacus at quam faucibus imperdiet. Praesent at congue orci, eget placerat mauris. Nulla facilisi. Nam varius elementum nunc quis elementum.', 'Cancelled', '2024-03-26 04:18:03', 'Accounting', 'laguinlinastovezajocar@gmail.com'),
-(16, 37, '2024-03-25 05:21:49.511949', 'Import', 'Energy Specialist Company(ESCO)', 'John Carlo Astoveza', 'Ut ultricies viverra orci non semper. Vestibulum pretium blandit leo, in auctor diam vulputate vitae. Nam vitae lorem sed ex dignissim sagittis eu non quam. Sed aliquam enim nec ligula bibendum, non condimentum lacus accumsan. Proin dapibus justo ut metus placerat, vitae tincidunt eros pellentesque. In eget orci bibendum leo aliquam euismod.', 'Unresolved', '2024-04-03 01:29:53', 'Purchasing', 'laguinlinastovezajocar@gmail.com'),
-(17, 37, '2024-03-25 05:43:27.132086', 'Import', 'Comfac Technology Options (CTO)', 'John Carlo Astoveza', 'Please Install', 'Resolved', '2024-04-03 01:29:26', 'System installation', 'laguinlinastovezajocar@gmail.com'),
-(19, 37, '2024-03-25 05:53:07.427681', 'Import', 'Comfac Technology Options (CTO)', 'John Carlo Astoveza', 'aa', 'Cancelled', '2024-03-26 05:21:05', 'Purchasing', 'laguinlinastovezajocar@gmail.com'),
-(27, 35, '2024-03-25 07:47:55.352923', 'Change the content', 'Comfac Technology Options (CTO)', 'Mhargielyn Miñeque', 'Nullam consequat massa nec tempus ultrices. Duis scelerisque lectus at quam sagittis, ut posuere velit tempor. Sed a nulla gravida, hendrerit nisl quis, iaculis massa. In hac habitasse platea dictumst. Aliquam nec pulvinar nisi. ', 'Cancelled', '2024-03-26 05:50:07', 'HR', 'mhargielyn.mineque@my.jru.edu'),
-(34, 37, '2024-04-04 07:22:48.582058', 'Sample Presentation', 'Energy Specialist Company(ESCO)', 'John Carlo Astoveza', 'Helloo', 'Pending', '2024-04-04 07:22:48', 'HR', 'laguinlinastovezajocar@gmail.com');
+INSERT INTO `ticket` (`ticket_id`, `user_id`, `date`, `subject`, `to_company`, `requestor`, `concern`, `status`, `date_created`, `to_dept`, `email`, `to_branch`, `cancel_reason`) VALUES
+(1000, 37, '2024-04-06 17:26:13.974150', 'sample', 'Comfac Global Group', 'John Carlo Astoveza', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus dictum magna, vel imperdiet sem pharetra sodales. Cras bibendum tellus at odio cursus, vitae elementum quam consequat. Vivamus blandit odio eu odio semper, euismod ultrices orci aliquet. Etiam in efficitur odio, eget sollicitudin lorem.', 'Pending', '2024-04-06 17:26:13', 'MIS-Department', 'laguinlinastovezajocar@gmail.com', 'Libertad', ''),
+(1002, 35, '2024-04-06 17:29:59.158755', 'Hallu', 'Comfac Technology Options (CTO)', 'Mhargielyn Miñeque', 'Curabitur aliquet metus vel nibh semper, a sodales metus rhoncus. Sed facilisis posuere ornare. Quisque vel imperdiet elit. Quisque auctor erat nec erat interdum, id vestibulum diam elementum', 'Resolved', '2024-04-06 17:45:17', 'MIS-Department', 'mhargielyn.mineque@my.jru.edu', 'Libertad', ''),
+(1003, 35, '2024-04-06 18:00:35.363002', 'Lorem ipsum', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Cras quis porta lorem, vitae venenatis neque.', 'Cancelled', '2024-04-06 18:00:49', 'MIS-Department', 'mhargielyn.mineque@my.jru.edu', 'Libertad', 'test');
 
 -- --------------------------------------------------------
 
@@ -438,9 +445,8 @@ CREATE TABLE `ticket_reply` (
 --
 
 INSERT INTO `ticket_reply` (`id`, `ticket_id`, `user_id`, `reply`, `Name`) VALUES
-(8, 30, 37, 'sss', 'John Carlo Astoveza'),
-(9, 34, 37, 'Cancelling', 'John Carlo Astoveza'),
-(10, 17, 37, 'hello', 'John Carlo Astoveza');
+(1, 1000, 37, 'Hallo', 'John Carlo Astoveza'),
+(2, 1000, 35, 'Curabitur aliquet metus vel nibh semper, a sodales metus rhoncus. Sed facilisis posuere ornare.', 'Mhargielyn Miñeque');
 
 -- --------------------------------------------------------
 
@@ -546,7 +552,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `audit_trail`
 --
 ALTER TABLE `audit_trail`
-  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=205;
+  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=216;
 
 --
 -- AUTO_INCREMENT for table `branch`
@@ -576,19 +582,19 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `file_attachment`
 --
 ALTER TABLE `file_attachment`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1004;
 
 --
 -- AUTO_INCREMENT for table `ticket_reply`
 --
 ALTER TABLE `ticket_reply`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `user`
