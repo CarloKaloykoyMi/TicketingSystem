@@ -141,6 +141,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     $sql = "INSERT INTO audit_trail (user_id,action) VALUES('$user_id','$action');"; // Insert the action into the audit trail table
     $atrun = mysqli_query($con, $sql);
     echo "<script> location.href='User_Profile.php'; </script>";
+    
 } elseif (isset($_POST['saveChanges'])) {
     $userid = $_POST['userid'];
     $fn = $_POST['firstName'];
@@ -174,11 +175,11 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     }
 }
 
-// Change the status of the ticket
 else if (isset($_POST['change_status'])) {
     $ticket_id = $_POST['ticket_id'];
     $status = $_POST['status']; // Retrieve the selected status from the form data
     $email = $_POST['email'];
+    $resolveby = $_POST['resolveby'];
 
     // Use prepared statements to prevent SQL injection
     $updateUser_query = "UPDATE ticket SET status=? WHERE ticket_id=?";
@@ -197,6 +198,14 @@ else if (isset($_POST['change_status'])) {
         mysqli_stmt_bind_result($stmt, $email);
         mysqli_stmt_fetch($stmt);
         mysqli_stmt_close($stmt);
+
+        if ($status == 'Resolved') {
+            $resolved_by = $resolveby; // Get the user ID of the resolver
+            $sql = "UPDATE ticket SET resolved_date = NOW(), resolved_by = ? WHERE ticket_id = ?";
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $resolved_by, $ticket_id);
+            $run = mysqli_stmt_execute($stmt);
+        }
 
         // Send email notification
         require "phpmailer/PHPMailerAutoload.php"; // Include the PHPMailer library

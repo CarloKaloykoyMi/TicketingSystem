@@ -93,11 +93,6 @@ $reply_result = mysqli_query($con, $query);
         margin-bottom: 16px;
     }
 
-    .ticket-status {
-        text-align: right;
-        color: green;
-    }
-
     .header-buttons button {
         margin-left: 8px;
     }
@@ -200,9 +195,47 @@ $reply_result = mysqli_query($con, $query);
                             </b>
                         </span>
                         <!-- Button trigger modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 10px;" <?php if ($status == 'Cancelled') {echo 'disabled';} ?>>
-                            Update Status
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 10px;" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
+                            echo 'disabled';
+                        } ?>>Update Status
                         </button>
+                        <br>
+                        <?php
+                        $query = "SELECT t.*, u.firstname, u.lastname 
+                        FROM ticket t
+                        INNER JOIN user u ON t.resolved_by = u.user_id 
+                        WHERE t.ticket_id = ?";
+
+                        if ($stmt = mysqli_prepare($con, $query)) {
+                            // Bind the $ticket_id parameter
+                            mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+
+                            // Execute
+                            mysqli_stmt_execute($stmt);
+
+                            // Bind the results
+                            $result = mysqli_stmt_get_result($stmt);
+
+                            if ($ticket_data = mysqli_fetch_assoc($result)) {
+                                // Check if the ticket is resolved
+                                if ($ticket_data['status'] == 'Resolved') {
+                                    echo '<span class="number pull-right"><b>Resolved on: ' . date('F j, Y g:i A', strtotime($ticket_data['resolved_date'])) . '</b></span>' . '<br>';
+                                    echo '<span class="number pull-right"><b>Resolved by: ' . htmlspecialchars($ticket_data['firstname']) . ' ' . htmlspecialchars($ticket_data['lastname']) . '</b></span>';
+                                }
+                            } else {
+                                // Ticket not found or other error handling
+                                echo 'Ticket not found or error fetching ticket.';
+                            }
+
+                            // Close the statement
+                            mysqli_stmt_close($stmt);
+                        } else {
+                            // Error preparing statement
+                            echo "Error preparing statement.";
+                        }
+                        ?>
+
+
 
                         <!-- Delete Button (visible only if status is "Cancelled") -->
                         <?php if ($status == 'Cancelled') : ?>
@@ -245,6 +278,7 @@ $reply_result = mysqli_query($con, $query);
                                     </div>
                                     <div class="modal-body">
                                         <form id="status-form" action="crud.php" method="POST">
+                                            <input type="hidden" class="form-control" name="resolveby" value="<?php echo $userid1 ?>">
                                             <label for="Status" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
                                             <select id="Status" name="status" class="form-control" required>
                                                 <option value="" disabled>Select your Status</option>
@@ -284,8 +318,12 @@ $reply_result = mysqli_query($con, $query);
 
                     <div class="header-buttons">
                         <!-- Reply Button -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" <?php if ($status == 'Cancelled') {echo 'disabled';} ?>>Reply</button>
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal">Cancel Ticket</button>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
+                                                                                                                                echo 'disabled';
+                                                                                                                            } ?>>Reply</button>
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
+                                                                                                                                echo 'disabled';
+                                                                                                                            } ?>>Cancel Ticket</button>
                         <a href="Home_User.php" class="btn btn-secondary">Go Back</a>
                     </div>
 
