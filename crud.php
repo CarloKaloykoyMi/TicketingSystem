@@ -21,13 +21,13 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
 
     if ($insert_ticket_query_run) { // Check if the query was executed
         $ticket_id = mysqli_insert_id($con); // Get the last inserted ticket_id
-    
+
         // Create folder for the ticket and user
         $folder_path = "ticket_files/ticket_" . $ticket_id . "_" . $requestor . "_" . date("F j, Y"); // Set desired folder path based on ticket_id and requestor's name
-    
+
         if (!file_exists($folder_path)) { // Check if the folder exists
             mkdir($folder_path, 0777, true); // Create the folder
-        }    
+        }
 
         // Handle file uploads
         if (!empty($_FILES['files']['name'][0])) { // Check if files are uploaded
@@ -270,10 +270,10 @@ else if (isset($_POST['change_status'])) {
         echo '<script>alert("You are not authorized to delete this ticket.");</script>';
         echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
     }
-    
-} else if  (isset($_POST['cancel_ticket'])) {
+} else if (isset($_POST['cancel_ticket'])) {
     $ticket_id = $_POST['ticket_id'];
     $requestor = $_POST['requestor'];
+    $cancel_reason = $_POST['cancel_reason'];
 
     // Fetch requestor name from the ticket
     $sql = "SELECT requestor FROM ticket WHERE ticket_id = ?";
@@ -298,10 +298,12 @@ else if (isset($_POST['change_status'])) {
         if (!$stmt_update) {
             die('Error in preparing SQL query: ' . mysqli_error($con));
         }
-
         mysqli_stmt_bind_param($stmt_update, "i", $ticket_id);
         mysqli_stmt_execute($stmt_update);
         mysqli_stmt_close($stmt_update);
+
+        $cancel_query = "UPDATE ticket SET cancel_reason = '$cancel_reason' WHERE ticket_id = '$ticket_id'";
+        $cancel_query_run = mysqli_query($con, $cancel_query);
 
         echo '<script>alert("Ticket Cancelled.");</script>';
         echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
@@ -311,8 +313,7 @@ else if (isset($_POST['change_status'])) {
         echo '<script>alert("You are not authorized to cancel this ticket.");</script>';
         echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
     }
-}
-else if (isset($_POST['ChangePassword'])) {
+} else if (isset($_POST['ChangePassword'])) {
     $user_id = $_POST['userid'];
     $oldpass = $_POST['password'];
     $newpass = $_POST['newpassword'];
