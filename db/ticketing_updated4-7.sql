@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 06, 2024 at 09:19 PM
+-- Generation Time: Apr 07, 2024 at 03:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -261,7 +261,26 @@ INSERT INTO `audit_trail` (`at_id`, `user_id`, `Action`, `Date`) VALUES
 (220, 37, 'Logout', '2024-04-06 19:04:23'),
 (221, 34, 'Logged In', '2024-04-06 19:04:27'),
 (222, 34, 'Logout', '2024-04-06 19:04:56'),
-(223, 37, 'Logged In', '2024-04-06 19:05:00');
+(223, 37, 'Logged In', '2024-04-06 19:05:00'),
+(224, 37, 'Logged In', '2024-04-07 06:32:42'),
+(225, 37, 'Logout', '2024-04-07 06:47:33'),
+(226, 35, 'Logged In', '2024-04-07 06:47:36'),
+(227, 35, 'Logout', '2024-04-07 06:47:41'),
+(228, 35, 'Logged In', '2024-04-07 06:47:45'),
+(229, 35, 'Logout', '2024-04-07 06:49:28'),
+(230, 37, 'Logged In', '2024-04-07 06:49:47'),
+(231, 35, 'Logged In', '2024-04-07 06:49:58'),
+(232, 35, 'Logout', '2024-04-07 11:01:14'),
+(233, 35, 'Logged In', '2024-04-07 11:01:17'),
+(234, 37, 'Logout', '2024-04-07 11:18:54'),
+(235, 34, 'Logged In', '2024-04-07 11:19:19'),
+(236, 34, 'Logout', '2024-04-07 11:24:42'),
+(237, 35, 'Logout', '2024-04-07 11:24:53'),
+(238, 39, 'Logged In', '2024-04-07 11:24:59'),
+(239, 39, 'Logout', '2024-04-07 11:28:35'),
+(240, 37, 'Logged In', '2024-04-07 11:28:42'),
+(241, 37, 'Logout', '2024-04-07 11:56:44'),
+(242, 37, 'Logged In', '2024-04-07 11:56:47');
 
 -- --------------------------------------------------------
 
@@ -394,18 +413,17 @@ CREATE TABLE `file_attachment` (
 --
 
 INSERT INTO `file_attachment` (`file_id`, `user_id`, `ticket_id`, `file_name`) VALUES
-(1, 37, 1000, 'Screenshot 2024-04-06 171649.png'),
-(2, 37, 1000, 'example.docx'),
-(3, 37, 1000, 'example.pdf'),
-(4, 35, 1001, 'Screenshot 2024-04-06 171649.png'),
-(5, 35, 1001, 'example.docx'),
-(6, 35, 1001, 'example.pdf'),
-(7, 35, 1002, 'example.pdf'),
-(8, 35, 1003, 'example.docx'),
-(9, 35, 1004, 'example.docx'),
-(10, 35, 1004, 'example.pdf'),
-(11, 35, 1005, 'Screenshot 2024-04-06 171649.png'),
-(12, 35, 1005, 'example.docx');
+(1, 35, 1000, 'Screenshot 2024-04-06 171649.png'),
+(2, 35, 1000, 'example.docx'),
+(3, 35, 1000, 'example.pdf'),
+(4, 35, 1001, 'example.pdf'),
+(5, 35, 1002, 'example.xlsx'),
+(6, 35, 1003, 'example.pdf'),
+(7, 35, 1004, 'example.pdf'),
+(8, 35, 1005, 'Screenshot 2024-04-06 171649.png'),
+(9, 35, 1005, 'example.docx'),
+(10, 35, 1006, 'example.docx'),
+(11, 35, 1006, 'example.pdf');
 
 -- --------------------------------------------------------
 
@@ -436,13 +454,11 @@ CREATE TABLE `ticket` (
 --
 
 INSERT INTO `ticket` (`ticket_id`, `user_id`, `date`, `subject`, `to_company`, `requestor`, `concern`, `status`, `date_created`, `to_dept`, `email`, `to_branch`, `cancel_reason`, `resolved_date`, `resolved_by`) VALUES
-(1000, 37, '2024-04-06 17:26:13.974150', 'sample', 'Comfac Global Group', 'John Carlo Astoveza', 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec finibus dictum magna, vel imperdiet sem pharetra sodales. Cras bibendum tellus at odio cursus, vitae elementum quam consequat. Vivamus blandit odio eu odio semper, euismod ultrices orci aliquet. Etiam in efficitur odio, eget sollicitudin lorem.', 'Resolved', '2024-04-06 17:26:13', 'MIS-Department', 'laguinlinastovezajocar@gmail.com', 'Libertad', '', '2024-04-06 18:28:39', ''),
-(1002, 35, '2024-04-06 17:29:59.158755', 'Hallu', 'Comfac Technology Options (CTO)', 'Mhargielyn Miñeque', 'Curabitur aliquet metus vel nibh semper, a sodales metus rhoncus. Sed facilisis posuere ornare. Quisque vel imperdiet elit. Quisque auctor erat nec erat interdum, id vestibulum diam elementum', 'Resolved', '2024-04-06 17:45:17', 'MIS-Department', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', NULL, ''),
-(1003, 35, '2024-04-06 18:00:35.363002', 'Lorem ipsum', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Cras quis porta lorem, vitae venenatis neque.', 'Cancelled', '2024-04-06 18:00:49', 'MIS-Department', 'mhargielyn.mineque@my.jru.edu', 'Libertad', 'test', NULL, ''),
-(1004, 35, '2024-04-06 18:41:26.152891', 'Change', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Quisque mollis orci in magna mattis porttitor. Suspendisse ipsum purus, tincidunt in ex at, convallis ullamcorper magna. In felis neque, pulvinar non mi in, elementum ultricies felis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec sed orci at velit feugiat porta sit amet ut ligula.', 'Resolved', '2024-04-06 18:41:26', 'Accounting', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-06 18:41:36', ''),
-(1006, 35, '2024-04-06 18:46:44.980967', 'Nullam sodales', 'Cornersteel Systems Corporation', 'Mhargielyn Miñeque', 'Nullam sodales rutrum finibus. Suspendisse potenti. Nam ut egestas augue, sed ornare nisi. Aliquam et arcu placerat, posuere mauris a, blandit purus.', 'Resolved', '2024-04-06 18:46:44', 'Accounting', 'mhargielyn.mineque@my.jru.edu', 'Makati', '', '2024-04-06 18:52:52', ''),
-(1007, 34, '2024-04-06 18:54:19.548088', 'Cras quis porta lorem', 'Comfac Technology Options (CTO)', 'Kyla Andrea Tamayo', ' Nullam sodales rutrum finibus. Suspendisse potenti. Nam ut egestas augue, sed ornare nisi. Aliquam et arcu placerat, posuere mauris a, blandit purus.', 'Resolved', '2024-04-06 18:54:19', 'Accounting', 'kylaandrea.tamayo@my.jru.edu', 'Libertad', '', '2024-04-06 18:56:23', '34'),
-(1008, 37, '2024-04-06 19:04:19.088011', 'Change', 'Comfac Technology Options (CTO)', 'John Carlo Astoveza', 'Nulla imperdiet tempor velit eu tincidunt. Nullam quis accumsan lectus. In gravida vehicula elementum. Etiam egestas eleifend erat sed aliquam.', 'Resolved', '2024-04-06 19:04:19', 'Accounting', 'laguinlinastovezajocar@gmail.com', 'Libertad', '', '2024-04-06 19:04:44', '34');
+(1000, 35, '2024-04-07 06:57:25.921779', 'Change', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Maecenas lorem mauris, malesuada ut turpis et, egestas lobortis orci. In auctor, quam id lacinia viverra, nulla risus porttitor erat, in fringilla mauris mi et nunc. Phasellus in venenatis velit, id pulvinar ante. Fusce felis erat, accumsan id tincidunt eu, aliquet sed neque. Nullam ut tellus feugiat, pharetra massa vitae, facilisis est. Nunc at magna vitae sapien pellentesque accumsan id at augue. Phasellus risus odio, interdum sed elit vel, dictum scelerisque leo. Donec ultricies lorem ut malesuada posuere.', 'Resolved', '2024-04-07 06:57:25', 'MIS-Department', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-07 07:15:42', '37'),
+(1003, 35, '2024-04-07 07:12:19.353544', 'Need', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Morbi auctor cursus ipsum. Aenean facilisis placerat viverra. Ut felis est, efficitur sit amet nunc vitae, ornare gravida mauris. Praesent at efficitur augue.', 'Resolved', '2024-04-07 07:12:19', 'MIS IT', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-07 11:18:22', '35'),
+(1004, 35, '2024-04-07 07:13:39.226460', 'hello', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Nullam dignissim accumsan purus, sed venenatis nulla vehicula nec. Nulla nec tempus nisi. Curabitur sed facilisis elit, sit amet interdum lorem', 'Resolved', '2024-04-07 07:13:39', 'MIS IT', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-07 11:19:32', '34'),
+(1005, 35, '2024-04-07 11:01:02.256678', 'Sample', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Sed commodo eros a elit maximus ultricies. Maecenas nec dui ac eros maximus maximus eget nec sem. Nullam lobortis pellentesque ultrices.', 'Pending', '2024-04-07 11:01:02', 'MIS IT', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', NULL, ''),
+(1006, 35, '2024-04-07 11:02:17.858888', 'Smaple', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Sed commodo eros a elit maximus ultricies. Maecenas nec dui ac eros maximus maximus eget nec sem. Nullam lobortis pellentesque ultrices.', 'Pending', '2024-04-07 11:02:17', 'MIS IT', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -463,8 +479,7 @@ CREATE TABLE `ticket_reply` (
 --
 
 INSERT INTO `ticket_reply` (`id`, `ticket_id`, `user_id`, `reply`, `Name`) VALUES
-(1, 1000, 37, 'Hallo', 'John Carlo Astoveza'),
-(2, 1000, 35, 'Curabitur aliquet metus vel nibh semper, a sodales metus rhoncus. Sed facilisis posuere ornare.', 'Mhargielyn Miñeque');
+(1, 1000, 37, 'done', 'John Carlo Astoveza');
 
 -- --------------------------------------------------------
 
@@ -570,7 +585,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `audit_trail`
 --
 ALTER TABLE `audit_trail`
-  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=224;
+  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=243;
 
 --
 -- AUTO_INCREMENT for table `branch`
@@ -600,19 +615,19 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `file_attachment`
 --
 ALTER TABLE `file_attachment`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1009;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1007;
 
 --
 -- AUTO_INCREMENT for table `ticket_reply`
 --
 ALTER TABLE `ticket_reply`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
