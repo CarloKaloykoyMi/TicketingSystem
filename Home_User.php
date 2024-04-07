@@ -98,19 +98,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="ticketNumberSearch" placeholder="Search by Ticket Number">
                     </div>
-                    <div class="col-md-3">
+                    <!-- <div class="col-md-3">
                         <select class="form-select" id="departmentFilter">
                             <option value="">Filter by Department</option>
-                            <?php
-                            $departments = getAll("department");
-                            if (mysqli_num_rows($departments) > 0) {
-                                foreach ($departments as $department) {
-                                    echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
-                                }
-                            }
+                            <//?php
+                            // $departments = getAll("department");
+                            // if (mysqli_num_rows($departments) > 0) {
+                            //     foreach ($departments as $department) {
+                            //         echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
+                            //     }
+                            // }
                             ?>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="col-md-3">
                         <select class="form-select" id="statusFilter">
                             <option value="">Filter by Status</option>
@@ -139,6 +139,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <th class="text-center">Subject</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Date Created</th>
+                            <th class="text-center">Resolved by</th>
+                            <th class="text-center">Resolved date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -147,6 +149,14 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                         if (mysqli_num_rows($ticket) > 0) {
                             foreach ($ticket as $item) {
+                                // SQL query to get resolved_by user's information
+                                $resolved_by_query = "SELECT t.*, u.firstname, u.lastname 
+                              FROM ticket t 
+                              INNER JOIN user u ON t.resolved_by = u.user_id 
+                              WHERE t.ticket_id = " . $item['ticket_id'];
+                                $resolved_result = mysqli_query($con, $resolved_by_query);
+                                $resolved_row = mysqli_fetch_assoc($resolved_result);
+
                         ?>
                                 <tr>
                                     <td><u><a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="text-body fw-bold">Ticket #<?php echo $item['ticket_id']; ?></a></u></td>
@@ -168,12 +178,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         }
                                         ?>
                                     </td>
-                                    <td class="text-center"><?= date('F j, Y h:i:s A', strtotime($item['date_created'])); ?></td>
+                                    <td class="text-center"><?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td>
+                                    <td class="text-center">
+                                        <?= (!empty($resolved_row['firstname']) && !empty($resolved_row['lastname'])) ? $resolved_row['firstname'] . ' ' . $resolved_row['lastname'] : ''; ?>
+                                    </td>
+                                    <td class="text-center"><?php if (!empty($item['resolved_date'])) {
+                                                                echo date('F j, Y h:i A', strtotime($item['resolved_date']));
+                                                            } ?></td>
                                 </tr>
                         <?php
                             }
                         }
                         ?>
+
                     </tbody>
                 </table>
             </div>
@@ -229,7 +246,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             }
                                             ?>
                                         </select>
-                                    </div> <br> 
+                                    </div> <br>
                                     <div class="input-group">
                                         <span class="icon-container">
                                             <i class="fa-solid fa-code-branch"></i>
@@ -246,21 +263,24 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                         </span>
                                         <label for="todepartment" class="sr-only">To Department</label>
-                                        <select class="form-control" name="todepartment" required>
-                                            <option value="" data-icon="fas fa-users">To Department:</option>
-                                            <?php
-                                            $departments = getAll("department");
-                                            if (mysqli_num_rows($departments) > 0) {
-                                                foreach ($departments as $department) {
-                                            ?>
-                                                    <option value="<?= $department['department_name']; ?>" data-icon="fas fa-users"><?= $department['department_name']; ?></option>
-                                            <?php
-                                                }
-                                            } else {
-                                                echo "<option value='' data-icon='fas fa-users'>No Department available</option>";
-                                            }
-                                            ?>
+                                        <select name="todepartment" class="form-control" readonly>
+                                            <option value="MIS IT">MIS IT</option>
                                         </select>
+                                        <!-- <select class="form-control" name="todepartment" required>
+                                            <option value="" data-icon="fas fa-users">To Department:</option>
+                                            <!-- <//?php
+                                            // $departments = getAll("department");
+                                            // if (mysqli_num_rows($departments) > 0) {
+                                            //     foreach ($departments as $department) {
+                                            ?>
+                                                    <option value="<//?= $department['department_name']; ?>" data-icon="fas fa-users"><//?= $department['department_name']; ?></option>
+                                            <//?php
+                                            //     }
+                                            // } else {
+                                            //     echo "<option value='' data-icon='fas fa-users'>No Department available</option>";
+                                            // }
+                                            ?> -->
+                                        <!-- </select> -->
                                     </div>
                                     <div class="form-group">
                                         <div class="sender">

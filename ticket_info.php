@@ -196,42 +196,41 @@ $reply_result = mysqli_query($con, $query);
                         </span>
                         <!-- Button trigger modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 10px;" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
-                            echo 'disabled';
-                        } ?>>Update Status
+                                                                                                                                                                            echo 'disabled';
+                                                                                                                                                                        } ?>>Update Status
                         </button>
                         <br>
                         <?php
-                        $query = "SELECT t.*, u.firstname, u.lastname 
-                        FROM ticket t
-                        INNER JOIN user u ON t.resolved_by = u.user_id 
-                        WHERE t.ticket_id = ?";
+                        if ($ticket_data['status'] == 'Resolved') {
+                            $query = "SELECT t.*, u.firstname, u.lastname 
+                            FROM ticket t
+                            INNER JOIN user u ON t.resolved_by = u.user_id 
+                            WHERE t.ticket_id = ?";
 
-                        if ($stmt = mysqli_prepare($con, $query)) {
-                            // Bind the $ticket_id parameter
-                            mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+                            if ($stmt = mysqli_prepare($con, $query)) {
+                                // Bind the $ticket_id parameter
+                                mysqli_stmt_bind_param($stmt, "i", $ticket_id);
 
-                            // Execute
-                            mysqli_stmt_execute($stmt);
+                                // Execute
+                                mysqli_stmt_execute($stmt);
 
-                            // Bind the results
-                            $result = mysqli_stmt_get_result($stmt);
+                                // Bind the results
+                                $result = mysqli_stmt_get_result($stmt);
 
-                            if ($ticket_data = mysqli_fetch_assoc($result)) {
-                                // Check if the ticket is resolved
-                                if ($ticket_data['status'] == 'Resolved') {
-                                    echo '<span class="number pull-right"><b>Resolved on: ' . date('F j, Y g:i A', strtotime($ticket_data['resolved_date'])) . '</b></span>' . '<br>';
-                                    echo '<span class="number pull-right"><b>Resolved by: ' . htmlspecialchars($ticket_data['firstname']) . ' ' . htmlspecialchars($ticket_data['lastname']) . '</b></span>';
+                                if ($ticket_data = mysqli_fetch_assoc($result)) {
+                                    // Check if the ticket is resolved
+                                    if ($ticket_data['status'] == 'Resolved') {
+                                        echo '<span class="number pull-right"><b>Resolved on: ' . date('F j, Y g:i A', strtotime($ticket_data['resolved_date'])) . '</b></span>' . '<br>';
+                                        echo '<span class="number pull-right"><b>Resolved by: ' . htmlspecialchars($ticket_data['firstname']) . ' ' . htmlspecialchars($ticket_data['lastname']) . '</b></span>';
+                                    }
+                                } else {
+                                    // Ticket not found or other error handling
+                                    echo 'Ticket not found or error fetching ticket.';
                                 }
                             } else {
-                                // Ticket not found or other error handling
-                                echo 'Ticket not found or error fetching ticket.';
+                                // Error preparing statement
+                                echo "Error preparing statement.";
                             }
-
-                            // Close the statement
-                            mysqli_stmt_close($stmt);
-                        } else {
-                            // Error preparing statement
-                            echo "Error preparing statement.";
                         }
                         ?>
 
