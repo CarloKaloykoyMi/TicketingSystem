@@ -87,6 +87,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <th scope="col">Subject</th>
                             <th scope="col">Status</th>
                             <th scope="col">Date Created</th>
+                            <th class="text-center">Resolved by</th>
+                            <th class="text-center">Resolved date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -97,7 +99,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             foreach ($ticket as $item) {
                                 $status = $item['status'];
 
-                                // Only display rows with status "Resolved"
+                                $resolved_by_query = "SELECT t.*, u.firstname, u.lastname 
+                                FROM ticket t 
+                                INNER JOIN user u ON t.resolved_by = u.user_id 
+                                WHERE t.ticket_id = " . $item['ticket_id'];
+                                $resolved_result = mysqli_query($con, $resolved_by_query);
+                                $resolved_row = mysqli_fetch_assoc($resolved_result);
                         ?>
                                 <tr>
                                     <td><u><a href="ticket_info.php?ticket_id=<?= $item['ticket_id']; ?>" class="text-body fw-bold">Ticket #<?= $item['ticket_id']; ?></a></u></td>
@@ -107,7 +114,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     <td class="text-center">
                                         <span class="badge text-bg-success"><?= $status; ?></span>
                                     </td>
-                                    <td class="text-center"><?= date('F j, Y h:i:s A', strtotime($item['date_created'])); ?></td>
+                                    <td class="text-center"><?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td>
+                                    <td class="text-center">
+                                        <?= (!empty($resolved_row['firstname']) && !empty($resolved_row['lastname'])) ? $resolved_row['firstname'] . ' ' . $resolved_row['lastname'] : ''; ?>
+                                    </td>
+                                    <td class="text-center"><?php if (!empty($item['resolved_date'])) {
+                                                                echo date('F j, Y h:i A', strtotime($item['resolved_date']));
+                                                            } ?></td>
                                 </tr>
                         <?php
 

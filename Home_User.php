@@ -149,14 +149,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                         if (mysqli_num_rows($ticket) > 0) {
                             foreach ($ticket as $item) {
-                                // SQL query to get resolved_by user's information
                                 $resolved_by_query = "SELECT t.*, u.firstname, u.lastname 
                               FROM ticket t 
                               INNER JOIN user u ON t.resolved_by = u.user_id 
                               WHERE t.ticket_id = " . $item['ticket_id'];
                                 $resolved_result = mysqli_query($con, $resolved_by_query);
                                 $resolved_row = mysqli_fetch_assoc($resolved_result);
-
                         ?>
                                 <tr>
                                     <td><u><a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="text-body fw-bold">Ticket #<?php echo $item['ticket_id']; ?></a></u></td>
