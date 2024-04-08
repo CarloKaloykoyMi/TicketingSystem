@@ -204,7 +204,7 @@ $reply_result = mysqli_query($con, $query);
                         if ($ticket_data['status'] == 'Resolved') {
                             $query = "SELECT t.*, u.firstname, u.lastname 
                             FROM ticket t
-                            INNER JOIN user u ON t.resolved_by = u.user_id 
+                            INNER JOIN user u ON t.updated_by = u.user_id 
                             WHERE t.ticket_id = ?";
 
                             if ($stmt = mysqli_prepare($con, $query)) {
@@ -220,7 +220,7 @@ $reply_result = mysqli_query($con, $query);
                                 if ($ticket_data = mysqli_fetch_assoc($result)) {
                                     // Check if the ticket is resolved
                                     if ($ticket_data['status'] == 'Resolved') {
-                                        echo '<span class="number pull-right"><b>Resolved on: ' . date('F j, Y g:i A', strtotime($ticket_data['resolved_date'])) . '</b></span>' . '<br>';
+                                        echo '<span class="number pull-right"><b>Resolved on: ' . date('F j, Y g:i A', strtotime($ticket_data['updated_date'])) . '</b></span>' . '<br>';
                                         echo '<span class="number pull-right"><b>Resolved by: ' . htmlspecialchars($ticket_data['firstname']) . ' ' . htmlspecialchars($ticket_data['lastname']) . '</b></span>';
                                     }
                                 } else {
@@ -233,8 +233,6 @@ $reply_result = mysqli_query($con, $query);
                             }
                         }
                         ?>
-
-
 
                         <!-- Delete Button (visible only if status is "Cancelled") -->
                         <?php if ($status == 'Cancelled') : ?>
@@ -277,13 +275,13 @@ $reply_result = mysqli_query($con, $query);
                                     </div>
                                     <div class="modal-body">
                                         <form id="status-form" action="crud.php" method="POST">
-                                            <input type="hidden" class="form-control" name="resolveby" value="<?php echo $userid1 ?>">
+                                            <input type="hidden" class="form-control" name="updatedby" value="<?php echo $userid1 ?>">
                                             <label for="Status" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
                                             <select id="Status" name="status" class="form-control" required>
                                                 <option value="" disabled>Select your Status</option>
                                                 <?php
                                                 $currentStatus = $ticket_data['status'];
-                                                $statusOptions = array("Pending", "Unresolved", "Resolved");
+                                                $statusOptions = array("Unresolved", "Resolved");
                                                 foreach ($statusOptions as $option) {
                                                     $selected = ($option == $currentStatus) ? 'selected' : '';
                                                     echo "<option value=\"$option\" $selected>$option</option>";
@@ -317,7 +315,7 @@ $reply_result = mysqli_query($con, $query);
 
                     <div class="header-buttons">
                         <!-- Reply Button -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" <?php if ($status == 'Cancelled') {
                                                                                                                                 echo 'disabled';
                                                                                                                             } ?>>Reply</button>
                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#cancelModal" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
@@ -367,7 +365,7 @@ $reply_result = mysqli_query($con, $query);
                                         <input type="hidden" class="form-control" name="requestor" placeholder="Requestor" value="<?php echo $requestor ?>">
                                         <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
                                         Are you sure you want to cancel this ticket? <br> <br>
-                                        <textarea class="form-control" name="cancel_reason" rows="4" placeholder="Reason to Cancel" required></textarea>
+                                        <textarea class="form-control" name="cancel_reason" rows="4" placeholder="Reason" required></textarea>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLose</button>
@@ -399,8 +397,8 @@ $reply_result = mysqli_query($con, $query);
 
                     <?php
                     $result = mysqli_query($con, $sql1);
-                    $ticketdate = $ticket_data['date']; 
-                    $directory_path = "ticket_files/ticket_" . $ticket_id . "_" . $ticket_data['requestor'] . "_" . date("F j, Y",strtotime($ticketdate));
+                    $ticketdate = $ticket_data['date_created'];
+                    $directory_path = "ticket_files/ticket_" . $ticket_id . "_" . $ticket_data['requestor'] . "_" . date("F j, Y", strtotime($ticketdate));
                     if (is_dir($directory_path)) {
                         $files = scandir($directory_path);
                         foreach ($files as $file) {

@@ -179,7 +179,7 @@ else if (isset($_POST['change_status'])) {
     $ticket_id = $_POST['ticket_id'];
     $status = $_POST['status']; // Retrieve the selected status from the form data
     $email = $_POST['email'];
-    $resolveby = $_POST['resolveby'];
+    $updatedby = $_POST['updatedby'];
 
     // Use prepared statements to prevent SQL injection
     $updateUser_query = "UPDATE ticket SET status=? WHERE ticket_id=?";
@@ -200,10 +200,10 @@ else if (isset($_POST['change_status'])) {
         mysqli_stmt_close($stmt);
 
         if ($status == 'Resolved') {
-            $resolved_by = $resolveby; // Get the user ID of the resolver
-            $sql = "UPDATE ticket SET resolved_date = NOW(), resolved_by = ? WHERE ticket_id = ?";
+            $updated_by = $updatedby; // Get the user ID of the resolver
+            $sql = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
             $stmt = mysqli_prepare($con, $sql);
-            mysqli_stmt_bind_param($stmt, "ii", $resolved_by, $ticket_id);
+            mysqli_stmt_bind_param($stmt, "ii", $updated_by, $ticket_id);
             $run = mysqli_stmt_execute($stmt);
         }
 
@@ -311,11 +311,22 @@ else if (isset($_POST['change_status'])) {
         mysqli_stmt_execute($stmt_update);
         mysqli_stmt_close($stmt_update);
 
-        $cancel_query = "UPDATE ticket SET cancel_reason = '$cancel_reason' WHERE ticket_id = '$ticket_id'";
+        $status = 'Cancelled'; // Assign value to $status variable here
+
+        $cancel_query = "UPDATE ticket SET reason = '$cancel_reason' WHERE ticket_id = '$ticket_id'";
         $cancel_query_run = mysqli_query($con, $cancel_query);
 
+        if($status == 'Cancelled')
+        {
+            $updated_by = $requestor; // Get the user ID of the resolver
+            $sql = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $updated_by, $ticket_id);
+            $run = mysqli_stmt_execute($stmt);
+        }
+
         echo '<script>alert("Ticket Cancelled.");</script>';
-        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
+        // echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
         exit();
     } else {
         // Unauthorized access

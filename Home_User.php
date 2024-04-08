@@ -139,8 +139,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <th class="text-center">Subject</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Date Created</th>
-                            <th class="text-center">Resolved by</th>
-                            <th class="text-center">Resolved date</th>
+                            <th class="text-center">Updated by</th>
+                            <th class="text-center">Updated Date</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -151,7 +151,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             foreach ($ticket as $item) {
                                 $resolved_by_query = "SELECT t.*, u.firstname, u.lastname 
                               FROM ticket t 
-                              INNER JOIN user u ON t.resolved_by = u.user_id 
+                              INNER JOIN user u ON t.updated_by = u.user_id 
                               WHERE t.ticket_id = " . $item['ticket_id'];
                                 $resolved_result = mysqli_query($con, $resolved_by_query);
                                 $resolved_row = mysqli_fetch_assoc($resolved_result);
@@ -180,8 +180,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     <td class="text-center">
                                         <?= (!empty($resolved_row['firstname']) && !empty($resolved_row['lastname'])) ? $resolved_row['firstname'] . ' ' . $resolved_row['lastname'] : ''; ?>
                                     </td>
-                                    <td class="text-center"><?php if (!empty($item['resolved_date'])) {
-                                                                echo date('F j, Y h:i A', strtotime($item['resolved_date']));
+                                    <td class="text-center"><?php if (!empty($item['updated_date'])) {
+                                                                echo date('F j, Y h:i A', strtotime($item['updated_date']));
                                                             } ?></td>
                                 </tr>
                         <?php
