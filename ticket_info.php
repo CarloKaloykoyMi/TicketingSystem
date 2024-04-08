@@ -399,7 +399,8 @@ $reply_result = mysqli_query($con, $query);
 
                     <?php
                     $result = mysqli_query($con, $sql1);
-                    $directory_path = "ticket_files/ticket_" . $ticket_id . "_" . $ticket_data['requestor'] . "_" . date("F j, Y");
+                    $ticketdate = $ticket_data['date']; 
+                    $directory_path = "ticket_files/ticket_" . $ticket_id . "_" . $ticket_data['requestor'] . "_" . date("F j, Y",strtotime($ticketdate));
                     if (is_dir($directory_path)) {
                         $files = scandir($directory_path);
                         foreach ($files as $file) {
