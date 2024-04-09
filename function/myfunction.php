@@ -42,6 +42,14 @@ function getUnresolvedStatus()
     return $query_run = mysqli_query($con, $query);
 }
 
+function getCanceledStatus()
+{
+    global $con;
+    $query = "SELECT * FROM `ticket` WHERE `status` = 'Cancelled' ORDER BY `ticket_id` DESC, `date_created` ASC";
+
+    return $query_run = mysqli_query($con, $query);
+}
+
 function getRecent()
 {
     global $con;
