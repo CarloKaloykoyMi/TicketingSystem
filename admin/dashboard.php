@@ -83,11 +83,22 @@ $result = mysqli_query($con, $query);
 // Prepare data for the chart
 $labels = [];
 $data = [];
+$colors = [];
+
+$labelColors = array(
+    'Cancelled' => 'rgba(255, 99, 132)',
+    'Pending' => 'rgba(255, 159, 64)',
+    'Resolved' => 'rgba(75, 192, 192)',
+    'Unresolved' => 'rgba(54, 162, 235)'
+);
 
 while ($row = mysqli_fetch_assoc($result)) {
-    $labels[] = $row['status'];
+    $label = $row['status'] . ' (' . $row['count'] . ')';
+    $labels[] = $label;
     $data[] = $row['count'];
+    $colors[] = $labelColors[$row['status']];
 }
+
 
 // ----------------------------------------------------------------------------------------------
 // Fetch data for "Pending" tickets from the database
@@ -290,17 +301,16 @@ while ($row = mysqli_fetch_assoc($result)) {
 
                     <!-- Add JavaScript to create the chart -->
                     <script>
-                        
                         var ctx = document.getElementById('ticketChart').getContext('2d');
                         var ticketChart = new Chart(ctx, {
                             type: 'bar',
                             data: {
                                 labels: <?php echo json_encode($labels); ?>,
                                 datasets: [{
-                                    label: 'Ticket Status',
+                                    label: 'Close',
                                     data: <?php echo json_encode($data); ?>,
-                                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                                    borderColor: 'rgba(75, 192, 192, 1)',
+                                    backgroundColor: <?php echo json_encode($colors); ?>,
+                                    borderColor: <?php echo json_encode($colors); ?>,
                                     borderWidth: 1
                                 }]
                             },
@@ -317,6 +327,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                         });
                     </script>
 
+
+
                     <!-- Add JavaScript to create the chart -->
                     <script>
                         var ctx = document.getElementById('pendingTicketsChart').getContext('2d');
@@ -327,8 +339,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 datasets: [{
                                     label: 'Pending Tickets',
                                     data: <?php echo json_encode($data1); ?>,
-                                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Customize the color as needed
-                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    backgroundColor: 'rgba(255, 159, 64)', // Customize the color as needed
+                                    borderColor: 'rgba(255, 159, 64)',
                                     borderWidth: 1
                                 }]
                             },
@@ -336,6 +348,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 scales: {
                                     y: {
                                         beginAtZero: true,
+                                        responsive: true,
                                         ticks: {
                                             stepSize: 1
                                         }
@@ -354,8 +367,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 datasets: [{
                                     label: 'Cancelled Tickets',
                                     data: <?php echo json_encode($data_cancel); ?>,
-                                    backgroundColor: 'rgba(255, 99, 132, 0.2)', // Customize the color as needed
-                                    borderColor: 'rgba(255, 99, 132, 1)',
+                                    backgroundColor: 'rgba(255, 99, 132)', // Customize the color as needed
+                                    borderColor: 'rgba(255, 99, 132)',
                                     borderWidth: 1
                                 }]
                             },
@@ -380,8 +393,8 @@ while ($row = mysqli_fetch_assoc($result)) {
                                 labels: <?php echo json_encode($labels2); ?>,
                                 datasets: [{
                                     data: <?php echo json_encode($data2); ?>,
-                                    backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'], // Customize colors as needed
-                                    borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+                                    backgroundColor: ['rgba(75, 192, 192)', 'rgba(54, 162, 235)'], // Customize colors as needed
+                                    borderColor: ['rgba(75, 192, 192)', 'rgba(54, 162, 235, 1)'],
                                     borderWidth: 1
                                 }]
                             },
