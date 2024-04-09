@@ -47,9 +47,6 @@ while ($row = mysqli_fetch_array($result)) {
     <!-- LineIcons -->
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
-    <!-- Font Awesome -->
-    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
-
     <!--css -->
     <link rel="stylesheet" href="css/sidebar.css">
 
@@ -364,6 +361,9 @@ while ($row = mysqli_fetch_array($result)) {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <!-- Font Awesome -->
+    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
 
     <script>
         $(document).ready(function() {
