@@ -30,8 +30,6 @@ while ($row = mysqli_fetch_array($result)) {
     $department = $row['department'];
     $contact = $row['contact'];
 }
-$atsql = "SELECT * FROM audit_trail WHERE user_id = '$user_id' ORDER BY `Date` desc";
-$atresult = mysqli_query($con, $atsql);
 ?>
 
 <!DOCTYPE html>
@@ -42,24 +40,21 @@ $atresult = mysqli_query($con, $atsql);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <!-- LineIcons -->
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+
+    <!-- Font Awesome -->
+    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
 
     <!--css -->
     <link rel="stylesheet" href="css/sidebar.css">
-    <!-- datatable css -->
-    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
-    <script defer src="js/table.js"></script>
+
 </head>
 <style>
-    body h2 {
-        font-family: "Arial", sans-serif;
-    }
-
     .container {
         margin-top: 20px;
         background-color: #fff;
@@ -97,16 +92,6 @@ $atresult = mysqli_query($con, $atsql);
 
     button:hover {
         background-color: #0056b3;
-    }
-
-    .logs-container {
-        margin-top: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        max-width: 800px;
-        margin: 0 auto;
     }
 
     .nav-tabs-bordered .nav-link:hover {
@@ -151,7 +136,8 @@ $atresult = mysqli_query($con, $atsql);
                                     <div class="card" style="width: 15rem; background-color:#555;">
                                         <img src='<?php echo "../Images/" . $user_id . "-" . $username . "/" . $img ?>' class="card-img-top" alt="Profile" style="max-width: 100%; max-height: 220px;">
                                     </div>
-                                    <h2><?php echo $name ?></h2>
+                                    <br>
+                                    <h3><?php echo $name ?></h3>
                                 </div>
                             </div>
                         </div>
@@ -181,37 +167,37 @@ $atresult = mysqli_query($con, $atsql);
                                             <h5 class="card-title"><b>Profile Details:</b></h5>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label "><i class="fa-solid fa-user"></i> First Name:</div>
+                                                <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> First Name:</div>
                                                 <div class="col-lg-3 col-md-5"><?php echo $fn ?></div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label "><i class="fa-solid fa-user"></i> Middle Initial:</div>
+                                                <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> Middle Initial:</div>
                                                 <div class="col-lg-3 col-md-5"><?php echo $ml ?></div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label "><i class="fa-solid fa-user"></i> Last Name:</div>
+                                                <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> Last Name:</div>
                                                 <div class="col-lg-3 col-md-5"><?php echo $lname ?></div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label"><i class="fa-solid fa-building"></i> Company:</div>
-                                                <div class="col-lg-3 col-md-5"><?php echo $company ?></div>
+                                                <div class="col-lg-4 col-md-5 label"><i class="fas fa-building"></i> Company:</div>
+                                                <div class="col-lg-5"><?php echo $company ?></div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label"><i class="fa-solid fa-location-dot"></i> Branch:</div>
+                                                <div class="col-lg-4 col-md-5 label"><i class="fas fa-location-dot"></i> Branch:</div>
                                                 <div class="col-lg-3 col-md-5"><?php echo $branch ?></div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label"><i class="fa-solid fa-users"></i> Department:</div>
+                                                <div class="col-lg-4 col-md-5 label"><i class="fas fa-users"></i> Department:</div>
                                                 <div class="col-lg-3 col-md-5"><?php echo $department ?></div>
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label"><i class="fa-solid fa-phone"></i> Contact Number :</div>
+                                                <div class="col-lg-4 col-md-5 label"><i class="fas fa-phone"></i> Contact Number :</div>
                                                 <div class="col-lg-4 col-md-5"><?php echo $contact ?></div>
                                             </div>
 
@@ -254,7 +240,7 @@ $atresult = mysqli_query($con, $atsql);
                                                 </div>
                                                 <div class="row mb-3">
                                                     <label for="company" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-building"></i> Company</label>
-                                                    <div class="col-md-8 col-lg-8">
+                                                    <div class="col-md-8 col-lg">
                                                         <?php
                                                         $companies = getAll("company");
 
@@ -372,67 +358,38 @@ $atresult = mysqli_query($con, $atsql);
         </div>
     </div>
 
-    <div class="logs-container mt-4" style="padding: 20px;">
-        <h3>User Action Logs</h3>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="js/sidebar.js"></script>
 
-        <div class="table-responsive">
-            <table id="example" class="table table-striped">
-                <thead>
-                    <tr>
-                        <th>Action</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody id="userLogs">
-                    <?php
-                    while ($atrow = mysqli_fetch_array($atresult)) {
-                        $action = $atrow['Action'];
-                        $date = date('F j, Y h:i:s A', strtotime($atrow['Date']));
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#company').change(function() {
+                var companyName = $(this).val();
 
-                        echo "<tr>
-            <td>$action</td>
-            <td>$date</td>
-          </tr>";
+                $.ajax({
+                    url: 'get_branch.php',
+                    type: 'POST',
+                    data: {
+                        company_name: companyName
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#branch').html(response);
+                        $('#branchGroup').toggle(response.trim() !== '');
+                    },
+                    error: function() {
+                        alert('Error fetching branches.');
                     }
-
-                    echo '    </tbody>
-    </table>
-</div>'; ?>
-        </div>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-        <script src="js/sidebar.js"></script>
-
-        <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <script>
-            $(document).ready(function() {
-                $('#company').change(function() {
-                    var companyName = $(this).val();
-
-                    $.ajax({
-                        url: 'get_branch.php',
-                        type: 'POST',
-                        data: {
-                            company_name: companyName
-                        },
-                        success: function(response) {
-                            console.log(response);
-                            $('#branch').html(response);
-                            $('#branchGroup').toggle(response.trim() !== '');
-                        },
-                        error: function() {
-                            alert('Error fetching branches.');
-                        }
-                    });
                 });
             });
-        </script>
+        });
+    </script>
 
-<script>
+    <script>
         function restrictToLettersWithSingleSpace(input) {
             var lastNameNote = input.parentNode.querySelector('.note');
             var inputValue = input.value;
@@ -453,7 +410,7 @@ $atresult = mysqli_query($con, $atsql);
         }
     </script>
 
-<script>
+    <script>
         function restrictToNumbers(input) {
             var phoneNumberNote = input.parentNode.querySelector('.note');
             var inputValue = input.value;
