@@ -85,7 +85,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         foreach ($ticket as $item) {
                                     ?>
                                             <tr>
-                                                <td><?= date('F j, Y h:i:s A', strtotime($item['date'])); ?></td>
+                                                <td><?= date('F j, Y h:i:s A', strtotime($item['date_created'])); ?></td>
                                                 <td><?= $item['requestor']; ?></td>
                                                 <td><?= $item['subject']; ?></td>
                                                 <td><?= $item['to_dept']; ?></td>
