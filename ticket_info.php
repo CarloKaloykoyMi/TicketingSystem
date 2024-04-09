@@ -231,6 +231,36 @@ $reply_result = mysqli_query($con, $query);
                                 // Error preparing statement
                                 echo "Error preparing statement.";
                             }
+                        } elseif ($ticket_data['status'] == 'Unresolved') {
+                            $query = "SELECT t.*, u.firstname, u.lastname 
+                            FROM ticket t
+                            INNER JOIN user u ON t.updated_by = u.user_id 
+                            WHERE t.ticket_id = ?";
+
+                            if ($stmt = mysqli_prepare($con, $query)) {
+                                // Bind the $ticket_id parameter
+                                mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+
+                                // Execute
+                                mysqli_stmt_execute($stmt);
+
+                                // Bind the results
+                                $result = mysqli_stmt_get_result($stmt);
+
+                                if ($ticket_data = mysqli_fetch_assoc($result)) {
+                                    // Check if the ticket is Unresolved
+                                    if ($ticket_data['status'] == 'Unresolved') {
+                                        echo '<span class="number pull-right"><b>Unresolved on: ' . date('F j, Y g:i A', strtotime($ticket_data['updated_date'])) . '</b></span>' . '<br>';
+                                        echo '<span class="number pull-right"><b>Unresolved by: ' . htmlspecialchars($ticket_data['firstname']) . ' ' . htmlspecialchars($ticket_data['lastname']) . '</b></span>';
+                                    }
+                                } else {
+                                    // Ticket not found or other error handling
+                                    echo 'Ticket not found or error fetching ticket.';
+                                }
+                            } else {
+                                // Error preparing statement
+                                echo "Error preparing statement.";
+                            }
                         }
                         ?>
 

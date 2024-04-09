@@ -207,6 +207,14 @@ else if (isset($_POST['change_status'])) {
             $run = mysqli_stmt_execute($stmt);
         }
 
+        if ($status == 'Unresolved') {
+            $updated_by = $updatedby; // Get the user ID of the resolver
+            $sql = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $updated_by, $ticket_id);
+            $run = mysqli_stmt_execute($stmt);
+        }
+
         // Send email notification
         require "phpmailer/PHPMailerAutoload.php"; // Include the PHPMailer library
         $mail = new PHPMailer; // Create a new PHPMailer instance
