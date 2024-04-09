@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 08, 2024 at 11:19 AM
+-- Generation Time: Apr 09, 2024 at 11:46 AM
 -- Server version: 10.4.32-MariaDB
--- PHP Version: 8.0.30
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -414,24 +414,6 @@ CREATE TABLE `file_attachment` (
   `file_name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `file_attachment`
---
-
-INSERT INTO `file_attachment` (`file_id`, `user_id`, `ticket_id`, `file_name`) VALUES
-(1, 35, 1000, 'Screenshot 2024-04-06 171649.png'),
-(2, 35, 1000, 'example.docx'),
-(3, 35, 1000, 'example.pdf'),
-(4, 35, 1001, 'example.pdf'),
-(5, 35, 1002, 'example.xlsx'),
-(6, 35, 1003, 'example.pdf'),
-(7, 35, 1004, 'example.pdf'),
-(8, 35, 1005, 'Screenshot 2024-04-06 171649.png'),
-(9, 35, 1005, 'example.docx'),
-(10, 35, 1006, 'example.docx'),
-(11, 35, 1006, 'example.pdf'),
-(12, 37, 1007, 'example.PNG');
-
 -- --------------------------------------------------------
 
 --
@@ -455,24 +437,6 @@ CREATE TABLE `ticket` (
   `updated_by` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `ticket`
---
-
-INSERT INTO `ticket` (`ticket_id`, `user_id`, `subject`, `to_company`, `requestor`, `concern`, `status`, `date_created`, `to_dept`, `email`, `to_branch`, `reason`, `updated_date`, `updated_by`) VALUES
-(1000, 35, 'Change', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Maecenas lorem mauris, malesuada ut turpis et, egestas lobortis orci. In auctor, quam id lacinia viverra, nulla risus porttitor erat, in fringilla mauris mi et nunc. Phasellus in venenatis velit, id pulvinar ante. Fusce felis erat, accumsan id tincidunt eu, aliquet sed neque. Nullam ut tellus feugiat, pharetra massa vitae, facilisis est. Nunc at magna vitae sapien pellentesque accumsan id at augue. Phasellus risus odio, interdum sed elit vel, dictum scelerisque leo. Donec ultricies lorem ut malesuada posuere.', 'Resolved', '2024-04-07 06:57:25', 'MIS-Department', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-07 07:15:42', '37'),
-(1003, 35, 'Need', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Morbi auctor cursus ipsum. Aenean facilisis placerat viverra. Ut felis est, efficitur sit amet nunc vitae, ornare gravida mauris. Praesent at efficitur augue.', 'Resolved', '2024-04-07 07:12:19', 'MIS IT', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-07 11:18:22', '35'),
-(1004, 35, 'hello', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Nullam dignissim accumsan purus, sed venenatis nulla vehicula nec. Nulla nec tempus nisi. Curabitur sed facilisis elit, sit amet interdum lorem', 'Resolved', '2024-04-07 07:13:39', 'MIS IT', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-07 11:19:32', '34'),
-(1005, 35, 'Sample', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Sed commodo eros a elit maximus ultricies. Maecenas nec dui ac eros maximus maximus eget nec sem. Nullam lobortis pellentesque ultrices.', 'Resolved', '2024-04-07 11:01:02', 'MIS IT', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-08 07:11:13', ''),
-(1006, 35, 'Smaple', 'Comfac Global Group', 'Mhargielyn Miñeque', 'Sed commodo eros a elit maximus ultricies. Maecenas nec dui ac eros maximus maximus eget nec sem. Nullam lobortis pellentesque ultrices.', 'Resolved', '2024-04-07 11:02:17', 'MIS IT', 'mhargielyn.mineque@my.jru.edu', 'Libertad', '', '2024-04-08 03:00:35', '37'),
-(1007, 37, 'changeee', 'Cornersteel Systems Corporation', 'John Carlo Astoveza', 'Sample', 'Cancelled', '2024-04-08 02:48:51', 'MIS IT', 'laguinlinastovezajocar@gmail.com', 'Makati', 'try', '2024-04-08 02:58:09', ''),
-(1008, 37, 'changeee', 'Comfac Global Group', 'John Carlo Astoveza', 'lorem', 'Resolved', '2024-04-08 07:12:08', 'MIS IT', 'laguinlinastovezajocar@gmail.com', 'Libertad', '', '2024-04-08 07:13:42', ''),
-(1009, 37, 'Sample Presentation', 'Comfac Technology Options (CTO)', 'John Carlo Astoveza', 'hello', 'Resolved', '2024-04-08 07:15:20', 'MIS IT', 'laguinlinastovezajocar@gmail.com', 'Libertad', '', '2024-04-08 07:15:26', ''),
-(1010, 37, 'Sample Presentation', 'Comfac Technology Options (CTO)', 'John Carlo Astoveza', 'lorem', 'Resolved', '2024-04-08 07:19:19', 'MIS IT', 'laguinlinastovezajocar@gmail.com', 'Libertad', '', '2024-04-08 07:19:26', '37'),
-(1011, 37, 'changeee', 'Comfac Global Group', 'John Carlo Astoveza', 'aa', 'Resolved', '2024-04-08 07:21:43', 'MIS IT', 'laguinlinastovezajocar@gmail.com', 'Libertad', '', '2024-04-08 07:21:50', '37'),
-(1012, 37, 'changeee', 'Comfac Global Group', 'John Carlo Astoveza', 'aaa', 'Cancelled', '2024-04-08 07:36:27', 'MIS IT', 'laguinlinastovezajocar@gmail.com', 'Libertad', 'cancel', '2024-04-08 07:40:13', ''),
-(1013, 37, 'changeee', 'Comfac Technology Options (CTO)', 'John Carlo Astoveza', 'aa', 'Cancelled', '2024-04-08 07:41:55', 'MIS IT', 'laguinlinastovezajocar@gmail.com', 'Libertad', 'h', '2024-04-08 07:43:42', '0');
-
 -- --------------------------------------------------------
 
 --
@@ -486,13 +450,6 @@ CREATE TABLE `ticket_reply` (
   `reply` text NOT NULL,
   `Name` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `ticket_reply`
---
-
-INSERT INTO `ticket_reply` (`id`, `ticket_id`, `user_id`, `reply`, `Name`) VALUES
-(1, 1000, 37, 'done', 'John Carlo Astoveza');
 
 -- --------------------------------------------------------
 
@@ -628,19 +585,19 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `file_attachment`
 --
 ALTER TABLE `file_attachment`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1014;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `ticket_reply`
 --
 ALTER TABLE `ticket_reply`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
