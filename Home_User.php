@@ -178,7 +178,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     </td>
                                     <td class="text-center"><?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td>
                                     <td class="text-center">
-                                        <?= (!empty($resolved_row['firstname']) && !empty($resolved_row['lastname'])) ? $resolved_row['firstname'] . ' ' . $resolved_row['lastname'] : ''; ?>
+                                        <?= (!empty($resolved_row['firstname']) && !empty($resolved_row['lastname'])) ? 'Resolved by ' . $resolved_row['firstname'] . ' ' . $resolved_row['lastname'] : ''; ?>
                                     </td>
                                     <td class="text-center"><?php if (!empty($item['updated_date'])) {
                                                                 echo date('F j, Y h:i A', strtotime($item['updated_date']));
