@@ -178,7 +178,11 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     </td>
                                     <td class="text-center"><?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td>
                                     <td class="text-center">
-                                        <?= (!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : ''; ?>
+                                        <?= (!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : '';
+                                        if ($status == 'Cancelled') {
+                                            echo 'Cancelled by ' . $item['updated_by'] . ' due to ' . $item['reason'];
+                                        }
+                                        ?>
                                     </td>
                                     <td class="text-center"><?php if (!empty($item['updated_date'])) {
                                                                 echo date('F j, Y h:i A', strtotime($item['updated_date']));

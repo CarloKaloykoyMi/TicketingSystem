@@ -141,7 +141,6 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     $sql = "INSERT INTO audit_trail (user_id,action) VALUES('$user_id','$action');"; // Insert the action into the audit trail table
     $atrun = mysqli_query($con, $sql);
     echo "<script> location.href='User_Profile.php'; </script>";
-    
 } elseif (isset($_POST['saveChanges'])) {
     $userid = $_POST['userid'];
     $fn = $_POST['firstName'];
@@ -173,9 +172,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         // PHP code failed to execute
         echo '<script>alert("Error Changing. Please try again.");</script>';
     }
-}
-
-else if (isset($_POST['change_status'])) {
+} else if (isset($_POST['change_status'])) {
     $ticket_id = $_POST['ticket_id'];
     $status = $_POST['status']; // Retrieve the selected status from the form data
     $email = $_POST['email'];
@@ -319,29 +316,32 @@ else if (isset($_POST['change_status'])) {
         mysqli_stmt_execute($stmt_update);
         mysqli_stmt_close($stmt_update);
 
-        $status = 'Cancelled'; // Assign value to $status variable here
+        // Update updated_date and updated_by columns
+        $updated_by = $requestor; // Get the user ID of the resolver
+        $sql_update = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
+        $stmt_update = mysqli_prepare($con, $sql_update);
+        mysqli_stmt_bind_param($stmt_update, "si", $updated_by, $ticket_id);
+        $run_update = mysqli_stmt_execute($stmt_update);
+        mysqli_stmt_close($stmt_update);
 
+        if (!$run_update) {
+            die('Error updating ticket: ' . mysqli_error($con));
+        }
+
+        // Update the reason for cancellation
         $cancel_query = "UPDATE ticket SET reason = '$cancel_reason' WHERE ticket_id = '$ticket_id'";
         $cancel_query_run = mysqli_query($con, $cancel_query);
 
-        if($status == 'Cancelled')
-        {
-            $updated_by = $requestor; // Get the user ID of the resolver
-            $sql = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
-            $stmt = mysqli_prepare($con, $sql);
-            mysqli_stmt_bind_param($stmt, "ii", $updated_by, $ticket_id);
-            $run = mysqli_stmt_execute($stmt);
-        }
-
         echo '<script>alert("Ticket Cancelled.");</script>';
-        // echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
+        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
         exit();
     } else {
         // Unauthorized access
         echo '<script>alert("You are not authorized to cancel this ticket.");</script>';
         echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
     }
-} else if (isset($_POST['ChangePassword'])) {
+}
+ else if (isset($_POST['ChangePassword'])) {
     $user_id = $_POST['userid'];
     $oldpass = $_POST['password'];
     $newpass = $_POST['newpassword'];

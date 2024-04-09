@@ -194,7 +194,7 @@ $reply_result = mysqli_query($con, $query);
                                 ?>
                             </b>
                         </span>
-                        <!-- Button trigger modal -->
+                        <!-- Updated Status modal -->
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 10px;" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
                                                                                                                                                                             echo 'disabled';
                                                                                                                                                                         } ?>>Update Status
@@ -264,6 +264,14 @@ $reply_result = mysqli_query($con, $query);
                         }
                         ?>
 
+                        <?php
+                        if ($status == 'Cancelled') {
+                            echo '<span class="number pull-right"><b>Cancelled on: ' . date('F j, Y g:i A', strtotime($ticket_data['updated_date'])) . '</b></span>' . '<br>';
+                            echo '<span class="number pull-right"><b>Cancelled by: ' . htmlspecialchars($requestor) . '</b></span>';
+                        }
+                        ?>
+
+                        <br>
                         <!-- Delete Button (visible only if status is "Cancelled") -->
                         <?php if ($status == 'Cancelled') : ?>
                             <form id="deleteForm" action="crud.php" method="POST" style="display: inline;">
