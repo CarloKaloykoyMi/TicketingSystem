@@ -278,7 +278,7 @@ $reply_result = mysqli_query($con, $query);
                         <br>
                         <!-- Delete Button (visible only if status is "Cancelled") -->
                         <?php if ($status == 'Cancelled') : ?>
-                            <form id="deleteForm" action="crud.php" method="POST" style="display: inline;">
+                            <form id="deleteForm" action="code.php" method="POST" style="display: inline;">
                                 <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
                                 <button type="button" class="btn btn-danger" style="padding: 5px 10px; font-size: 10px;" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">Delete Ticket</button>
                             </form>
@@ -292,7 +292,7 @@ $reply_result = mysqli_query($con, $query);
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
-                                            <form action="crud.php" method="POST">
+                                            <form action="code.php" method="POST">
                                                 <input type="hidden" class="form-control" name="requestor" placeholder="Requestor" value="<?php echo $requestor ?>">
                                                 <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
                                                 Are you sure you want to delete this ticket?
@@ -316,8 +316,8 @@ $reply_result = mysqli_query($con, $query);
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form id="status-form" action="crud.php" method="POST">
-                                            <input type="hidden" class="form-control" name="updatedby" value="<?php echo $userid1 ?>">
+                                        <form id="status-form" action="code.php" method="POST">
+                                            <input type="text" class="form-control" name="updatedby" value="<?php echo $user_id ?>">
                                             <label for="Status" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
                                             <select id="Status" name="status" class="form-control" required>
                                                 <option value="" disabled>Select your Status</option>
@@ -375,7 +375,7 @@ $reply_result = mysqli_query($con, $query);
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="crud.php" method="POST">
+                                    <form action="code.php" method="POST">
                                         <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
                                         <input type="hidden" name="userid" value="<?php echo $userid1; ?>">
                                         <input type="text" name="sender" style="display: none;" value="<?php echo $fname . " " . $lname; ?>">
@@ -403,7 +403,7 @@ $reply_result = mysqli_query($con, $query);
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="crud.php" method="POST">
+                                    <form action="code.php" method="POST">
                                         <input type="hidden" class="form-control" name="requestor" placeholder="Requestor" value="<?php echo $requestor ?>">
                                         <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
                                         Are you sure you want to cancel this ticket? <br> <br>

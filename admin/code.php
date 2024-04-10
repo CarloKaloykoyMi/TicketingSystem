@@ -144,6 +144,8 @@ if (isset($_POST['add_company'])) {
 } else if (isset($_POST['change_status'])) {
     $ticket_id = $_POST['ticket_id'];
     $status = $_POST['status']; // Retrieve the selected status from the form data
+    $email = $_POST['email'];
+    $updatedby = $_POST['updatedby'];
 
     // Use prepared statements to prevent SQL injection
     $updateUser_query = "UPDATE ticket SET status=? WHERE ticket_id=?";
@@ -154,12 +156,118 @@ if (isset($_POST['add_company'])) {
     $updateUser_query_run = mysqli_stmt_execute($stmt);
 
     if ($updateUser_query_run) {
-        echo '<script>alert("Status updated successfully.");</script>';
-        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '";</script>';
-        exit();
+        // Retrieve requestor email based on ticket_id
+        $getRequestorEmail_query = "SELECT email FROM ticket WHERE ticket_id=?";
+        $stmt = mysqli_prepare($con, $getRequestorEmail_query);
+        mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+        mysqli_stmt_execute($stmt);
+        mysqli_stmt_bind_result($stmt, $email);
+        mysqli_stmt_fetch($stmt);
+        mysqli_stmt_close($stmt);
+
+        if ($status == 'Resolved') {
+            $updated_by = $updatedby; // Get the user ID of the resolver
+            $sql = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $updated_by, $ticket_id);
+            $run = mysqli_stmt_execute($stmt);
+        }
+
+        if ($status == 'Unresolved') {
+            $updated_by = $updatedby; // Get the user ID of the resolver
+            $sql = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
+            $stmt = mysqli_prepare($con, $sql);
+            mysqli_stmt_bind_param($stmt, "ii", $updated_by, $ticket_id);
+            $run = mysqli_stmt_execute($stmt);
+        }
+
+        // Send email notification
+        require "../phpmailer/PHPMailerAutoload.php"; // Include the PHPMailer library
+        $mail = new PHPMailer; // Create a new PHPMailer instance
+
+        $mail->isSMTP(); // Enable SMTP
+        $mail->Host = 'smtp.gmail.com'; // Specify the SMTP server
+        $mail->Port = 587; // Set the SMTP port
+        $mail->SMTPAuth = true; // Enable SMTP authentication
+        $mail->SMTPSecure = 'tls'; // Enable TLS encryption
+
+        $mail->Username = 'odetocode04@gmail.com'; // email
+        $mail->Password = 'mnugjcpwaslqthdn'; // email password
+
+        $mail->setFrom('no-reply@gmail.com', 'no-reply'); // Set the sender of the email
+        $mail->addAddress($email); // Send email to the requestor
+
+        $mail->isHTML(true); // Set email format to HTML
+        $mail->Subject = "Ticket Status Updated"; // Set the email subject
+        $mail->Body = "Dear User,<br><br>Your ticket with ID #$ticket_id has been updated to '$status'.<br><br>Thank you for using our system.<br><br>Best regards,<br>CGG E-Ticketing"; // Set the email body
+
+        // Send email
+        if (!$mail->send()) { // Check if the email was sent
+            echo '<script>alert("Error sending email notification. Please try again.");</script>';
+        } else {
+            echo '<script>alert("Status updated successfully. Email notification sent.");</script>';
+            echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '";</script>';
+            exit();
+        }
     } else {
         // PHP code failed to execute
-        echo '<script>alert("Error updating user request. Please try again.");</script>';
+        echo '<script>alert("Error updating ticket status. Please try again.");</script>';
+    }
+} else if (isset($_POST['cancel_ticket'])) {
+    $ticket_id = $_POST['ticket_id'];
+    $requestor = $_POST['requestor'];
+    $cancel_reason = $_POST['cancel_reason'];
+
+    // Fetch requestor name from the ticket
+    $sql = "SELECT requestor FROM ticket WHERE ticket_id = ?";
+    $stmt = mysqli_prepare($con, $sql);
+
+    if (!$stmt) {
+        die('Error in preparing SQL query: ' . mysqli_error($con));
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_bind_result($stmt, $db_requestor);
+    mysqli_stmt_fetch($stmt);
+    mysqli_stmt_close($stmt);
+
+    // Check if the requestor matches the currently authenticated user
+    if ($db_requestor === $requestor) {
+        // Update the ticket status to 'cancelled'
+        $sql_update = "UPDATE ticket SET status = 'Cancelled' WHERE ticket_id = ?";
+        $stmt_update = mysqli_prepare($con, $sql_update);
+
+        if (!$stmt_update) {
+            die('Error in preparing SQL query: ' . mysqli_error($con));
+        }
+        mysqli_stmt_bind_param($stmt_update, "i", $ticket_id);
+        mysqli_stmt_execute($stmt_update);
+        mysqli_stmt_close($stmt_update);
+
+        // Update updated_date and updated_by columns
+        $updated_by = $requestor; // Get the user ID of the resolver
+        $sql_update = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
+        $stmt_update = mysqli_prepare($con, $sql_update);
+        mysqli_stmt_bind_param($stmt_update, "si", $updated_by, $ticket_id);
+        $run_update = mysqli_stmt_execute($stmt_update);
+        mysqli_stmt_close($stmt_update);
+
+        if (!$run_update) {
+            die('Error updating ticket: ' . mysqli_error($con));
+        }
+
+        // Update the reason for cancellation
+        $cancel_query = "UPDATE ticket SET reason = '$cancel_reason' WHERE ticket_id = '$ticket_id'";
+        $cancel_query_run = mysqli_query($con, $cancel_query);
+
+        echo '<script>alert("Ticket Cancelled.");</script>';
+        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
+        exit();
+    } else {
+        // Unauthorized access
+        echo '<script>alert("You are not authorized to cancel this ticket.");</script>';
+        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
     }
 } else if (isset($_POST['add_reply'])) {
     $reply = $_POST['reply'];
@@ -198,13 +306,13 @@ if (isset($_POST['add_company'])) {
     VALUES('$lastName', '$firstName', '$middleinitial', '$company', '$branch', '$department', '$email', '$contact', '$username', '$password', '1', $role)");
 
     if ($insert_user_query) {
-            // Get the last inserted user_id
-    $user_id = mysqli_insert_id($con);
-    echo "User ID from database: " . $user_id; // Add this line to check the user ID
+        // Get the last inserted user_id
+        $user_id = mysqli_insert_id($con);
+        echo "User ID from database: " . $user_id; // Add this line to check the user ID
 
-    // Set the path to the folder where default profile images are stored
-    $profile_image_folder = '../Images/';
-    $new_folder_path = $profile_image_folder . $user_id . '-' . $username;
+        // Set the path to the folder where default profile images are stored
+        $profile_image_folder = '../Images/';
+        $new_folder_path = $profile_image_folder . $user_id . '-' . $username;
 
         // Create the folder if it doesn't exist
         if (!file_exists($new_folder_path)) {
