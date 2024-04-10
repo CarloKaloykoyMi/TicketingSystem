@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 09, 2024 at 08:00 PM
+-- Generation Time: Apr 10, 2024 at 10:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -306,7 +306,36 @@ INSERT INTO `audit_trail` (`at_id`, `user_id`, `Action`, `Date`) VALUES
 (265, 43, 'Logout', '2024-04-09 11:58:05'),
 (266, 39, 'Logged In', '2024-04-09 11:58:24'),
 (267, 39, 'Logout', '2024-04-09 14:22:10'),
-(268, 39, 'Logged In', '2024-04-09 14:22:14');
+(268, 39, 'Logged In', '2024-04-09 14:22:14'),
+(269, 39, 'Logged In', '2024-04-10 05:29:10'),
+(270, 39, 'Logout', '2024-04-10 05:46:28'),
+(271, 43, 'Logged In', '2024-04-10 05:46:35'),
+(272, 43, 'Logout', '2024-04-10 05:46:44'),
+(273, 43, 'Logged In', '2024-04-10 05:47:43'),
+(274, 43, 'Logout', '2024-04-10 05:47:53'),
+(275, 37, 'Logged In', '2024-04-10 05:48:14'),
+(276, 39, 'Logged In', '2024-04-10 05:49:09'),
+(277, 39, 'Logged In', '2024-04-10 05:53:03'),
+(278, 39, 'Logout', '2024-04-10 05:54:13'),
+(279, 39, 'Logged In', '2024-04-10 05:54:21'),
+(280, 37, 'Logout', '2024-04-10 05:59:23'),
+(281, 43, 'Logged In', '2024-04-10 05:59:28'),
+(282, 43, 'Logout', '2024-04-10 06:02:22'),
+(283, 39, 'Logged In', '2024-04-10 06:02:28'),
+(284, 39, 'Logout', '2024-04-10 06:02:30'),
+(285, 42, 'Logged In', '2024-04-10 06:02:41'),
+(286, 39, 'Logout', '2024-04-10 06:12:06'),
+(287, 44, 'Logged In', '2024-04-10 06:15:20'),
+(288, 44, 'Logout', '2024-04-10 06:18:09'),
+(289, 39, 'Logged In', '2024-04-10 06:18:19'),
+(290, 42, 'Logout', '2024-04-10 06:22:34'),
+(291, 44, 'Logged In', '2024-04-10 06:22:42'),
+(292, 39, 'Logout', '2024-04-10 06:37:11'),
+(293, 39, 'Logged In', '2024-04-10 06:37:14'),
+(294, 39, 'Logout', '2024-04-10 07:05:06'),
+(295, 45, 'Logged In', '2024-04-10 07:05:23'),
+(296, 45, 'Logout', '2024-04-10 07:12:42'),
+(297, 39, 'Logged In', '2024-04-10 07:12:45');
 
 -- --------------------------------------------------------
 
@@ -442,7 +471,10 @@ INSERT INTO `file_attachment` (`file_id`, `user_id`, `ticket_id`, `file_name`) V
 (8, 42, 1006, 'Screenshot 2024-04-06 171649.png'),
 (9, 42, 1006, 'example.docx'),
 (10, 42, 1006, 'example.pdf'),
-(11, 43, 1012, 'example.docx');
+(11, 43, 1012, 'example.docx'),
+(13, 44, 1017, 'Screenshot 2024-04-06 171649.png'),
+(14, 44, 1017, 'example.docx'),
+(15, 44, 1017, 'example.pdf');
 
 -- --------------------------------------------------------
 
@@ -478,7 +510,9 @@ INSERT INTO `ticket` (`ticket_id`, `user_id`, `subject`, `to_company`, `requesto
 (1009, 42, 'Hallo', 'Comfac Technology Options (CTO)', 'John Santos', 'Try', 'Unresolved', '2024-04-09 10:35:42', 'MIS IT', 'mipepo5677@evimzo.com', 'Libertad', '', '2024-04-09 10:36:02', '35'),
 (1011, 43, 'Example', 'Comfac Technology Options (CTO)', 'Carlo Gonzales', 'Exampleee', 'Cancelled', '2024-04-09 10:54:58', 'MIS IT', 'tefonitetu@rungel.net', 'Libertad', 'Try', '2024-04-09 10:55:09', 'Carlo Gonzales'),
 (1012, 43, 'Change', 'Comfac Technology Options (CTO)', 'Carlo Gonzales', 'Please Change', 'Cancelled', '2024-04-09 11:13:55', 'MIS IT', 'tefonitetu@rungel.net', 'Libertad', 'Wrong file', '2024-04-09 11:14:16', 'Carlo Gonzales'),
-(1013, 43, 'Example', 'Energy Specialist Company(ESCO)', 'Carlo Gonzales', 'Ellow', 'Pending', '2024-04-09 11:37:20', 'MIS IT', 'tefonitetu@rungel.net', 'Libertad', '', NULL, '');
+(1016, 43, 'Example', 'Comfac Technology Options (CTO)', 'Carlo Gonzales', 'fdfd', 'Unresolved', '2024-04-10 05:59:42', 'MIS IT', 'tefonitetu@rungel.net', 'Libertad', '', '2024-04-10 06:11:30', '39'),
+(1017, 44, 'Hello', 'Comfac Technology Options (CTO)', 'Gray Estrera', 'Good day', 'Resolved', '2024-04-10 06:16:43', 'MIS IT', 'mapohod370@ekposta.com', 'Libertad', '', '2024-04-10 06:19:53', '39'),
+(1018, 44, 'Hello', 'Energy Specialist Company(ESCO)', 'Gray Estrera', 'Eyy', 'Pending', '2024-04-10 06:23:03', 'MIS IT', 'mapohod370@ekposta.com', 'Libertad', '', NULL, '');
 
 -- --------------------------------------------------------
 
@@ -499,7 +533,10 @@ CREATE TABLE `ticket_reply` (
 --
 
 INSERT INTO `ticket_reply` (`id`, `ticket_id`, `user_id`, `reply`, `Name`) VALUES
-(2, 1006, 37, 'Done', 'John Carlo Astoveza');
+(2, 1006, 37, 'Done', 'John Carlo Astoveza'),
+(4, 1018, 44, 'Heyy', 'Gray Estrera'),
+(7, 1018, 45, 'Hello', 'Ace Estrera'),
+(8, 1018, 39, 'Hello', 'Evalyn Grace Estrera');
 
 -- --------------------------------------------------------
 
@@ -537,7 +574,9 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `middleinitial`, `suffix
 (39, 'Estrera', 'Evalyn Grace', 'P', '', 'Cornersteel Systems Corporation', 'Libertad', 'MIS-Department', 'estrera.evalyngrace@gmail.com', '09655662351', 'evagraceest', '@Qwerty123', 1, 0, '2024-03-20 05:37:00', 'user2.png'),
 (40, 'Valen', 'Edmund', 'F', '', 'Cornersteel Systems Corporation', 'Libertad', 'MIS-Department', 'edmund@cornersteel.com', '09235877287', 'edmund', 'Comf@c123', 1, 1, '2024-03-26 01:57:09', 'user2.png'),
 (42, 'Santos', 'John', '', 'Sr.', 'Comfac Global Group', 'Libertad', 'Management Info', 'mipepo5677@evimzo.com', '09565654581', 'john.santos', '@Qwerty123', 1, 1, '2024-04-02 07:26:16', 'user2.png'),
-(43, 'Gonzales', 'Carlo', 'J', 'I', 'Comfac Global Group', 'Libertad', 'Purchasing', 'tefonitetu@rungel.net', '09785244451', 'carlo', '@Gawegh12', 1, 1, '2024-04-02 07:50:42', 'user2.png');
+(43, 'Gonzales', 'Carlo', 'J', 'I', 'Comfac Global Group', 'Libertad', 'Purchasing', 'tefonitetu@rungel.net', '09785244451', 'carlo', '@Gawegh12', 1, 1, '2024-04-02 07:50:42', 'user2.png'),
+(44, 'Estrera', 'Gray', 'P', '', 'Comfac Technology Options (CTO)', 'Libertad', 'MIS-Department', 'mapohod370@ekposta.com', '09123546567', 'grayyy', '@Qwerty123', 1, 1, '2024-04-10 06:14:24', 'user2.png'),
+(45, 'Estrera', 'Ace', 'P', '', 'Comfac Global Group', 'Libertad', 'MIS-Department', 'gray13est@gmail.com', '09132549566', 'acey', '123456', 1, 0, '2024-04-10 07:04:38', 'user2.png');
 
 --
 -- Indexes for dumped tables
@@ -605,7 +644,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `audit_trail`
 --
 ALTER TABLE `audit_trail`
-  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=269;
+  MODIFY `at_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=298;
 
 --
 -- AUTO_INCREMENT for table `branch`
@@ -617,7 +656,7 @@ ALTER TABLE `branch`
 -- AUTO_INCREMENT for table `company`
 --
 ALTER TABLE `company`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `contact_us`
@@ -635,25 +674,25 @@ ALTER TABLE `department`
 -- AUTO_INCREMENT for table `file_attachment`
 --
 ALTER TABLE `file_attachment`
-  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `file_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `ticket`
 --
 ALTER TABLE `ticket`
-  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1014;
+  MODIFY `ticket_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1019;
 
 --
 -- AUTO_INCREMENT for table `ticket_reply`
 --
 ALTER TABLE `ticket_reply`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
