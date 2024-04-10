@@ -317,7 +317,7 @@ $reply_result = mysqli_query($con, $query);
                                     </div>
                                     <div class="modal-body">
                                         <form id="status-form" action="code.php" method="POST">
-                                            <input type="text" class="form-control" name="updatedby" value="<?php echo $user_id ?>">
+                                            <input type="hidden" class="form-control" name="updatedby" value="<?php echo $user_id ?>">
                                             <label for="Status" class="form-label"><i class="fas fa-info-circle"></i> Status</label>
                                             <select id="Status" name="status" class="form-control" required>
                                                 <option value="" disabled>Select your Status</option>
@@ -377,7 +377,7 @@ $reply_result = mysqli_query($con, $query);
                                 <div class="modal-body">
                                     <form action="code.php" method="POST">
                                         <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
-                                        <input type="hidden" name="userid" value="<?php echo $userid1; ?>">
+                                        <input type="text" name="userid" value="<?php echo $user_id; ?>">
                                         <input type="text" name="sender" style="display: none;" value="<?php echo $fname . " " . $lname; ?>">
                                         <div class="mb-3">
                                             <label for="replyMessage" class="form-label">Reply</label>
