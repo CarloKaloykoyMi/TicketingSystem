@@ -36,6 +36,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
     <!-- icon css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
+
 
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
@@ -57,8 +59,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Company</h4>
-                            <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addCompanyModal">Add Company</button>
+                            <h4 class="text-center">Company</h4>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addCompanyModal">
+                                <i class="fas fa-plus"></i>&nbsp;Add Company
+                            </button>
                         </div>
                         <div class="card-body" id="category_table">
                             <table id="example" class="table table-striped" style="width:100%">
@@ -129,13 +135,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fa-solid fa-location-dot"></i> Company Address</label>
+                                                                    <label for=""><i class="fas fa-location-dot"></i> Company Address</label>
                                                                     <input type="text" name="company_address" value="<?= $item['company_address']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
-                                                             
+                                                                    <label for=""><i class="fas fa-phone"></i> Contact</label>
+
                                                                     <input name="contact" type="text" class="form-control" maxlength="11" value="<?php echo $contact ?>" oninput="restrictToNumbers(this)" required>
                                                                     <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                                                                 </div>
@@ -186,12 +192,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for=""><i class="fa-solid fa-location-dot"></i> Company Address</label>
+                            <label for=""><i class="fas fa-location-dot"></i> Company Address</label>
                             <input type="text" name="company_address" placeholder="Enter Company Address" class="form-control" required>
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
+                            <label for=""><i class="fas fa-phone"></i> Contact</label>
                             <input type="text" name="contact" placeholder="Enter Contact" maxlength="11" class="form-control" oninput="restrictToNumbers(this)" required>
                             <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                         </div>

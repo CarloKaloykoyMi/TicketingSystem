@@ -56,8 +56,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Users</h4>
-                            <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
+                            <h4 class="text-center">Users</h4>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="fas fa-plus"></i>&nbsp;Add User</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
@@ -139,7 +141,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                     </div>
 
                                                                     <div class="col-md-12 mt-3">
-                                                                        <label for="department"><i class="fa-solid fa-users"></i> Department</label>
+                                                                        <label for="department"><i class="fas fa-users"></i> Department</label>
                                                                         <select name="department" class="form-control">
                                                                             <?php
                                                                             $departments = getAll("department");
@@ -270,7 +272,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="col-md-12 mt-3">
                             <div class="input-group">
                                 <span class="input-group-prepend">
-                                    <i class="fa-solid fa-building input-group-text"></i>
+                                    <i class="fas fa-building input-group-text"></i>
                                 </span>
                                 <label for="company" class="sr-only">Company</label>
                                 <select class="form-control" id="company" name="company" required>
@@ -307,7 +309,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="col-md-12 mt-3">
                             <div class="input-group">
                                 <span class="input-group-prepend">
-                                    <i class="fa-solid fa-building input-group-text"></i>
+                                    <i class="fas fa-building input-group-text"></i>
 
                                 </span>
                                 <label for="department" class="sr-only">Department:</label>

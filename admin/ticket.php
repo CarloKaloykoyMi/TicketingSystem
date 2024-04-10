@@ -64,9 +64,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Tickets</h4>
+                            <h4 class="text-center">Ticket List</h4>
                         </div>
-                        <div class="card-body" id="category_table">
+                        <div class="card-body">
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
@@ -85,7 +85,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         foreach ($ticket as $item) {
                                     ?>
                                             <tr>
-                                                <td><?= date('F j, Y h:i:s A', strtotime($item['date_created'])); ?></td>
+                                                <td><?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td>
                                                 <td><?= $item['requestor']; ?></td>
                                                 <td><?= $item['subject']; ?></td>
                                                 <td><?= $item['to_dept']; ?></td>

@@ -55,7 +55,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Contact Us</h4>
+                            <div class="text-center">
+                                <h4>Contact Us</h4>
+                            </div>
                         </div>
                         <div class="card-body" id="category_table">
                             <table id="example" class="table table-striped" style="width:100%">
@@ -94,12 +96,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                         <div class="modal-body">
                                                             <!-- Your view form content goes here -->
                                                             <div class="col-md-12 mt-3">
-                                                                <label for=""><i class="fa-solid fa-user"></i> Name</label>
+                                                                <label for=""><i class="fas fa-user"></i> Name</label>
                                                                 <input type="text" name="name" value="<?= $item['first_name'] . ' ' . $item['last_name']; ?>" class="form-control" disabled>
                                                             </div>
 
                                                             <div class="col-md-12 mt-3">
-                                                                <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
+                                                                <label for=""><i class="fas fa-phone"></i> Contact</label>
                                                                 <input type="text" name="phone" value="<?= $item['phone']; ?>" class="form-control" disabled>
                                                             </div>
 
@@ -109,19 +111,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                             </div>
 
                                                             <div class="col-md-12 mt-3">
-                                                            <div class="col-md-12 mt-3">
-                                                            <label for="concern"><i class="fa-solid fa-message"></i> Message</label>
-                                                            <textarea class="form-control" name="concern" rows="3" placeholder="Concerns" required disabled><?= $item['message']; ?></textarea>
-                                                        </div>
+                                                                <div class="col-md-12 mt-3">
+                                                                    <label for="concern"><i class="fas fa-message"></i> Message</label>
+                                                                    <textarea class="form-control" name="concern" rows="3" placeholder="Concerns" required disabled><?= $item['message']; ?></textarea>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <!-- End Edit Company Modal -->
-                                    <?php
+                                                <!-- End Edit Company Modal -->
+                                        <?php
                                         }
                                     }
-                                    ?>
+                                        ?>
                                 </tbody>
                             </table>
                         </div>

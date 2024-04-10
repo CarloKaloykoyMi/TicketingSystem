@@ -54,10 +54,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Department</h4>
-                            <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addDepartmentModal">Add Department</button>
+                            <h4 class="text-center">List of Departments</h4>
                         </div>
-                        <div class="card-body" id="category_table">
+                        <div class="text-end">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDepartmentModal"><i class="fas fa-plus"></i>&nbsp;Add Department</button>
+                        </div>
+
+                        <div class="card-body">
                             <table id="example" class="table table-striped" style="width:100%">
                                 <thead>
                                     <tr>
@@ -123,7 +126,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 <input type="hidden" name="department_id" value="<?= $item['id']; ?>">
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for="company_name" class="form-label"> <i class="fa-solid fa-location-dot"></i> Company</label>
+                                                                    <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
                                                                     <select id=company_name name="company_name" class="form-control">
                                                                         <option value="<?= $item['company']; ?>"><?= $item['company']; ?></option>
                                                                         <?php
@@ -142,7 +145,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fa-solid fa-users"></i> Department Name</label>
+                                                                    <label for=""><i class="fas fa-users"></i> Department Name</label>
                                                                     <input type="text" name="department_name" value="<?= $item['department_name']; ?>" class="form-control">
                                                                 </div>
 
@@ -152,7 +155,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fa-solid fa-location-dot"></i> Location</label>
+                                                                    <label for=""><i class="fas fa-location-dot"></i> Location</label>
                                                                     <input type="text" name="location" value="<?= $item['location']; ?>" class="form-control" required>
                                                                 </div>
 
@@ -168,11 +171,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 </div>
                                             </div>
                                             <!-- End Edit Company Modal -->
-
                                     <?php
                                         }
-                                    } else {
-                                        echo "No Records Found!";
                                     }
                                     ?>
                                 </tbody>
@@ -196,7 +196,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <form action="code.php" method="POST">
 
                         <div class="col-md-12 mt-3">
-                            <label for="company_name" class="form-label"> <i class="fa-solid fa-location-dot"></i> Company</label>
+                            <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
                             <select id=company_name name="company_name" class="form-control" required>
                                 <option value="" disabled selected>Select your Company</option>
                                 <?php
@@ -215,7 +215,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for=""><i class="fa-solid fa-users"></i> Department Name</label>
+                            <label for=""><i class="fas fa-users"></i> Department Name</label>
                             <input type="text" name="department_name" placeholder="Enter Department Name" class="form-control" required>
                         </div>
 
@@ -225,7 +225,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for=""><i class="fa-solid fa-location-dot"></i> Location</label>
+                            <label for=""><i class="fas fa-location-dot"></i> Location</label>
                             <input type="text" name="location" placeholder="Enter Location" class="form-control" required>
                         </div>
 

@@ -17,7 +17,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $role = $_SESSION['auth_user']['role'];
     $lname = $_SESSION['auth_user']['lastname'];
     $fname = $_SESSION['auth_user']['firstname'];
-    
 }
 
 ?>
@@ -26,20 +25,21 @@ if (!isset($_SESSION['auth_user']['username'])) {
 <html lang="en">
 
 <head>
-<title>Branch</title>
+    <title>Branch</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- datatable css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
 
     <!-- icon css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+
+    <!-- datatable css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
     <!-- datatable css -->
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
@@ -56,8 +56,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
-                            <h4>Branches</h4>
-                            <button class="btn btn-primary float-end" data-bs-toggle="modal" data-bs-target="#addBranchModal">Add Branch</button>
+                            <h4 class="text-center">Branches</h4>
+                        </div>
+                        <div class="text-end">
+                            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBranchModal"><i class="fas fa-plus"></i>&nbsp;Add Branch</button>
                         </div>
                         <div class="card-body" id="category_table">
                             <table id="example" class="table table-striped" style="width:100%">
@@ -126,7 +128,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 <input type="hidden" name="branch_id" value="<?= $item['id']; ?>">
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for="company_name" class="form-label"> <i class="fa-solid fa-location-dot"></i> Company</label>
+                                                                    <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
                                                                     <select id=company_name name="company_name" class="form-control">
                                                                         <option value="<?= $item['company']; ?>"><?= $item['company']; ?></option>
                                                                         <?php
@@ -150,12 +152,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fa-solid fa-location-dot"></i> Branch Address</label>
+                                                                    <label for=""><i class="fas fa-location-dot"></i> Branch Address</label>
                                                                     <input type="text" name="branch_address" value="<?= $item['branch_address']; ?>" class="form-control" required>
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
+                                                                    <label for=""><i class="fas fa-phone"></i> Contact</label>
                                                                     <input type="text" name="contact" value="<?= $item['contact']; ?>" class="form-control" oninput="restrictToNumbers(this)" required>
                                                                     <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                                                                 </div>
@@ -180,8 +182,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                     <?php
                                         }
-                                    } else {
-                                        echo "No Records Found!";
                                     }
                                     ?>
                                 </tbody>
@@ -206,7 +206,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <form action="code.php" method="POST">
 
                         <div class="col-md-12 mt-3">
-                            <label for="company_name" class="form-label"> <i class="fa-solid fa-location-dot"></i> Company</label>
+                            <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
                             <select id=company_name name="company_name" class="form-control" required>
                                 <option value="" disabled selected>Select your Company</option>
                                 <?php
@@ -230,12 +230,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for=""><i class="fa-solid fa-location-dot"></i> Branch Address</label>
+                            <label for=""><i class="fas fa-location-dot"></i> Branch Address</label>
                             <input type="text" name="branch_address" placeholder="Enter Branch Address" class="form-control" required>
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for=""><i class="fa-solid fa-phone"></i> Contact</label>
+                            <label for=""><i class="fas fa-phone"></i> Contact</label>
                             <input type="text" name="contact" placeholder="Enter Contact" class="form-control" oninput="restrictToNumbers(this)" required>
                             <span class="note" style="display: none; color: red; font-size: 13px;">Please enter a valid 11-digit numbers.</span>
                         </div>
