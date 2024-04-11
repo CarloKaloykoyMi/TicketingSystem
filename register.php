@@ -55,6 +55,10 @@
         left: -35px;
         content: "❌";
     }
+
+    .modal-dialog {
+        max-width: 800px;
+    }
 </style>
 
 <body>
@@ -222,6 +226,61 @@
                             <button class="btn btn-outline-secondary" type="button" id="toggleConfirmPassword"><i class="fas fa-eye"></i></button>
                         </div>
                     </div>
+                    <div class="row justify-content-center">
+                        <label class="form-check-label text-center">
+                            <br>
+                            <input class="form-check-input" type="checkbox" value="" id="policyCheckbox" required>
+                            I agree to the terms and conditions of the <a href="#" class="text-decoration-none policy-link" style="color: #7a7a7a;">Policy</a><br>
+                        </label>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="policyModal" tabindex="-1" role="dialog" aria-labelledby="policyModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="policyModalLabel">Privacy and Consent Form</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body" style="text-align: justify;">
+                                    <p><strong>Introduction</strong></p>
+                                    <p>CGG Nexus is dedicated to safeguarding the confidentiality of your personal information within our ticketing system for managing inquiries and concerns of employees across all company branches and departments. This document details our procedures concerning the acquisition, utilization, and sharing of your data.</p>
+
+                                    <p><strong>Information Collection</strong></p>
+                                    <ul>
+                                        <li><strong>Employee Details:</strong> We gather employee particulars including names, dates of birth, contact details, and professional history to administer inquiries effectively.</li>
+                                        <li><strong>Work-related Data:</strong> Information about roles, responsibilities, and interactions within the company is collected to address inquiries accurately.</li>
+                                        <li><strong>System Interaction:</strong> We collect data on employee interactions with the ticketing system, including device information and usage patterns.</li>
+                                    </ul>
+
+                                    <p><strong>Utilization of Employee Information</strong></p>
+                                    <p>Employee data within the ticketing system is utilized for:</p>
+                                    <ul>
+                                        <li><strong>Inquiry Resolution:</strong> Employee information aids in resolving inquiries promptly and accurately.</li>
+                                        <li><strong>System Enhancement:</strong> Analysis of aggregated data helps in enhancing the efficiency and performance of the ticketing system.</li>
+                                        <li><strong>Communication:</strong> Employee contact details may be used for essential updates, notifications, and communication concerning inquiries.</li>
+                                    </ul>
+
+                                    <p><strong>Data Handling and Disclosure</strong></p>
+                                    <ul>
+                                        <li><strong>Confidentiality:</strong> We uphold the confidentiality of employee information and only share it as necessary for inquiry resolution.</li>
+                                        <li><strong>Third-party Engagement:</strong> Third-party involvement may occur for inquiry resolution, with contractual agreements ensuring confidentiality.</li>
+                                        <li><strong>Legal Obligations:</strong> Employee information may be disclosed to comply with legal requirements or protect the rights and interests of CGG Nexus, its employees, or others.</li>
+                                    </ul>
+
+                                    <p><strong>Security Measures</strong></p>
+                                    <p>Strict security protocols are in place to safeguard employee data within the ticketing system from unauthorized access or disclosure.</p>
+
+                                    <p><strong>Consent and Rights</strong></p>
+                                    <p>By submitting inquiries through our ticketing system, employees consent to the collection, use, and disclosure of their information as outlined in this policy. Employees retain rights regarding access, rectification, erasure, and objection to processing activities.</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Confirm</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
                 <div class="button-container">
                     <button type="submit" name="register" class="btn btn-primary"><i class="fas fa-user-plus"></i> Register</button>
@@ -237,6 +296,14 @@
             </form>
         </div>
     </div>
+
+    <script>
+        // JavaScript to display modal when policy link is clicked
+        document.querySelector('.policy-link').addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent default link behavior
+            $('#policyModal').modal('show'); // Show the modal
+        });
+    </script>
 
     <script>
         function show() {
