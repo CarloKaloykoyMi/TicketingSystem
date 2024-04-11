@@ -106,6 +106,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                             <form action="code.php" method="POST">
+                                                                <input type="hidden" name="user_id" value="<?= $user_id; ?>">
                                                                 <input type="hidden" name="branch_id" value="<?= $item['id']; ?>">
                                                                 <button type="submit" class="btn btn-danger" name="delete_branch">Delete</button>
                                                             </form>
