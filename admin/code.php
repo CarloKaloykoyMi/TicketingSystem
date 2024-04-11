@@ -386,6 +386,7 @@ if (isset($_POST['add_company'])) {
     $sql = "DELETE FROM company WHERE id = '$id';";
     $sqlRun =  mysqli_query($con, $sql);
 
+    $usid = $_POST['user_id'];
     $action = 'Company Deletion';
     $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
     $atrun = mysqli_query($con, $sqlDel);
@@ -395,6 +396,7 @@ if (isset($_POST['add_company'])) {
     $sql = "DELETE FROM branch WHERE id = '$id';";
     $sqlRun =  mysqli_query($con, $sql);
 
+    $usid = $_POST['user_id'];
     $action = 'Branch Deletion';
     $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
     $atrun = mysqli_query($con, $sqlDel);

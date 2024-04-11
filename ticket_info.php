@@ -291,6 +291,7 @@ $reply_result = mysqli_query($con, $query);
                                             <form action="crud.php" method="POST">
                                                 <input type="hidden" class="form-control" name="requestor" placeholder="Requestor" value="<?php echo $requestor ?>">
                                                 <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
+                                                <input type="hidden" name="user_id" value="<?php echo $userid1; ?>">
                                                 Are you sure you want to delete this ticket?
                                         </div>
                                         <div class="modal-footer">

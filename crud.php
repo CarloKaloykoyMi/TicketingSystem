@@ -276,6 +276,11 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         mysqli_stmt_execute($stmt_delete);
         mysqli_stmt_close($stmt_delete);
 
+        $usid = $_POST['user_id'];
+        $action = 'Ticket Deletion';
+        $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
+        $atrun = mysqli_query($con, $sqlDel);
+
         echo '<script>alert("Ticket Deleted.");</script>';
         echo '<script>window.location.href = "home_user.php";</script>';
         exit();

@@ -2,6 +2,7 @@
 include('../function/myfunction.php');
 include 'sidebar_navbar.php';
 
+// Check if user is not authenticated, then redirect to login page
 if (!isset($_SESSION['auth_user']['username'])) {
     session_destroy();
     unset($_SESSION['auth_user']['username']);
@@ -11,7 +12,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
     unset($_SESSION['auth_user']['fname']);
     unset($_SESSION['auth_user']['lname']);
     echo '<script>window.location.href = "../adminlogin.php";</script>';
+    exit; // Exit after redirection
 } else {
+    // Initialize session variables
     $username = $_SESSION['auth_user']['username'];
     $user_id = $_SESSION['auth_user']['user_id'];
     $email = $_SESSION['auth_user']['email'];
@@ -19,6 +22,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $lname = $_SESSION['auth_user']['lastname'];
     $fname = $_SESSION['auth_user']['firstname'];
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -41,13 +45,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-
-    <!-- jQuery -->
-    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
-
-    <!-- DataTables JavaScript -->
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/sidebar.css">
@@ -72,7 +69,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#user-audit">User Logs</button>
                                 </li>
-                                <!-- Add more tab buttons if needed -->
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#delete-audit">Delete Logs</button>
+                                </li>
                             </ul>
 
                             <div class="tab-content mt-3">
@@ -87,6 +86,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </thead>
                                         <tbody>
                                             <?php
+                                            // Select admin logs query
                                             $adminlogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME, user.role FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE user.role = 0 ORDER BY audit_trail.Date DESC";
                                             $adminlogsResult = mysqli_query($con, $adminlogs);
                                             while ($row1 = mysqli_fetch_assoc($adminlogsResult)) {
@@ -111,6 +111,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </thead>
                                         <tbody>
                                             <?php
+                                            // Select user logs query
                                             $userlogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME, user.role FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE user.role = 1 ORDER BY audit_trail.Date DESC";
                                             $userlogsResult = mysqli_query($con, $userlogs);
                                             while ($row2 = mysqli_fetch_assoc($userlogsResult)) {
@@ -124,8 +125,32 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="tab-pane fade" id="delete-audit">
+                                    <table id="deleteTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            // Select delete logs query
+                                            $deleteLogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE audit_trail.Action LIKE '%deletion%' ORDER BY audit_trail.Date DESC";
+                                            $deleteLogsResult = mysqli_query($con, $deleteLogs);
+                                            while ($row3 = mysqli_fetch_assoc($deleteLogsResult)) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row3['NAME'] . "</td>";
+                                                echo "<td>" . $row3['Action'] . "</td>";
+                                                echo "<td>" . date('F j, Y g:i A', strtotime($row3['Date'])) . "</td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <!-- Add more tab panes if needed -->
                         </div>
                     </div>
                 </div>
@@ -136,30 +161,17 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 
+    <!-- DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
     <!-- Custom JS -->
     <script src="js/sidebar.js"></script>
 
     <script>
-        // Initialize DataTable for Admin Table
+        // Initialize DataTables for all tables
         $(document).ready(function() {
-            $('#adminTable').DataTable({
-                "order": [
-                    [2, "desc"]
-                ], // Sort by the third (Date) column in ascending order
-                "columnDefs": [{
-                    "targets": [2],
-                    "render": function(data, type, row) {
-                        var date = new Date(data);
-                        return formatDate(date);
-                    },
-                    "type": "date"
-                }]
-            });
-        });
-
-        // Initialize DataTable for User Table
-        $(document).ready(function() {
-            $('#userTable').DataTable({
+            $('#adminTable, #userTable, #deleteTable').DataTable({
                 "order": [
                     [2, "desc"]
                 ], // Sort by the third (Date) column in ascending order
@@ -189,8 +201,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
             return formattedDate;
         }
     </script>
-
-
 
 </body>
 
