@@ -5,12 +5,6 @@ include 'sidebar_navbar.php';
 // Check if user is not authenticated, then redirect to login page
 if (!isset($_SESSION['auth_user']['username'])) {
     session_destroy();
-    unset($_SESSION['auth_user']['username']);
-    unset($_SESSION['auth_user']['user_id']);
-    unset($_SESSION['auth_user']['email']);
-    unset($_SESSION['auth_user']['role']);
-    unset($_SESSION['auth_user']['fname']);
-    unset($_SESSION['auth_user']['lname']);
     echo '<script>window.location.href = "../adminlogin.php";</script>';
     exit; // Exit after redirection
 } else {
@@ -19,10 +13,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $user_id = $_SESSION['auth_user']['user_id'];
     $email = $_SESSION['auth_user']['email'];
     $role = $_SESSION['auth_user']['role'];
-    $lname = $_SESSION['auth_user']['lastname'];
-    $fname = $_SESSION['auth_user']['firstname'];
+    $lname = $_SESSION['auth_user']['lastname']; // Changed 'lastname' to 'lname'
+    $fname = $_SESSION['auth_user']['firstname']; // Changed 'firstname' to 'fname'
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -43,8 +36,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <!-- Line Icons -->
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
-    <!-- DataTables CSS -->
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- DataTables JavaScript -->
+<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/sidebar.css">
@@ -86,7 +90,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            // Select admin logs query
                                             $adminlogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME, user.role FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE user.role = 0 ORDER BY audit_trail.Date DESC";
                                             $adminlogsResult = mysqli_query($con, $adminlogs);
                                             while ($row1 = mysqli_fetch_assoc($adminlogsResult)) {
@@ -111,7 +114,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            // Select user logs query
                                             $userlogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME, user.role FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE user.role = 1 ORDER BY audit_trail.Date DESC";
                                             $userlogsResult = mysqli_query($con, $userlogs);
                                             while ($row2 = mysqli_fetch_assoc($userlogsResult)) {
@@ -136,14 +138,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </thead>
                                         <tbody>
                                             <?php
-                                            // Select delete logs query
                                             $deleteLogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE audit_trail.Action LIKE '%deletion%' ORDER BY audit_trail.Date DESC";
                                             $deleteLogsResult = mysqli_query($con, $deleteLogs);
                                             while ($row3 = mysqli_fetch_assoc($deleteLogsResult)) {
                                                 echo "<tr>";
                                                 echo "<td>" . $row3['NAME'] . "</td>";
                                                 echo "<td>" . $row3['Action'] . "</td>";
-                                                echo "<td>" . date('F j, Y g:i A', strtotime($row3['Date'])) . "</td>";
+                                                echo "<td>" . date('F j, Y g:i A', strtotime($row3['Date'])) . "</td>"; // Changed $row2 to $row3
                                                 echo "</tr>";
                                             }
                                             ?>
@@ -151,6 +152,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     </table>
                                 </div>
                             </div>
+                            <!-- Add more tab panes if needed -->
                         </div>
                     </div>
                 </div>
@@ -167,40 +169,71 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
     <!-- Custom JS -->
     <script src="js/sidebar.js"></script>
-
     <script>
-        // Initialize DataTables for all tables
-        $(document).ready(function() {
-            $('#adminTable, #userTable, #deleteTable').DataTable({
-                "order": [
-                    [2, "desc"]
-                ], // Sort by the third (Date) column in ascending order
-                "columnDefs": [{
-                    "targets": [2],
-                    "render": function(data, type, row) {
-                        var date = new Date(data);
-                        return formatDate(date);
-                    },
-                    "type": "date"
-                }]
-            });
+    $(document).ready(function() {
+        // Initialize DataTable for Admin Table
+        $('#adminTable').DataTable({
+            "order": [
+                [2, "desc"]
+            ],
+            "columnDefs": [{
+                "targets": [2],
+                "render": function(data, type, row) {
+                    var date = new Date(data);
+                    return formatDate(date);
+                },
+                "type": "date"
+            }]
         });
 
-        // Function to format date as "Month Day, Year Time"
-        function formatDate(date) {
-            var options = {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            var formattedDate = date.toLocaleDateString('en-US', options);
-            // Remove the "at" substring
-            formattedDate = formattedDate.replace(" at", "");
-            return formattedDate;
-        }
-    </script>
+        // Initialize DataTable for User Table
+        $('#userTable').DataTable({
+            "order": [
+                [2, "desc"]
+            ],
+            "columnDefs": [{
+                "targets": [2],
+                "render": function(data, type, row) {
+                    var date = new Date(data);
+                    return formatDate(date);
+                },
+                "type": "date"
+            }]
+        });
+
+        // Initialize DataTable for Delete Table
+        $('#deleteTable').DataTable({
+            "order": [
+                [2, "desc"]
+            ],
+            "columnDefs": [{
+                "targets": [2],
+                "render": function(data, type, row) {
+                    var date = new Date(data);
+                    return formatDate(date);
+                },
+                "type": "date"
+            }]
+        });
+    });
+
+    // Function to format date as "Month Day, Year Time"
+    function formatDate(date) {
+        var options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        var formattedDate = date.toLocaleDateString('en-US', options);
+        // Remove the "at" substring
+        formattedDate = formattedDate.replace(" at", "");
+        return formattedDate;
+    }
+</script>
+
+
 
 </body>
 
