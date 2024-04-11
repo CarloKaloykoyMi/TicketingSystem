@@ -69,7 +69,7 @@ while ($row = mysqli_fetch_array($result)) {
 
         </div>
         <ul class="sidebar-nav">
-            <li class="sidebar-item">
+            <!-- <li class="sidebar-item">
                 <a href="#" class="sidebar-link">
                     <i class="fa-solid fa-ticket"></i>
                     <span><strong>TICKETS</strong></span>
@@ -87,6 +87,12 @@ while ($row = mysqli_fetch_array($result)) {
                     <li><a href="cancel_ticket.php"><i class="fa-solid fa-xmark"></i>
                             <span class="nav-item">Cancelled Tickets</span></a></li>
                 </ul>
+            </li> -->
+            <li class="sidebar-item">
+                <a href="Home_User.php" class="sidebar-link">
+                <i class="fa-solid fa-house"></i>
+                    <span><strong>TICKETS</strong></span>
+                </a>
             </li>
             <li class="sidebar-item">
                 <a href="User_Profile.php" class="sidebar-link">

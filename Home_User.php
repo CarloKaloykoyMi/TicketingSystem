@@ -87,6 +87,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
         margin-right: 3px;
         /* Add margin for spacing */
     }
+
+    .table th:nth-child(7),
+    .table td:nth-child(7)
+    .table th:nth-child(9),
+    .table td:nth-child(9) {
+        white-space: pre-wrap;
+    }
 </style>
 
 <body>
@@ -98,19 +105,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="ticketNumberSearch" placeholder="Search by Ticket Number">
                     </div>
-                    <!-- <div class="col-md-3">
+                    <div class="col-md-3">
                         <select class="form-select" id="departmentFilter">
                             <option value="">Filter by Department</option>
-                            <//?php
-                            // $departments = getAll("department");
-                            // if (mysqli_num_rows($departments) > 0) {
-                            //     foreach ($departments as $department) {
-                            //         echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
-                            //     }
-                            // }
+                            <?php
+                            $departments = getAll("department");
+                            if (mysqli_num_rows($departments) > 0) {
+                                foreach ($departments as $department) {
+                                    echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
+                                }
+                            }
                             ?>
                         </select>
-                    </div> -->
+                    </div>
                     <div class="col-md-3">
                         <select class="form-select" id="statusFilter">
                             <option value="">Filter by Status</option>
@@ -122,15 +129,15 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </div>
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="requestorSearch" placeholder="Search by Requestor">
-                        <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 30px;padding-right:10px;padding-left:10px;">Reset Filters</button>
+                        <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 30px;padding-right:20px;padding-left:10px;">Reset Filters</button>
 
                     </div>
 
                 </div>
                 <h3>
-                    <center>Overall Ticket List</center>
+                    <center>Ticket List</center>
                 </h3>
-                <table id="example" class="table table-responsive hover table-bordered">
+                <table id="example" class="table table-bordered">
                     <thead class="table-light">
                         <tr>
                             <th>Ticket ID</th>
@@ -141,6 +148,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <th class="text-center">Date Created</th>
                             <th class="text-center">Updated by</th>
                             <th class="text-center">Updated Date</th>
+                            <th class="text-center">Reason</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -180,13 +188,15 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     <td class="text-center">
                                         <?= (!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : '';
                                         if ($status == 'Cancelled') {
-                                            echo 'Cancelled by ' . $item['updated_by'] . ' due to ' . $item['reason'];
+                                            echo 'Cancelled by ' . $item['updated_by'];
                                         }
                                         ?>
                                     </td>
                                     <td class="text-center"><?php if (!empty($item['updated_date'])) {
                                                                 echo date('F j, Y h:i A', strtotime($item['updated_date']));
                                                             } ?></td>
+                                    <td><?= (strlen($item['reason']) > 20) ? wordwrap($item['reason'], 20, true) : $item['reason']; ?></td>
+
                                 </tr>
                         <?php
                             }

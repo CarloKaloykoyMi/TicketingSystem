@@ -106,7 +106,7 @@
                             <li>
                                 <a href="#contact">Contact</a>
                             </li>
-                            <li><a href="usertype.php" class="active">LOGIN</a></li>
+                            <li><a href="emplogin.php" class="active">LOGIN</a></li>
                         </ul>
                     </div>
 
@@ -404,7 +404,7 @@
         }
     </script>
 
-<script>
+    <script>
         function restrictToNumbers(input) {
             var phoneNumberNote = input.parentNode.querySelector('.note');
             var inputValue = input.value;
@@ -420,4 +420,5 @@
         }
     </script>
 </body>
+
 </html>
