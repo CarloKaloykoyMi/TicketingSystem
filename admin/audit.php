@@ -1,4 +1,5 @@
-<?php include('../function/myfunction.php');
+<?php
+include('../function/myfunction.php');
 include 'sidebar_navbar.php';
 
 if (!isset($_SESSION['auth_user']['username'])) {
@@ -18,7 +19,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     $lname = $_SESSION['auth_user']['lastname'];
     $fname = $_SESSION['auth_user']['firstname'];
 }
-
 ?>
 
 <!DOCTYPE html>
@@ -30,23 +30,26 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Audit Trail</title>
 
-    <!-- datatable css -->
+    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-    <!-- icon css -->
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+    <!-- Line Icons -->
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
-    <!-- bootstrap css -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-    <!-- datatable css -->
-    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script defer src="js/table.js"></script>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
 
@@ -62,31 +65,67 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             </div>
                         </div>
                         <div class="card-body">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
-                                    <tr>
-                                        <th>User ID</th>
-                                        <th>Action</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php
-                                    $audit = getAll("audit_trail");
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#admin-audit">Admin Logs</button>
+                                </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#user-audit">User Logs</button>
+                                </li>
+                                <!-- Add more tab buttons if needed -->
+                            </ul>
 
-                                    if (mysqli_num_rows($audit) > 0) {
-                                        foreach ($audit as $item) {
-                                    ?>
+                            <div class="tab-content mt-3">
+                                <div class="tab-pane fade show active" id="admin-audit">
+                                    <table id="adminTable" class="table table-striped" style="width:100%">
+                                        <thead>
                                             <tr>
-                                                <td><?= $item['user_id']; ?></td>
-                                                <td><?= $item['Action']; ?></td>
-                                                <td><?= date('F j, Y g:i A', strtotime($item['Date'])); ?></td>
-                                    <?php
-                                        }
-                                    }
-                                    ?>
-                                </tbody>
-                            </table>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $adminlogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME, user.role FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE user.role = 0 ORDER BY audit_trail.Date DESC";
+                                            $adminlogsResult = mysqli_query($con, $adminlogs);
+                                            while ($row1 = mysqli_fetch_assoc($adminlogsResult)) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row1['NAME'] . "</td>";
+                                                echo "<td>" . $row1['Action'] . "</td>";
+                                                echo "<td>" . date('F j, Y g:i A', strtotime($row1['Date'])) . "</td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="tab-pane fade" id="user-audit">
+                                    <table id="userTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $userlogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME, user.role FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE user.role = 1 ORDER BY audit_trail.Date DESC";
+                                            $userlogsResult = mysqli_query($con, $userlogs);
+                                            while ($row2 = mysqli_fetch_assoc($userlogsResult)) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row2['NAME'] . "</td>";
+                                                echo "<td>" . $row2['Action'] . "</td>";
+                                                echo "<td>" . date('F j, Y g:i A', strtotime($row2['Date'])) . "</td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <!-- Add more tab panes if needed -->
                         </div>
                     </div>
                 </div>
@@ -94,8 +133,65 @@ if (!isset($_SESSION['auth_user']['username'])) {
         </div>
     </div>
 
+    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+    <!-- Custom JS -->
     <script src="js/sidebar.js"></script>
+
+    <script>
+        // Initialize DataTable for Admin Table
+        $(document).ready(function() {
+            $('#adminTable').DataTable({
+                "order": [
+                    [2, "desc"]
+                ], // Sort by the third (Date) column in ascending order
+                "columnDefs": [{
+                    "targets": [2],
+                    "render": function(data, type, row) {
+                        var date = new Date(data);
+                        return formatDate(date);
+                    },
+                    "type": "date"
+                }]
+            });
+        });
+
+        // Initialize DataTable for User Table
+        $(document).ready(function() {
+            $('#userTable').DataTable({
+                "order": [
+                    [2, "desc"]
+                ], // Sort by the third (Date) column in ascending order
+                "columnDefs": [{
+                    "targets": [2],
+                    "render": function(data, type, row) {
+                        var date = new Date(data);
+                        return formatDate(date);
+                    },
+                    "type": "date"
+                }]
+            });
+        });
+
+        // Function to format date as "Month Day, Year Time"
+        function formatDate(date) {
+            var options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            var formattedDate = date.toLocaleDateString('en-US', options);
+            // Remove the "at" substring
+            formattedDate = formattedDate.replace(" at", "");
+            return formattedDate;
+        }
+    </script>
+
+
+
 </body>
 
 </html>
