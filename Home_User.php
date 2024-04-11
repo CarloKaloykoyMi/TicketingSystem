@@ -98,19 +98,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="ticketNumberSearch" placeholder="Search by Ticket Number">
                     </div>
-                    <!-- <div class="col-md-3">
+                    <div class="col-md-3">
                         <select class="form-select" id="departmentFilter">
                             <option value="">Filter by Department</option>
-                            <//?php
-                            // $departments = getAll("department");
-                            // if (mysqli_num_rows($departments) > 0) {
-                            //     foreach ($departments as $department) {
-                            //         echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
-                            //     }
-                            // }
+                            <?php
+                            $departments = getAll("department");
+                            if (mysqli_num_rows($departments) > 0) {
+                                foreach ($departments as $department) {
+                                    echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
+                                }
+                            }
                             ?>
                         </select>
-                    </div> -->
+                    </div>
                     <div class="col-md-3">
                         <select class="form-select" id="statusFilter">
                             <option value="">Filter by Status</option>
@@ -122,13 +122,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </div>
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="requestorSearch" placeholder="Search by Requestor">
-                        <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 30px;padding-right:10px;padding-left:10px;">Reset Filters</button>
+                        <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 30px;padding-right:20px;padding-left:10px;">Reset Filters</button>
 
                     </div>
 
                 </div>
                 <h3>
-                    <center>Overall Ticket List</center>
+                    <center>Ticket List</center>
                 </h3>
                 <table id="example" class="table table-responsive hover table-bordered">
                     <thead class="table-light">
