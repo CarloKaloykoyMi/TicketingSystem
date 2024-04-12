@@ -40,7 +40,7 @@ include('mysql_connect.php'); // connection to MySQL
                     <li>
                         <a href="index.php#contact">Contact</a>
                     </li>
-                    <li><a href="usertype.php" class="active">LOGIN</a></li>
+                    <li><a href="emplogin.php" class="active">LOGIN</a></li>
                 </ul>
             </div>
             </div>

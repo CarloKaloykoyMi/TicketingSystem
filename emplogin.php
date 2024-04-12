@@ -70,9 +70,8 @@ include('mysql_connect.php'); // connection to MySQL
                     <span>Don't have an account yet? <a href="register.php" class="button">Signup</a></span>
                 </div>
 
-                <br><br>
                 <div class="form-link">
-                    <span>Login as admin. <a href="adminlogin.php" class="button">Login</a></span>
+                    <span><a href="adminlogin.php" class="button">Login</a></span> as admin</span>
                 </div>
             </div>
         </div>
