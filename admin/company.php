@@ -109,6 +109,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                             <form action="code.php" method="POST">
                                                                 <input type="hidden" name="company_id" value="<?= $item['id']; ?>">
+                                                                <input type="hidden" name="company_name" value="<?= $item['company_name']; ?>">
                                                                 <input type="hidden" name="user_id" value="<?= $user_id; ?>">
                                                                 <button type="submit" class="btn btn-danger" name="delete_company">Delete</button>
                                                             </form>

@@ -377,7 +377,8 @@ if (isset($_POST['add_company'])) {
     $sql = "DELETE FROM department WHERE id = '$id';";
     $sqlRun =  mysqli_query($con, $sql);
 
-    $action = 'Department Deletion';
+    $department_name =$_POST['department_name'];
+    $action = 'Department Deletion: '.$department_name. " Department";
     $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
     $atrun = mysqli_query($con, $sqlDel);
     echo "<script> location.href='../admin/department.php'; </script>";
@@ -387,7 +388,8 @@ if (isset($_POST['add_company'])) {
     $sqlRun =  mysqli_query($con, $sql);
 
     $usid = $_POST['user_id'];
-    $action = 'Company Deletion';
+    $company_name =$_POST['company_name'];
+    $action = 'Company Deletion: '.$company_name. " Company";
     $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
     $atrun = mysqli_query($con, $sqlDel);
     echo "<script> location.href='../admin/company.php'; </script>";
@@ -397,7 +399,8 @@ if (isset($_POST['add_company'])) {
     $sqlRun =  mysqli_query($con, $sql);
 
     $usid = $_POST['user_id'];
-    $action = 'Branch Deletion';
+    $branch_name =$_POST['branch_name'];
+    $action = 'Branch Deletion: '.$branch_name. " Branch";
     $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
     $atrun = mysqli_query($con, $sqlDel);
     echo "<script> location.href='../admin/branch.php'; </script>";
