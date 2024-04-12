@@ -165,7 +165,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 $updatedby_result = mysqli_fetch_assoc($updated_by_result);
                         ?>
                                 <tr>
-                                    <td><u><a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="text-body fw-bold">Ticket #<?php echo $item['ticket_id']; ?></a></u></td>
+                                    <td><u><a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="text-body fw-bold">ITR -<?php echo $item['ticket_id']; ?></a></u></td>
                                     <td><?= $item['requestor']; ?></td>
                                     <td><?= $item['to_dept']; ?></td>
                                     <td class="text-justify"><?= $item['subject']; ?></td>
