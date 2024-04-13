@@ -280,7 +280,7 @@ while ($row = mysqli_fetch_assoc($result)) {
                                         foreach ($recent as $item) {
                                     ?>
                                             <tr>
-                                                <td>Ticket #<?= $item['ticket_id']; ?></td>
+                                                <td>ITR-<?= $item['ticket_id']; ?></td>
                                                 <td><?= $item['subject']; ?></td>
                                                 <td><?= $item['status']; ?></td>
                                             </tr>
