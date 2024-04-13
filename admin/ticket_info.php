@@ -198,11 +198,6 @@ $reply_result = mysqli_query($con, $query);
                                 ?>
                             </b>
                         </span>
-                        <!-- Updated Status modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 10px;" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
-                                                                                                                                                                            echo 'disabled';
-                                                                                                                                                                        } ?>>Update Status
-                        </button>
                         <br>
                         <?php
                         if ($ticket_data['status'] == 'Resolved') {
@@ -267,7 +262,11 @@ $reply_result = mysqli_query($con, $query);
                             }
                         }
                         ?>
-
+                        <br>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 14px;" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
+                                                                                                                                                                            echo 'disabled';
+                                                                                                                                                                        } ?>>Update Status
+                        </button>
                         <?php
                         if ($status == 'Cancelled') {
                             echo '<span class="number pull-right"><b>Cancelled on: ' . date('F j, Y g:i A', strtotime($ticket_data['updated_date'])) . '</b></span>' . '<br>';

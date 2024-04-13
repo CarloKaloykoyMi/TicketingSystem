@@ -195,7 +195,7 @@ $reply_result = mysqli_query($con, $query);
                             </b>
                         </span>
                         <!-- Updated Status modal -->
-                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" style="padding: 5px 10px; font-size: 10px;" <?php if ($status == 'Cancelled' || $status == 'Resolved') {
+                        <button type="button" class="btn badge text-bg-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"  <?php if ($status == 'Cancelled' || $status == 'Resolved') {
                                                                                                                                                                             echo 'disabled';
                                                                                                                                                                         } ?>>Update Status
                         </button>
