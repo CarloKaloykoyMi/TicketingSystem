@@ -85,7 +85,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 <td><?= $item['location']; ?></td>
                                                 <td>
                                                     <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editDepartmentModal<?= $item['id']; ?>"><i class="fas fa-pencil"></i>&nbsp;Edit</a>
-                                                    <a href="#" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal<?= $item['id']; ?>">
+                                                    <a href="#" class="btn btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteDepartmentModal<?= $item['id']; ?>">
                                                         <i class="fas fa-trash"></i>&nbsp;Delete
                                                     </a>
                                                 </td>
