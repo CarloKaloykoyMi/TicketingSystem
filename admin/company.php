@@ -57,7 +57,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
         <div class="container">
             <div class="row mb-3">
                 <div class="col-md-4">
-                    <input type="text" class="form-control" id="companyNameSearch" placeholder="Search by Company Name">
+                    <select class="form-control" id="companyNameSearch">
+                        <option value="">Select Company Name</option>
+                        <?php
+                        $companies = getAll("company");
+                        if (mysqli_num_rows($companies) > 0) {
+                            foreach ($companies as $company) {
+                                echo "<option value='" . $company['company_name'] . "'>" . $company['company_name'] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No Companies available</option>";
+                        }
+                        ?>
+                    </select>
                 </div>
                 <div class="col-md-4">
                     <input type="text" class="form-control" id="contactSearch" placeholder="Search by Contact" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
