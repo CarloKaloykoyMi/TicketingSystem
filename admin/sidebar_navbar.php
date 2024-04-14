@@ -85,10 +85,11 @@ while ($row = mysqli_fetch_array($result)) {
                 <ul class="sub-menu">
                     <li><a href="company.php"><i class="fa-solid fa-building"></i>
                             <span class="nav-item">Company</span></a></li>
-                    <li><a href="department.php"><i class="fa-solid fa-users"></i>
-                            <span class="nav-item">Department</span></a></li>
                     <li><a href="branch.php"><i class="fa-solid fa-location-dot"></i>
                             <span class="nav-item">Branch </span></a></li>
+                    <li><a href="department.php"><i class="fa-solid fa-users"></i>
+                            <span class="nav-item">Department</span></a></li>
+
                 </ul>
             </li>
             <li class="sidebar-item">
@@ -99,7 +100,7 @@ while ($row = mysqli_fetch_array($result)) {
             </li>
             <li class="sidebar-item">
                 <a href="audit.php" class="sidebar-link">
-                <i class="fa-solid fa-list-ul"></i>
+                    <i class="fa-solid fa-list-ul"></i>
                     <span>Audit Trail</span>
                 </a>
             </li>
