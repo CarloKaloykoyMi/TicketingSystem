@@ -55,6 +55,21 @@ if (!isset($_SESSION['auth_user']['username'])) {
 <body>
     <div class="main p-3">
         <div class="container">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="companyNameSearch" placeholder="Search by Company Name">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="contactSearch" placeholder="Search by Contact">
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="emailSearch" placeholder="Search by Email">
+                </div>
+                <div class="col-md-4">
+                    <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 70px;padding-right:15px;padding-left:15px;">Reset Filters</button>
+                </div>
+                <br> <br>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -232,6 +247,44 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
             input.value = numbersOnly;
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const companyNameSearch = document.getElementById('companyNameSearch');
+            const contactSearch = document.getElementById('contactSearch');
+            const emailSearch = document.getElementById('emailSearch');
+            const resetFiltersButton = document.getElementById('resetFilters');
+
+            companyNameSearch.addEventListener('input', filterCompanies);
+            contactSearch.addEventListener('input', filterCompanies);
+            emailSearch.addEventListener('input', filterCompanies);
+            resetFiltersButton.addEventListener('click', resetFilters);
+
+            function filterCompanies() {
+                const companies = document.querySelectorAll('#example tbody tr');
+                const companyNameValue = companyNameSearch.value.trim().toLowerCase();
+                const contactValue = contactSearch.value.trim().toLowerCase();
+                const emailValue = emailSearch.value.trim().toLowerCase();
+
+                companies.forEach(company => {
+                    const companyName = company.querySelector('td:first-child').textContent.trim().toLowerCase();
+                    const contact = company.querySelector('td:nth-child(2)').textContent.trim().toLowerCase();
+                    const email = company.querySelector('td:nth-child(3)').textContent.trim().toLowerCase();
+
+                    let shouldShow = companyName.includes(companyNameValue) &&
+                        contact.includes(contactValue) &&
+                        email.includes(emailValue);
+
+                    company.style.display = shouldShow ? 'table-row' : 'none';
+                });
+            }
+
+            function resetFilters() {
+                companyNameSearch.value = ''; // Reset company name filter
+                contactSearch.value = ''; // Reset contact filter
+                emailSearch.value = ''; // Reset email filter
+                filterCompanies(); // Apply filters after resetting
+            }
+
+        });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>

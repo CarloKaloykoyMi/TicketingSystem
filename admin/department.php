@@ -50,6 +50,45 @@ if (!isset($_SESSION['auth_user']['username'])) {
 <body>
     <div class="main p-3">
         <div class="container">
+            <div class="row mb-3">
+                <div class="col-md-4">
+                    <select class="form-control" id="companyNameSearch">
+                        <option value="">Select Company Name</option>
+                        <?php
+                        $companies = getAll("company");
+                        if (mysqli_num_rows($companies) > 0) {
+                            foreach ($companies as $company) {
+                                echo "<option value='" . $company['company_name'] . "'>" . $company['company_name'] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No Companies available</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <select class="form-control" id="departmentNameSearch">
+                        <option value="">Select Department Name</option>
+                        <?php
+                        $departments = getAll("department");
+                        if (mysqli_num_rows($departments) > 0) {
+                            foreach ($departments as $department) {
+                                echo "<option value='" . $department['department_name'] . "'>" . $department['department_name'] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No Departments available</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <input type="text" class="form-control" id="departmentHeadSearch" placeholder="Search by Department Head">
+                </div>
+                <div class="col-md-4">
+                    <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 70px;padding-right:15px;padding-left:15px;">Reset Filters</button>
+                </div>
+                <br> <br>
+            </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -240,6 +279,47 @@ if (!isset($_SESSION['auth_user']['username'])) {
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const companyNameSearch = document.getElementById('companyNameSearch');
+            const departmentNameSearch = document.getElementById('departmentNameSearch');
+            const departmentHeadSearch = document.getElementById('departmentHeadSearch');
+            const resetFiltersButton = document.getElementById('resetFilters');
+
+            companyNameSearch.addEventListener('input', filterDepartments);
+            departmentNameSearch.addEventListener('input', filterDepartments);
+            departmentHeadSearch.addEventListener('input', filterDepartments);
+            resetFiltersButton.addEventListener('click', resetFilters);
+
+            function filterDepartments() {
+                const departments = document.querySelectorAll('#example tbody tr');
+                const companyNameValue = companyNameSearch.value.trim().toLowerCase();
+                const departmentNameValue = departmentNameSearch.value.trim().toLowerCase();
+                const departmentHeadValue = departmentHeadSearch.value.trim().toLowerCase();
+
+                departments.forEach(department => {
+                    const companyName = department.querySelector('td:first-child').textContent.trim().toLowerCase();
+                    const departmentName = department.querySelector('td:nth-child(2)').textContent.trim().toLowerCase();
+                    const departmentHead = department.querySelector('td:nth-child(3)').textContent.trim().toLowerCase();
+
+                    let shouldShow = companyName.includes(companyNameValue) &&
+                        departmentName.includes(departmentNameValue) &&
+                        departmentHead.includes(departmentHeadValue);
+
+                    department.style.display = shouldShow ? 'table-row' : 'none';
+                });
+            }
+
+            function resetFilters() {
+                companyNameSearch.value = ''; // Reset company name filter
+                departmentNameSearch.value = ''; // Reset department name filter
+                departmentHeadSearch.value = ''; // Reset department head filter
+                filterDepartments(); // Apply filters after resetting
+            }
+
+        });
+    </script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
