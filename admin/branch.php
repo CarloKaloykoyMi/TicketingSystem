@@ -52,6 +52,38 @@ if (!isset($_SESSION['auth_user']['username'])) {
 <body>
     <div class="main p-3">
         <div class="container">
+            <div class="row mb-12">
+                <div class="col-md-3">
+                    <select class="form-control" id="companyNameSearch">
+                        <option value="">Select Company Name</option>
+                        <?php
+                        $companies = getAll("company");
+                        if (mysqli_num_rows($companies) > 0) {
+                            foreach ($companies as $company) {
+                                echo "<option value='" . $company['company_name'] . "'>" . $company['company_name'] . "</option>";
+                            }
+                        } else {
+                            echo "<option value=''>No Companies available</option>";
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="branchNameSearch" placeholder="Search by Branch Name">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="branchContactSearch" placeholder="Search by Contact" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" id="branchEmailSearch" placeholder="Search by Email">
+                </div>
+                <div class="col-md-4">
+                    <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 70px;padding-right:15px;padding-left:15px;">Reset Filters</button>
+                </div>
+                <br> <br>
+            </div>
+
+
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
@@ -274,6 +306,50 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
             input.value = numbersOnly;
         }
+        document.addEventListener("DOMContentLoaded", function() {
+            const companyNameSearch = document.getElementById('companyNameSearch');
+            const branchNameSearch = document.getElementById('branchNameSearch');
+            const branchContactSearch = document.getElementById('branchContactSearch');
+            const branchEmailSearch = document.getElementById('branchEmailSearch');
+            const resetFiltersButton = document.getElementById('resetFilters');
+
+            companyNameSearch.addEventListener('input', filterBranches);
+            branchNameSearch.addEventListener('input', filterBranches);
+            branchContactSearch.addEventListener('input', filterBranches);
+            branchEmailSearch.addEventListener('input', filterBranches);
+            resetFiltersButton.addEventListener('click', resetFilters);
+
+            function filterBranches() {
+                const branches = document.querySelectorAll('#example tbody tr');
+                const companyNameValue = companyNameSearch.value.trim().toLowerCase();
+                const branchNameValue = branchNameSearch.value.trim().toLowerCase();
+                const branchContactValue = branchContactSearch.value.trim().toLowerCase();
+                const branchEmailValue = branchEmailSearch.value.trim().toLowerCase();
+
+                branches.forEach(branch => {
+                    const companyName = branch.querySelector('td:first-child').textContent.trim().toLowerCase();
+                    const branchName = branch.querySelector('td:nth-child(2)').textContent.trim().toLowerCase();
+                    const branchContact = branch.querySelector('td:nth-child(3)').textContent.trim().toLowerCase();
+                    const branchEmail = branch.querySelector('td:nth-child(4)').textContent.trim().toLowerCase();
+
+                    let shouldShow = companyName.includes(companyNameValue) &&
+                        branchName.includes(branchNameValue) &&
+                        branchContact.includes(branchContactValue) &&
+                        branchEmail.includes(branchEmailValue);
+
+                    branch.style.display = shouldShow ? 'table-row' : 'none';
+                });
+            }
+
+            function resetFilters() {
+                companyNameSearch.value = ''; // Reset company name filter
+                branchNameSearch.value = ''; // Reset branch name filter
+                branchContactSearch.value = ''; // Reset branch contact filter
+                branchEmailSearch.value = ''; // Reset branch email filter
+                filterBranches(); // Apply filters after resetting
+            }
+
+        });
     </script>
 </body>
 

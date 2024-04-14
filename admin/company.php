@@ -60,7 +60,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <input type="text" class="form-control" id="companyNameSearch" placeholder="Search by Company Name">
                 </div>
                 <div class="col-md-4">
-                    <input type="text" class="form-control" id="contactSearch" placeholder="Search by Contact">
+                    <input type="text" class="form-control" id="contactSearch" placeholder="Search by Contact" oninput="this.value = this.value.replace(/[^0-9]/g, '');">
                 </div>
                 <div class="col-md-4">
                     <input type="text" class="form-control" id="emailSearch" placeholder="Search by Email">
