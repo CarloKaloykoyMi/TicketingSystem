@@ -255,10 +255,10 @@ while ($row = mysqli_fetch_array($result)) {
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3" id="branchGroup" style="display:none;">
-                                                    <label for="branch" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-code-branch"></i> Branch</label>
+                                                <div class="row mb-3" id="branchGroup">
+                                                    <label for="branch" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-location-dot"></i> Branch</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <select name="branch" class="form-control" id="branch"></select>
+                                                        <select name="branch" class="form-control" value="<?php echo $branch ?>" id="branch"></select>
                                                     </div>
                                                 </div>
 
@@ -367,9 +367,8 @@ while ($row = mysqli_fetch_array($result)) {
 
     <script>
         $(document).ready(function() {
-            $('#company').change(function() {
-                var companyName = $(this).val();
-
+            // Function to load branches
+            function loadBranches(companyName) {
                 $.ajax({
                     url: 'get_branch.php',
                     type: 'POST',
@@ -380,11 +379,27 @@ while ($row = mysqli_fetch_array($result)) {
                         console.log(response);
                         $('#branch').html(response);
                         $('#branchGroup').toggle(response.trim() !== '');
+
+                        // Set the value of the input field to $branch
+                        $('#oldbranch').val('<?php echo $branch ?>');
+
+                        // Set the selected option in the branch select
+                        $('#branch').val('<?php echo $branch ?>');
                     },
                     error: function() {
                         alert('Error fetching branches.');
                     }
                 });
+            }
+
+            // Load branches when page loads
+            var companyName = $('#company').val(); // Get the selected company
+            loadBranches(companyName);
+
+            // Change event for company select
+            $('#company').change(function() {
+                var companyName = $(this).val();
+                loadBranches(companyName);
             });
         });
     </script>
