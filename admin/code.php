@@ -83,12 +83,13 @@ if (isset($_POST['add_company'])) {
     }
 } else if (isset($_POST['add_department'])) {
     $company_name = $_POST['company_name'];
+    $branch = $_POST['branch'];
     $department_name = $_POST['department_name'];
     $department_head = $_POST['department_head'];
     $location = $_POST['location'];
 
-    $insert_department_query = "INSERT INTO department (company,department_name, department_head, location) 
-    VALUES ('$company_name','$department_name','$department_head','$location')";
+    $insert_department_query = "INSERT INTO department (company,branch, department_name, department_head, location) 
+    VALUES ('$company_name','$branch','$department_name','$department_head','$location')";
     $insert_department_query_run = mysqli_query($con, $insert_department_query);
 
     if ($insert_department_query_run) {
@@ -377,8 +378,8 @@ if (isset($_POST['add_company'])) {
     $sql = "DELETE FROM department WHERE id = '$id';";
     $sqlRun =  mysqli_query($con, $sql);
 
-    $department_name =$_POST['department_name'];
-    $action = 'Department Deletion: '.$department_name. " Department";
+    $department_name = $_POST['department_name'];
+    $action = 'Department Deletion: ' . $department_name . " Department";
     $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
     $atrun = mysqli_query($con, $sqlDel);
     echo "<script> location.href='../admin/department.php'; </script>";
@@ -388,8 +389,8 @@ if (isset($_POST['add_company'])) {
     $sqlRun =  mysqli_query($con, $sql);
 
     $usid = $_POST['user_id'];
-    $company_name =$_POST['company_name'];
-    $action = 'Company Deletion: '.$company_name. " Company";
+    $company_name = $_POST['company_name'];
+    $action = 'Company Deletion: ' . $company_name . " Company";
     $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
     $atrun = mysqli_query($con, $sqlDel);
     echo "<script> location.href='../admin/company.php'; </script>";
@@ -399,8 +400,8 @@ if (isset($_POST['add_company'])) {
     $sqlRun =  mysqli_query($con, $sql);
 
     $usid = $_POST['user_id'];
-    $branch_name =$_POST['branch_name'];
-    $action = 'Branch Deletion: '.$branch_name. " Branch";
+    $branch_name = $_POST['branch_name'];
+    $action = 'Branch Deletion: ' . $branch_name . " Branch";
     $sqlDel = "INSERT INTO audit_trail (user_id,action) VALUES('$usid','$action');";
     $atrun = mysqli_query($con, $sqlDel);
     echo "<script> location.href='../admin/branch.php'; </script>";

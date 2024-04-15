@@ -43,6 +43,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
     <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script defer src="js/table.js"></script>
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
@@ -100,10 +103,11 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         </div>
 
                         <div class="card-body">
-                            <table id="example" class="table table-striped" style="width:100%">
+                            <table id="example" class="table-responsive table-striped" style="width:100%">
                                 <thead>
                                     <tr>
                                         <th>Company Name</th>
+                                        <th>Branch Name</th>
                                         <th>Department Name</th>
                                         <th>Department Head</th>
                                         <th>Location</th>
@@ -119,6 +123,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     ?>
                                             <tr>
                                                 <td><?= $item['company']; ?></td>
+                                                <td><?= $item['branch']; ?></td>
                                                 <td><?= $item['department_name']; ?></td>
                                                 <td><?= $item['department_head']; ?></td>
                                                 <td><?= $item['location']; ?></td>
@@ -238,7 +243,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                         <div class="col-md-12 mt-3">
                             <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
-                            <select id=company_name name="company_name" class="form-control" required>
+                            <select id="company" name="company_name" class="form-control" required>
                                 <option value="" disabled selected>Select your Company</option>
                                 <?php
                                 $company = getAll("company");
@@ -252,6 +257,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     echo "<option value=''>No Company available</option>";
                                 }
                                 ?>
+                            </select>
+                        </div>
+
+                        <div class="col-md-12 mt-3">
+                            <label for="branch" id="branchGroup" class="form-label"> <i class="fa-solid fa-location-dot"></i> Branch:</label>
+                            <select class="form-control" id="branch" name="branch" required>
+                                <option value="">Select Branch:</option>
                             </select>
                         </div>
 
@@ -274,10 +286,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="form-group pull-right">
                             <button class="btn btn-primary float-end" type="submit" name="add_department">Submit</button>
                         </div>
-                    </form>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
     <script>
@@ -321,6 +333,29 @@ if (!isset($_SESSION['auth_user']['username'])) {
         });
     </script>
 
+    <script>
+        $(document).ready(function() {
+            $('#company').change(function() {
+                var companyName = $(this).val();
+
+                $.ajax({
+                    url: 'get_branch.php',
+                    type: 'POST',
+                    data: {
+                        company_name: companyName
+                    },
+                    success: function(response) {
+                        console.log(response);
+                        $('#branch').html(response);
+                        $('#branchGroup').toggle(response.trim() !== '');
+                    },
+                    error: function() {
+                        alert('Error fetching branches.');
+                    }
+                });
+            });
+        });
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
 </body>
