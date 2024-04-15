@@ -313,7 +313,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 departments.forEach(department => {
                     const companyName = department.querySelector('td:first-child').textContent.trim().toLowerCase();
                     const departmentName = department.querySelector('td:nth-child(2)').textContent.trim().toLowerCase();
-                    const departmentHead = department.querySelector('td:nth-child(3)').textContent.trim().toLowerCase();
+                    const departmentHead = department.querySelector('td:nth-child(4)').textContent.trim().toLowerCase();
 
                     let shouldShow = companyName.includes(companyNameValue) &&
                         departmentName.includes(departmentNameValue) &&
