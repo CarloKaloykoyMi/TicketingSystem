@@ -174,14 +174,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
                                                                     <select id=company_name name="company_name" class="form-control">
-                                                                        <option value="<?= $item['company']; ?>"><?= $item['company']; ?></option>
+                                                                        <option value="">Select Company</option>
                                                                         <?php
-                                                                        $company = getAll("company");
-                                                                        if (mysqli_num_rows($company) > 0) {
-                                                                            foreach ($company as $company) {
-                                                                        ?>
-                                                                                <option value="<?= $company['company_name']; ?>"><?= $company['company_name']; ?></option>
-                                                                        <?php
+                                                                        $companyList = getAll("company");
+                                                                        if (mysqli_num_rows($companyList) > 0) {
+                                                                            foreach ($companyList as $companyItem) {
+                                                                                $selected = ($item['company'] == $companyItem['company_name']) ? 'selected' : '';
+                                                                                echo "<option value='" . $companyItem['company_name'] . "' $selected>" . $companyItem['company_name'] . "</option>";
                                                                             }
                                                                         } else {
                                                                             echo "<option value=''>No Company available</option>";
