@@ -173,7 +173,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
-                                                                    <select id="company_name" name="company_name" class="form-control">
+                                                                    <select class="form-control company_name" name="company_name">
                                                                         <option value="">Select Company</option>
                                                                         <?php
                                                                         $companyList = getAll("company");
@@ -190,11 +190,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fas fa-code-branch"></i> Branch</label>
-                                                                    <select id="branchedit" name="branch" class="form-control">
+                                                                    <label for="branchedit" class="form-label"><i class="fas fa-code-branch"></i> Branch</label>
+                                                                    <select class="form-control branchedit" name="branch">
                                                                         <option value="">Select Branch</option>
                                                                     </select>
                                                                 </div>
+
+
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for=""><i class="fas fa-users"></i> Department Name</label>
@@ -384,7 +386,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
             <?php
             $branchList = getAll("branch");
             if ($branchList && mysqli_num_rows($branchList) > 0) {
-                foreach ($branchList as $branchItem) {
+                while ($branchItem = mysqli_fetch_assoc($branchList)) {
                     echo "if ('" . $branchItem['company'] . "' === selectedCompany) {";
                     echo "branchSelect.innerHTML += '<option value=\"" . $branchItem['branch_name'] . "\">" . $branchItem['branch_name'] . "</option>';";
                     echo "}";
@@ -393,6 +395,40 @@ if (!isset($_SESSION['auth_user']['username'])) {
             ?>
         });
     </script>
+<script>
+    $(document).ready(function() {
+        // Change event handler for company selection
+        $('.company_name').change(function() {
+            var company_name = $(this).val();
+            var branchDropdown = $(this).closest('.row').find('.branchedit'); // Find the corresponding branch dropdown
+
+            if (company_name != '') {
+                // Reset the branch dropdown
+                branchDropdown.html('<option value="">Select Branch</option>');
+                
+                // Fetch branches for the selected company
+                $.ajax({
+                    url: 'get_branch.php',
+                    type: 'POST',
+                    data: {
+                        company_name: company_name
+                    },
+                    success: function(response) {
+                        branchDropdown.append(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            } else {
+                // Reset the branch dropdown if no company is selected
+                branchDropdown.html('<option value="">Select Branch</option>');
+            }
+        });
+    });
+</script>
+
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
