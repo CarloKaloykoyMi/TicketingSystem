@@ -174,7 +174,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
                                                                     <select class="form-control company_name" name="company_name">
-                                                                        <option value="">Select Company</option>
+                                                                        <option value="" disabled>Select Company</option>
                                                                         <?php
                                                                         $companyList = getAll("company");
                                                                         if (mysqli_num_rows($companyList) > 0) {
@@ -191,9 +191,42 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for="branchedit" class="form-label"><i class="fas fa-code-branch"></i> Branch</label>
-                                                                    <select class="form-control branchedit" name="branch">
-                                                                        <option value="">Select Branch</option>
-                                                                    </select>
+                                                                    <?php
+
+                                                                    $deptCheck = "SELECT * FROM department WHERE id='" . $item['id'] . "';";
+                                                                    $result = mysqli_query($con, $deptCheck);
+
+                                                                    if ($result) {
+                                                                        $department = mysqli_fetch_assoc($result);
+                                                                        $branch = $department['branch'];
+                                                                        $comp = $department['company'];
+                                                                    
+                                                                        $branlist = "SELECT * FROM branch WHERE company ='".$comp."';";
+                                                                        $branresult = mysqli_query($con, $branlist);
+                                                                        
+                                                                        if ($branresult) {
+                                                                            echo '<select class="form-control branchedit" name="branch"><option value="" selected disabled>Select Branch</option>';
+                                                                            
+                                                                            while ($branchrelist = mysqli_fetch_assoc($branresult)) {
+                                                                                $otherbranch = $branchrelist['branch_name'];
+                                                                                if ($otherbranch != $branch) {
+                                                                                    echo '<option value="' . $otherbranch . '">' . $otherbranch . '</option>';
+                                                                                }
+                                                                            }
+                                                                            
+                                                                            echo '<option value="' . $branch . '" selected>' . $branch . '</option></select>';
+                                                                        } else {
+                                                                            // Handle query error
+                                                                            echo "Error executing query: " . mysqli_error($con);
+                                                                        }
+                                                                    } else {
+                                                                        // Handle query error
+                                                                        echo "Error executing query: " . mysqli_error($con);
+                                                                    }
+                                                                    
+
+                                                                    ?>
+
                                                                 </div>
 
 
@@ -395,39 +428,46 @@ if (!isset($_SESSION['auth_user']['username'])) {
             ?>
         });
     </script>
-<script>
-    $(document).ready(function() {
-        // Change event handler for company selection
-        $('.company_name').change(function() {
-            var company_name = $(this).val();
-            var branchDropdown = $(this).closest('.row').find('.branchedit'); // Find the corresponding branch dropdown
+    <script>
+        $(document).ready(function() {
+            // Change event handler for company selection
+            $('.company_name').change(function() {
+                var company_name = $(this).val();
+                var branchDropdown = $(this).closest('.modal-content').find('.branchedit'); // Find the corresponding branch dropdown
+                var selectedBranch = '<?php echo $branch; ?>'; // Get the selected branch for comparison
 
-            if (company_name != '') {
-                // Reset the branch dropdown
-                branchDropdown.html('<option value="">Select Branch</option>');
-                
-                // Fetch branches for the selected company
-                $.ajax({
-                    url: 'get_branch.php',
-                    type: 'POST',
-                    data: {
-                        company_name: company_name
-                    },
-                    success: function(response) {
-                        branchDropdown.append(response);
-                    },
-                    error: function(xhr, status, error) {
-                        console.error("Error:", error);
-                    }
-                });
-            } else {
-                // Reset the branch dropdown if no company is selected
-                branchDropdown.html('<option value="">Select Branch</option>');
-            }
+                if (company_name != '') {
+                    // Reset the branch dropdown
+                    branchDropdown.html('<option value="">Select Branch</option>');
+
+                    // Fetch branches for the selected company
+                    $.ajax({
+                        url: 'get_branch.php',
+                        type: 'POST',
+                        data: {
+                            company_name: company_name
+                        },
+                        success: function(response) {
+                            branchDropdown.append(response);
+
+                            // Select the branch if it matches $item['branch']
+                            branchDropdown.find('option').each(function() {
+                                if ($(this).val() == selectedBranch) {
+                                    $(this).prop('selected', true);
+                                }
+                            });
+                        },
+                        error: function(xhr, status, error) {
+                            console.error("Error:", error);
+                        }
+                    });
+                } else {
+                    // Reset the branch dropdown if no company is selected
+                    branchDropdown.html('<option value="">Select Branch</option>');
+                }
+            });
         });
-    });
-</script>
-
+    </script>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
