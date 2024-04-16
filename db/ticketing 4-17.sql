@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 15, 2024 at 03:36 AM
+-- Generation Time: Apr 16, 2024 at 07:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -383,7 +383,8 @@ INSERT INTO `branch` (`id`, `company`, `branch_name`, `branch_address`, `contact
 (10, 'Cornersteel Systems Corporation', 'Cabuyao', 'Laguna', '092535656545', 'cabuyao@gmail.com', '2024-03-08 07:55:29'),
 (11, 'Energy Specialist Company(ESCO)', 'Libertad', 'Mandaluyong', '092554655465', 'libertad@gmail.com', '2024-03-08 07:56:05'),
 (12, 'Comfac Technology Options (CTO)', 'Libertad', 'Mandaluyong', '092153555', 'cto@gmail.com', '2024-03-08 07:57:02'),
-(22, 'Test', 'Test', 'Makati City', '09776123146', 'laguinlinastovezajocar@gmail.com', '2024-04-15 00:32:33');
+(22, 'Test', 'Test', 'Makati City', '09776123146', 'laguinlinastovezajocar@gmail.com', '2024-04-15 00:32:33'),
+(23, 'Test', 'Test2', '5926 blk 4 lot 5 Venust st. Sikat Araw HOA Nagpayong', '09773555302', 'laguinlinastovezajocar@gmail.com', '2024-04-16 16:03:53');
 
 -- --------------------------------------------------------
 
@@ -448,7 +449,7 @@ INSERT INTO `contact_us` (`id`, `first_name`, `last_name`, `phone`, `email`, `me
 CREATE TABLE `department` (
   `id` int(50) NOT NULL,
   `company` varchar(50) NOT NULL,
-  `branch` varchar(191) NOT NULL,
+  `branch` varchar(191) DEFAULT NULL,
   `department_name` varchar(191) NOT NULL,
   `department_head` varchar(191) NOT NULL,
   `location` varchar(191) NOT NULL,
@@ -460,19 +461,21 @@ CREATE TABLE `department` (
 --
 
 INSERT INTO `department` (`id`, `company`, `branch`, `department_name`, `department_head`, `location`, `created_at`) VALUES
-(12, 'Cornersteel Systems Corporation', '', 'MIS-Department', 'Jun Edmund', '3rd floor', '2024-03-20 03:02:34'),
-(13, 'Energy Specialist Company(ESCO)', '', 'Accounting', 'Peter', '3rd Floor', '2024-03-20 03:05:58'),
-(14, 'Cornersteel Systems Corporation', '', 'HR', 'Joaquin', '2nd Floor', '2024-03-20 03:07:14'),
-(15, 'Comfac Technology Options (CTO)', '', 'System installation', 'Rein ', '3rd Floor', '2024-03-20 03:12:42'),
-(16, 'Cornersteel Systems Corporation', '', 'Accounting', 'Andrea', '2nd Floor', '2024-03-20 03:14:57'),
-(17, 'Energy Specialist Company(ESCO)', '', 'HR', 'Karen', '3rd Floor', '2024-03-20 03:15:36'),
-(18, 'Comfac Technology Options (CTO)', '', 'Purchasing', 'Kyla', '4th Floor', '2024-03-20 03:17:25'),
-(19, 'Comfac Global Group', '', 'System Mechanical', 'Norman', '2nd Floor', '2024-03-20 03:18:13'),
-(20, 'Cornersteel Systems Corporation', '', 'Field Service', 'Jasmin', '3rd Floor', '2024-03-20 03:19:07'),
-(22, 'Comfac Global Group', '', 'Management Info', 'Grace', '2nd Floor', '2024-03-20 03:20:37'),
-(28, 'Comfac Global Group', '', 'Field Service', 'Rommel', '2ndFloor', '2024-04-12 06:17:33'),
-(29, 'Test', '', 'Test', 'John Doe', '2ndFloor', '2024-04-15 00:32:58'),
-(30, 'Test', 'Test', 'Test 1', 'Jenny Doe', '2nd Floor', '2024-04-15 00:39:15');
+(12, 'Cornersteel Systems Corporation', 'Makati', 'MIS-Department', 'Jun Edmund', '3rd floor', '2024-03-20 03:02:34'),
+(13, 'Energy Specialist Company(ESCO)', 'Libertad', 'Accounting', 'Peter', '3rd Floor', '2024-03-20 03:05:58'),
+(14, 'Cornersteel Systems Corporation', 'Makati', 'HR', 'Joaquin', '2nd Floor', '2024-03-20 03:07:14'),
+(15, 'Comfac Technology Options (CTO)', 'Libertad', 'System installation', 'Rein ', '3rd Floor', '2024-03-20 03:12:42'),
+(16, 'Cornersteel Systems Corporation', 'Cabuyao', 'Accounting', 'Andrea', '2nd Floor', '2024-03-20 03:14:57'),
+(17, 'Energy Specialist Company(ESCO)', 'Libertad', 'HR', 'Karen', '3rd Floor', '2024-03-20 03:15:36'),
+(18, 'Comfac Technology Options (CTO)', 'Libertad', 'Purchasing', 'Kyla', '4th Floor', '2024-03-20 03:17:25'),
+(19, 'Comfac Global Group', 'Libertad', 'System Mechanical', 'Norman', '2nd Floor', '2024-03-20 03:18:13'),
+(20, 'Cornersteel Systems Corporation', 'Libertad', 'Field Service', 'Jasmin', '3rd Floor', '2024-03-20 03:19:07'),
+(22, 'Comfac Global Group', 'Libertad', 'Management Info', 'Grace', '2nd Floor', '2024-03-20 03:20:37'),
+(28, 'Comfac Global Group', 'Libertad', 'Field Service', 'Rommel', '2ndFloor', '2024-04-12 06:17:33'),
+(29, 'Test', 'Test2', 'Test', 'John Doe', '2ndFloor', '2024-04-15 00:32:58'),
+(30, 'Test', 'Test', 'Test 1', 'Jenny Doe', '2nd Floor', '2024-04-15 00:39:15'),
+(31, 'Test', 'Test2', 'Hello Test', 'Ako', 'Bldg123', '2024-04-16 16:04:31'),
+(32, 'Energy Specialist Company(ESCO)', 'Libertad', 'Hello Test3', 'Ako', 'Bldg123', '2024-04-16 16:47:13');
 
 -- --------------------------------------------------------
 
@@ -676,7 +679,7 @@ ALTER TABLE `audit_trail`
 -- AUTO_INCREMENT for table `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `company`
@@ -694,7 +697,7 @@ ALTER TABLE `contact_us`
 -- AUTO_INCREMENT for table `department`
 --
 ALTER TABLE `department`
-  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `file_attachment`
