@@ -173,7 +173,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                                                                 <div class="col-md-12 mt-3">
                                                                     <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
-                                                                    <select id=company_name name="company_name" class="form-control">
+                                                                    <select id="company_name" name="company_name" class="form-control">
                                                                         <option value="">Select Company</option>
                                                                         <?php
                                                                         $companyList = getAll("company");
@@ -186,6 +186,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                             echo "<option value=''>No Company available</option>";
                                                                         }
                                                                         ?>
+                                                                    </select>
+                                                                </div>
+
+                                                                <div class="col-md-12 mt-3">
+                                                                    <label for=""><i class="fas fa-code-branch"></i> Branch</label>
+                                                                    <select id="branchedit" name="branch" class="form-control">
+                                                                        <option value="">Select Branch</option>
                                                                     </select>
                                                                 </div>
 
@@ -334,9 +341,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
     <script>
         $(document).ready(function() {
-            $('#company').change(function() {
-                var companyName = $(this).val();
-
+            // Function to fetch branches based on selected company
+            function fetchBranches(companyName, targetElement) {
                 $.ajax({
                     url: 'get_branch.php',
                     type: 'POST',
@@ -345,16 +351,49 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     },
                     success: function(response) {
                         console.log(response);
-                        $('#branch').html(response);
-                        $('#branchGroup').toggle(response.trim() !== '');
+                        $(targetElement).html(response);
+                        $(targetElement).parent().toggle(response.trim() !== '');
                     },
                     error: function() {
                         alert('Error fetching branches.');
                     }
                 });
+            }
+
+            // Change event handler for company selection in add modal
+            $('#company').change(function() {
+                var companyName = $(this).val();
+                // Fetch branches for the selected company in add modal
+                fetchBranches(companyName, '#branch');
             });
+
+            // Initial fetch of branches for the selected company in add modal
+            var selectedCompanyAdd = $('#company').val();
+            fetchBranches(selectedCompanyAdd, '#branch');
         });
     </script>
+
+    <script>
+        // JavaScript to filter branch options based on selected company
+        document.getElementById('company_name').addEventListener('change', function() {
+            var selectedCompany = this.value;
+            var branchSelect = document.getElementById('branchedit');
+            // Clear existing options
+            branchSelect.innerHTML = '<option value="">Select Branch</option>';
+            // Fetch branches with the selected company
+            <?php
+            $branchList = getAll("branch");
+            if ($branchList && mysqli_num_rows($branchList) > 0) {
+                foreach ($branchList as $branchItem) {
+                    echo "if ('" . $branchItem['company'] . "' === selectedCompany) {";
+                    echo "branchSelect.innerHTML += '<option value=\"" . $branchItem['branch_name'] . "\">" . $branchItem['branch_name'] . "</option>';";
+                    echo "}";
+                }
+            }
+            ?>
+        });
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
 </body>
