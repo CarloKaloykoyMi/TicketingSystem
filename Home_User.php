@@ -141,7 +141,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <tr>
                             <th>Ticket ID</th>
                             <th class="text-center">Requestor</th>
-                            <th class="text-center">To Department</th>
+                            <th class="text-center">Assigned Department</th>
                             <th class="text-center">Subject</th>
                             <th class="text-center">Status</th>
                             <th class="text-center">Date Created</th>
@@ -173,14 +173,16 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         $status = $item['status'];
 
                                         if ($status == 'Pending') {
-                                            echo '<span class="badge text-bg-warning">' . $status . '</span>';
+                                            echo '<span class="badge text" style="background-color: #F7E1A1; color: black">' . $status . '</span>';
                                         } elseif ($status == 'Resolved') {
-                                            echo '<span class="badge text-bg-success">' . $status . '</span>';
+                                            echo '<span class="badge text" style="background-color: #BBDABB; color: black">' . $status . '</span>';
                                         } elseif ($status == 'Cancelled') {
-                                            echo '<span class="badge text-bg-danger">' . $status . '</span>';
+                                            echo '<span class="badge text" style="background-color: #FF6961; color: black">' . $status . '</span>';
                                         } else {
-                                            echo '<span class="badge text-bg-primary">' . $status . '</span>';
+                                            echo '<span class="badge text" style="background-color: #A1C1DF; color: black">' . $status . '</span>';
                                         }
+
+
                                         ?>
                                     </td>
                                     <td class="text-center"><?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td>
