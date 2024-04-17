@@ -89,8 +89,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
     }
 
     .table th:nth-child(7),
-    .table td:nth-child(7)
-    .table th:nth-child(9),
+    .table td:nth-child(7) .table th:nth-child(9),
     .table td:nth-child(9) {
         white-space: pre-wrap;
     }
@@ -276,8 +275,24 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </span>
                                         <label for="todepartment" class="sr-only">To Department</label>
                                         <select name="todepartment" class="form-control" readonly>
-                                            <option value="MIS IT">MIS IT</option>
+                                            <?php
+                                            // Execute the SQL query
+                                            $misql = "SELECT department_name FROM department WHERE department_name = 'MIS-Department' LIMIT 1;";
+                                            $misres = mysqli_query($con, $misql);
+
+                                            // Check if there are any rows returned
+                                            if (mysqli_num_rows($misres) > 0) {
+                                                // Fetch the department name
+                                                $department_name = mysqli_fetch_assoc($misres)['department_name'];
+                                                // Output the option tag with the fetched department name
+                                                echo '<option value="' . $department_name . '">' . $department_name . '</option>';
+                                            } else {
+                                                // If no rows are returned, you may choose to show a default option or handle it differently
+                                                echo '<option value="">No department found</option>';
+                                            }
+                                            ?>
                                         </select>
+
                                         <!-- <select class="form-control" name="todepartment" required>
                                             <option value="" data-icon="fas fa-users">To Department:</option>
                                             <!-- <//?php
