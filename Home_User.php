@@ -141,13 +141,14 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <tr>
                             <th>Ticket ID</th>
                             <th class="text-center">Requestor</th>
-                            <th class="text-center">Assigned Department</th>
+                            <th class="text-center">Assigned<br>Department</th>
                             <th class="text-center">Subject</th>
                             <th class="text-center">Status</th>
-                            <th class="text-center">Date Created</th>
+                            <!-- <th class="text-center">Date Created</th>
                             <th class="text-center">Updated by</th>
                             <th class="text-center">Updated Date</th>
-                            <th class="text-center">Reason</th>
+                            <th class="text-center">Reason</th> -->
+                            <th class="text-center">View</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -166,7 +167,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 <tr>
                                     <td><u><a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="text-body fw-bold">ITR -<?php echo $item['ticket_id']; ?></a></u></td>
                                     <td><?= $item['requestor']; ?></td>
-                                    <td><?= $item['to_dept']; ?></td>
+                                    <td class="text-center"><?= $item['to_dept']; ?></td>
                                     <td class="text-justify"><?= $item['subject']; ?></td>
                                     <td class="text-center">
                                         <?php
@@ -181,28 +182,69 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         } else {
                                             echo '<span class="badge text" style="background-color: #A1C1DF; color: black">' . $status . '</span>';
                                         }
-
-
                                         ?>
                                     </td>
-                                    <td class="text-center"><?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td>
-                                    <td class="text-center">
-                                        <?= (!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : '';
-                                        if ($status == 'Cancelled') {
-                                            echo 'Cancelled by ' . $item['updated_by'];
+                                    <!-- <td class="text-center"><//?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td> -->
+                                    <!-- <td class="text-center">
+                                        <//?= //(!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : '';
+                                        //if ($status == 'Cancelled') {
+                                            //echo 'Cancelled by ' . $item['updated_by'];
                                         }
                                         ?>
-                                    </td>
-                                    <td class="text-center"><?php if (!empty($item['updated_date'])) {
-                                                                echo date('F j, Y h:i A', strtotime($item['updated_date']));
+                                    </td> -->
+                                    <!-- <td class="text-center"><//?//php if (!empty($item['updated_date'])) {
+                                                                //echo date('F j, Y h:i A', strtotime($item['updated_date']));
                                                             } ?></td>
-                                    <td><?= (strlen($item['reason']) > 20) ? wordwrap($item['reason'], 20, true) : $item['reason']; ?></td>
-
+                                    <td><//?= (strlen($item['reason']) > 20) ? wordwrap($item['reason'], 20, true) : $item['reason']; ?></td> -->
+                                    <td class="text-center"> <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal<?= $item['ticket_id']; ?>"><i class="fas fa-eye"></i>&nbsp;View</a>
+                                    </td>
                                 </tr>
+
+                                <!-- View Modal -->
+                                <div class="modal fade" id="infoModal<?= $item['ticket_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Ticket Information</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Your view form content goes here -->
+                                                <div class="col-md-12 mt-3">
+                                                    <label for=""><i class="fas fa-user"></i> Date Created</label>
+                                                    <input type="text" name="name" value="<?= date('F j, Y h:i A', strtotime($item['date_created'])) ?>" class="form-control" disabled>
+                                                </div>
+
+                                                <div class="col-md-12 mt-3">
+                                                    <label for=""><i class="fas fa-envelope"></i> Updated by</label>
+                                                    <input type="text" name="email" value="<?= (!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : '';
+                                                                                            if ($status == 'Cancelled') {
+                                                                                                echo 'Cancelled by ' . $item['updated_by'];
+                                                                                            } ?>" class="form-control" disabled>
+                                                </div>
+
+                                                <div class="col-md-12 mt-3">
+                                                    <div class="col-md-12 mt-3">
+                                                        <label for="concern"><i class="fas fa-message"></i> Reason</label>
+                                                        <textarea class="form-control" name="concern" rows="3" placeholder="Concerns" required disabled><?= $item['reason']; ?></textarea>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-md-12 mt-3">
+                                                    <label for=""><i class="fas fa-envelope"></i> Updated Date</label>
+                                                    <input type="text" name="email" value="<?= $item['updated_date']; ?>" class="form-control" disabled>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                         <?php
                             }
                         }
+
                         ?>
+
+
 
                     </tbody>
                 </table>
@@ -369,12 +411,16 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 </div>
             </div>
 
+
+
         </div>
 
         <script src="js/sidebar.js"></script>
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
 
         <script>
             const fileInput = document.getElementById('example-fileinput');
