@@ -65,6 +65,9 @@ include('mysql_connect.php'); // connection to MySQL
                     <div class="field button-field">
                         <button type="submit" name="login_btn">Sign In</button>
                     </div>
+                    <div class="form-link">
+                    <span><a href="emplogin.php" class="button">Login</a></span> as Employee</span>
+                </div>
                 </form>
             </div>
 
