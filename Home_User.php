@@ -158,9 +158,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         if (mysqli_num_rows($ticket) > 0) {
                             foreach ($ticket as $item) {
                                 $updated_by = "SELECT t.*, u.firstname, u.lastname 
-                              FROM ticket t 
-                              INNER JOIN user u ON t.updated_by = u.user_id 
-                              WHERE t.ticket_id = " . $item['ticket_id'];
+                      FROM ticket t 
+                      INNER JOIN user u ON t.updated_by = u.user_id 
+                      WHERE t.ticket_id = " . $item['ticket_id'];
                                 $updated_by_result = mysqli_query($con, $updated_by);
                                 $updatedby_result = mysqli_fetch_assoc($updated_by_result);
                         ?>
@@ -184,19 +184,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         }
                                         ?>
                                     </td>
-                                    <!-- <td class="text-center"><//?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td> -->
-                                    <!-- <td class="text-center">
-                                        <//?= //(!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : '';
-                                        //if ($status == 'Cancelled') {
-                                            //echo 'Cancelled by ' . $item['updated_by'];
-                                        }
-                                        ?>
-                                    </td> -->
-                                    <!-- <td class="text-center"><//?//php if (!empty($item['updated_date'])) {
-                                                                //echo date('F j, Y h:i A', strtotime($item['updated_date']));
-                                                            } ?></td>
-                                    <td><//?= (strlen($item['reason']) > 20) ? wordwrap($item['reason'], 20, true) : $item['reason']; ?></td> -->
-                                    <td class="text-center"> <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal<?= $item['ticket_id']; ?>"><i class="fas fa-eye"></i>&nbsp;View</a>
+                                    <td class="text-center">
+                                        <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal<?= $item['ticket_id']; ?>">
+                                            <i class="fas fa-eye"></i>&nbsp;View
+                                        </a>
                                     </td>
                                 </tr>
 
@@ -210,10 +201,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Your view form content goes here -->
-                                                <div class="col-md-12 mt-3">
-                                                    <label for=""><i class="fas fa-user"></i> Date Created</label>
-                                                    <input type="text" name="name" value="<?= date('F j, Y h:i A', strtotime($item['date_created'])) ?>" class="form-control" disabled>
-                                                </div>
+
 
                                                 <div class="col-md-12 mt-3">
                                                     <label for=""><i class="fas fa-envelope"></i> Updated by</label>
@@ -226,14 +214,58 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                 <div class="col-md-12 mt-3">
                                                     <div class="col-md-12 mt-3">
                                                         <label for="concern"><i class="fas fa-message"></i> Reason</label>
-                                                        <textarea class="form-control" name="concern" rows="3" placeholder="Concerns" required disabled><?= $item['reason']; ?></textarea>
+                                                        <textarea class="form-control" name="concern" rows="3" required disabled><?= $item['reason']; ?></textarea>
                                                     </div>
                                                 </div>
-
                                                 <div class="col-md-12 mt-3">
-                                                    <label for=""><i class="fas fa-envelope"></i> Updated Date</label>
-                                                    <input type="text" name="email" value="<?= $item['updated_date']; ?>" class="form-control" disabled>
+                                                    <label for=""><i class="fas fa-user"></i> Date Created</label>
+                                                    <input type="text" name="name" value="<?= date('F j, Y h:i A', strtotime($item['date_created'])) ?>" class="form-control" disabled>
                                                 </div>
+
+                                                <?php if (!empty($item['updated_date'])) { ?>
+                                                    <div class="col-md-12 mt-3">
+                                                        <label for=""><i class="fas fa-envelope"></i> Updated Date</label>
+                                                        <input type="text" name="email" value="<?= date('F j, Y h:i A', strtotime($item['updated_date'])); ?>" class="form-control" disabled>
+                                                    </div>
+
+                                                    <div class="col-md-12 mt-3">
+                                                        <label for=""><i class="fas fa-clock"></i> Time Difference</label>
+                                                        <?php
+                                                        // Calculate time difference
+                                                        $createdTimestamp = strtotime($item['date_created']);
+                                                        $updatedTimestamp = strtotime($item['updated_date']);
+                                                        $timeDifference = $updatedTimestamp - $createdTimestamp;
+
+                                                        // Calculate days, hours, and minutes
+                                                        $days = floor($timeDifference / (60 * 60 * 24));
+                                                        $remainingHours = $timeDifference % (60 * 60 * 24);
+                                                        $hours = floor($remainingHours / (60 * 60));
+                                                        $remainingMinutes = $remainingHours % (60 * 60);
+                                                        $minutes = floor($remainingMinutes / 60);
+
+                                                        // Construct the time difference string
+                                                        if ($days > 0) {
+                                                            $timeDifferenceStr = $days . ' days ' . $hours . ' hours ' . $minutes . ' minutes';
+                                                        } else {
+                                                            $timeDifferenceStr = $hours . ' hours ' . $minutes . ' minutes';
+                                                        }
+                                                        ?>
+
+                                                        <input type="text" name="time_difference" value="<?= $timeDifferenceStr; ?>" class="form-control" disabled>
+
+                                                    </div>
+                                                <?php } else { ?>
+                                                    <div class="col-md-12 mt-3">
+                                                        <label for=""><i class="fas fa-envelope"></i> Updated Date</label>
+                                                        <input type="text" name="email" value="" class="form-control" disabled>
+                                                    </div>
+
+                                                    <div class="col-md-12 mt-3">
+                                                        <label for=""><i class="fas fa-clock"></i> Time Difference</label>
+                                                        <input type="text" name="time_difference" value="" class="form-control" disabled>
+                                                    </div>
+                                                <?php } ?>
+
                                             </div>
                                         </div>
                                     </div>
@@ -241,10 +273,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <?php
                             }
                         }
-
                         ?>
-
-
 
                     </tbody>
                 </table>

@@ -67,58 +67,144 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <h4 class="text-center">Ticket List</h4>
                         </div>
                         <div class="card-body">
-                            <table id="example" class="table table-striped" style="width:100%">
-                                <thead>
+                            <table id="example" class="table table-striped table-bordered" style="width:100%">
+                                <thead class="table-light">
                                     <tr>
-                                        <th>Dates</th>
-                                        <th>Requestor</th>
-                                        <th>Subject</th>
-                                        <th>To Department</th>
-                                        <th>Ticket</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th>Ticket ID</th>
+                                        <th class="text-center">Requestor</th>
+                                        <th class="text-center">Assigned<br>Department</th>
+                                        <th class="text-center">Subject</th>
+                                        <th class="text-center">Status</th>
+                                        <!-- <th class="text-center">Date Created</th>
+                            <th class="text-center">Updated by</th>
+                            <th class="text-center">Updated Date</th>
+                            <th class="text-center">Reason</th> -->
+                                        <th class="text-center">View</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
+                                    $ticket = getAll("ticket");
+
                                     if (mysqli_num_rows($ticket) > 0) {
                                         foreach ($ticket as $item) {
+                                            $updated_by = "SELECT t.*, u.firstname, u.lastname 
+                      FROM ticket t 
+                      INNER JOIN user u ON t.updated_by = u.user_id 
+                      WHERE t.ticket_id = " . $item['ticket_id'];
+                                            $updated_by_result = mysqli_query($con, $updated_by);
+                                            $updatedby_result = mysqli_fetch_assoc($updated_by_result);
                                     ?>
                                             <tr>
-                                                <td><?= date('F j, Y h:i A', strtotime($item['date_created'])); ?></td>
+                                                <td><u><a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="text-body fw-bold">ITR -<?php echo $item['ticket_id']; ?></a></u></td>
                                                 <td><?= $item['requestor']; ?></td>
-                                                <td><?= $item['subject']; ?></td>
-                                                <td><?= $item['to_dept']; ?></td>
-                                                <td>
-                                                    <center><?= $item['ticket_id']; ?>
-                                                </td>
-                                                </center>
-                                                <td>
+                                                <td class="text-center"><?= $item['to_dept']; ?></td>
+                                                <td class="text-justify"><?= $item['subject']; ?></td>
+                                                <td class="text-center">
                                                     <?php
                                                     $status = $item['status'];
 
                                                     if ($status == 'Pending') {
-                                                        echo '<span class="badge text-bg-warning">' . $status . '</span>';
+                                                        echo '<span class="badge text" style="background-color: #F7E1A1; color: black">' . $status . '</span>';
                                                     } elseif ($status == 'Resolved') {
-                                                        echo '<span class="badge text-bg-success">' . $status . '</span>';
+                                                        echo '<span class="badge text" style="background-color: #BBDABB; color: black">' . $status . '</span>';
                                                     } elseif ($status == 'Cancelled') {
-                                                        echo '<span class="badge text-bg-danger">' . $status . '</span>';
+                                                        echo '<span class="badge text" style="background-color: #FF6961; color: black">' . $status . '</span>';
                                                     } else {
-                                                        echo '<span class="badge text-bg-primary">' . $status . '</span>';
+                                                        echo '<span class="badge text" style="background-color: #A1C1DF; color: black">' . $status . '</span>';
                                                     }
                                                     ?>
                                                 </td>
-                                                <td class="table-action">
-                                                    <a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="btn btn-primary"><i class="fas fa-eye"></i>View
+                                                <td class="text-center">
+                                                    <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal<?= $item['ticket_id']; ?>">
+                                                        <i class="fas fa-eye"></i>&nbsp;View
                                                     </a>
                                                 </td>
                                             </tr>
+
+                                            <!-- View Modal -->
+                                            <div class="modal fade" id="infoModal<?= $item['ticket_id']; ?>" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel">Ticket Information</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Your view form content goes here -->
+                                                            <div class="col-md-12 mt-3">
+                                                                <label for=""><i class="fas fa-envelope"></i> Updated by</label>
+                                                                <input type="text" name="email" value="<?= (!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : '';
+                                                                                                        if ($status == 'Cancelled') {
+                                                                                                            echo 'Cancelled by ' . $item['updated_by'];
+                                                                                                        } ?>" class="form-control" disabled>
+                                                            </div>
+
+                                                            <div class="col-md-12 mt-3">
+                                                                <div class="col-md-12 mt-3">
+                                                                    <label for="concern"><i class="fas fa-message"></i> Reason</label>
+                                                                    <textarea class="form-control" name="concern" rows="3" required disabled><?= $item['reason']; ?></textarea>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-md-12 mt-3">
+                                                                <label for=""><i class="fas fa-user"></i> Date Created</label>
+                                                                <input type="text" name="name" value="<?= date('F j, Y h:i A', strtotime($item['date_created'])) ?>" class="form-control" disabled>
+                                                            </div>
+
+                                                            <?php if (!empty($item['updated_date'])) { ?>
+                                                                <div class="col-md-12 mt-3">
+                                                                    <label for=""><i class="fas fa-envelope"></i> Updated Date</label>
+                                                                    <input type="text" name="email" value="<?= date('F j, Y h:i A', strtotime($item['updated_date'])); ?>" class="form-control" disabled>
+                                                                </div>
+
+                                                                <div class="col-md-12 mt-3">
+                                                                    <label for=""><i class="fas fa-clock"></i> Time Difference</label>
+                                                                    <?php
+                                                                    // Calculate time difference
+                                                                    $createdTimestamp = strtotime($item['date_created']);
+                                                                    $updatedTimestamp = strtotime($item['updated_date']);
+                                                                    $timeDifference = $updatedTimestamp - $createdTimestamp;
+
+                                                                    // Calculate days, hours, and minutes
+                                                                    $days = floor($timeDifference / (60 * 60 * 24));
+                                                                    $remainingHours = $timeDifference % (60 * 60 * 24);
+                                                                    $hours = floor($remainingHours / (60 * 60));
+                                                                    $remainingMinutes = $remainingHours % (60 * 60);
+                                                                    $minutes = floor($remainingMinutes / 60);
+
+                                                                    // Construct the time difference string
+                                                                    if ($days > 0) {
+                                                                        $timeDifferenceStr = $days . ' days ' . $hours . ' hours ' . $minutes . ' minutes';
+                                                                    } else {
+                                                                        $timeDifferenceStr = $hours . ' hours ' . $minutes . ' minutes';
+                                                                    }
+                                                                    ?>
+
+                                                                    <input type="text" name="time_difference" value="<?= $timeDifferenceStr; ?>" class="form-control" disabled>
+
+                                                                </div>
+                                                            <?php } else { ?>
+                                                                <div class="col-md-12 mt-3">
+                                                                    <label for=""><i class="fas fa-envelope"></i> Updated Date</label>
+                                                                    <input type="text" name="email" value="" class="form-control" disabled>
+                                                                </div>
+
+                                                                <div class="col-md-12 mt-3">
+                                                                    <label for=""><i class="fas fa-clock"></i> Time Difference</label>
+                                                                    <input type="text" name="time_difference" value="" class="form-control" disabled>
+                                                                </div>
+                                                            <?php } ?>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                     <?php
                                         }
-                                    } else {
-                                        echo "No Records Found!";
                                     }
                                     ?>
+
                                 </tbody>
                             </table>
                         </div>
