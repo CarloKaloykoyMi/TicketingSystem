@@ -302,7 +302,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for="branch" id="branchGroup" class="form-label"> <i class="fa-solid fa-location-dot"></i> Branch:</label>
+                            <label for="branch" id="branchGroup" class="form-label"> <i class="fas fa-code-branch"></i> Branch:</label>
                             <select class="form-control" id="branch" name="branch" required>
                                 <option value="">Select Branch:</option>
                             </select>
@@ -353,7 +353,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                 departments.forEach(department => {
                     const companyName = department.querySelector('td:first-child').textContent.trim().toLowerCase();
-                    const departmentName = department.querySelector('td:nth-child(2)').textContent.trim().toLowerCase();
+                    const departmentName = department.querySelector('td:nth-child(3)').textContent.trim().toLowerCase();
                     const departmentHead = department.querySelector('td:nth-child(4)').textContent.trim().toLowerCase();
 
                     let shouldShow = companyName.includes(companyNameValue) &&
