@@ -159,7 +159,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fas fa-clock"></i> Time Difference</label>
+                                                                    <label for=""><i class="fas fa-clock"></i> Ticket Duration</label>
                                                                     <?php
                                                                     // Calculate time difference
                                                                     $createdTimestamp = strtotime($item['date_created']);
