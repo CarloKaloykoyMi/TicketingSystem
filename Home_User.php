@@ -133,6 +133,11 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </div>
 
                 </div>
+                <!-- <div>
+                    <form action="dl.php" method="post">
+                        <input type="submit" class="btn btn-secondary" name="download" value="Download">
+                    </form>
+                </div> -->
                 <h3>
                     <center>Ticket List</center>
                 </h3>
