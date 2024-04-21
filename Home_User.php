@@ -350,7 +350,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         <select name="todepartment" class="form-control" readonly>
                                             <?php
                                             // Execute the SQL query
-                                            $misql = "SELECT department_name FROM department WHERE department_name = 'MIS-Department' LIMIT 1;";
+                                            $misql = "SELECT department_name FROM department WHERE department_name = 'IT Department' LIMIT 1;";
                                             $misres = mysqli_query($con, $misql);
 
                                             // Check if there are any rows returned
