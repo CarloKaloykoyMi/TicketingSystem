@@ -133,11 +133,11 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </div>
 
                 </div>
-                <!-- <div>
+                <div>
                     <form action="dl.php" method="post">
                         <input type="submit" class="btn btn-secondary" name="download" value="Download">
                     </form>
-                </div> -->
+                </div>
                 <h3>
                     <center>Ticket List</center>
                 </h3>
@@ -146,13 +146,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <tr>
                             <th>Ticket ID</th>
                             <th class="text-center">Requestor</th>
-                            <th class="text-center">Assigned<br>Department</th>
+                            <th class="text-center">Assigned Branch</th>
                             <th class="text-center">Subject</th>
                             <th class="text-center">Status</th>
-                            <!-- <th class="text-center">Date Created</th>
-                            <th class="text-center">Updated by</th>
-                            <th class="text-center">Updated Date</th>
-                            <th class="text-center">Reason</th> -->
                             <th class="text-center">View</th>
                         </tr>
                     </thead>
@@ -171,8 +167,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         ?>
                                 <tr>
                                     <td><u><a href="ticket_info.php?ticket_id=<?php echo $item['ticket_id']; ?>" class="text-body fw-bold">ITR -<?php echo $item['ticket_id']; ?></a></u></td>
-                                    <td><?= $item['requestor']; ?></td>
-                                    <td class="text-center"><?= $item['to_dept']; ?></td>
+                                    <td class="text-center"><?= $item['requestor']; ?></td>
+                                    <td class="text-center"><?= $item['to_branch']; ?></td>
                                     <td class="text-justify"><?= $item['subject']; ?></td>
                                     <td class="text-center">
                                         <?php
@@ -491,53 +487,53 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     }
                 }
             });
-            document.addEventListener("DOMContentLoaded", function() {
-                const departmentFilter = document.getElementById('departmentFilter');
-                const statusFilter = document.getElementById('statusFilter');
-                const requestorSearch = document.getElementById('requestorSearch');
-                const ticketNumberSearch = document.getElementById('ticketNumberSearch');
-                const resetFiltersButton = document.getElementById('resetFilters');
+                document.addEventListener("DOMContentLoaded", function() {
+                    const departmentFilter = document.getElementById('departmentFilter');
+                    const statusFilter = document.getElementById('statusFilter');
+                    const requestorSearch = document.getElementById('requestorSearch');
+                    const ticketNumberSearch = document.getElementById('ticketNumberSearch');
+                    const resetFiltersButton = document.getElementById('resetFilters');
 
-                departmentFilter.addEventListener('change', filterTickets);
-                statusFilter.addEventListener('change', filterTickets);
-                requestorSearch.addEventListener('input', filterTickets);
-                ticketNumberSearch.addEventListener('input', filterTickets);
-                resetFiltersButton.addEventListener('click', resetFilters);
+                    departmentFilter.addEventListener('change', filterTickets);
+                    statusFilter.addEventListener('change', filterTickets);
+                    requestorSearch.addEventListener('input', filterTickets);
+                    ticketNumberSearch.addEventListener('input', filterTickets);
+                    resetFiltersButton.addEventListener('click', resetFilters);
 
-                function filterTickets() {
-                    const tickets = document.querySelectorAll('#example tbody tr');
-                    const departmentValue = departmentFilter.value.toLowerCase();
-                    const statusValue = statusFilter.value.toLowerCase();
-                    const requestorValue = requestorSearch.value.toLowerCase();
-                    const ticketNumberValue = ticketNumberSearch.value.toLowerCase();
+                    function filterTickets() {
+                        const tickets = document.querySelectorAll('#example tbody tr');
+                        const departmentValue = departmentFilter.value.toLowerCase();
+                        const statusValue = statusFilter.value.toLowerCase();
+                        const requestorValue = requestorSearch.value.toLowerCase();
+                        const ticketNumberValue = ticketNumberSearch.value.toLowerCase();
 
-                    tickets.forEach(ticket => {
-                        const ticketID = ticket.querySelector('td:first-child').textContent.toLowerCase();
-                        const requestor = ticket.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                        const department = ticket.querySelector('td:nth-child(3)').textContent.toLowerCase();
-                        const status = ticket.querySelector('td:nth-child(5) span').textContent.toLowerCase(); // Modified to select only the text content within <span>
+                        tickets.forEach(ticket => {
+                            const ticketID = ticket.querySelector('td:first-child').textContent.toLowerCase();
+                            const requestor = ticket.querySelector('td:nth-child(2)').textContent.toLowerCase();
+                            const department = ticket.querySelector('td:nth-child(3)').textContent.toLowerCase();
+                            const status = ticket.querySelector('td:nth-child(5) span').textContent.toLowerCase(); // Modified to select only the text content within <span>
 
-                        let shouldShow = ticketID.includes(ticketNumberValue) &&
-                            requestor.includes(requestorValue) &&
-                            department.includes(departmentValue);
+                            let shouldShow = ticketID.includes(ticketNumberValue) &&
+                                requestor.includes(requestorValue) &&
+                                department.includes(departmentValue);
 
-                        // Check if status matches selected status or if no status is selected
-                        if (statusValue !== '' && status !== statusValue) {
-                            shouldShow = false;
-                        }
+                            // Check if status matches selected status or if no status is selected
+                            if (statusValue !== '' && status !== statusValue) {
+                                shouldShow = false;
+                            }
 
-                        ticket.style.display = shouldShow ? 'table-row' : 'none';
-                    });
-                }
+                            ticket.style.display = shouldShow ? 'table-row' : 'none';
+                        });
+                    }
 
-                function resetFilters() {
-                    departmentFilter.value = ''; // Reset department filter
-                    statusFilter.value = ''; // Reset status filter
-                    requestorSearch.value = ''; // Reset requestor search
-                    ticketNumberSearch.value = ''; // Reset ticket number search
-                    filterTickets(); // Apply filters after resetting
-                }
-            });
+                    function resetFilters() {
+                        departmentFilter.value = ''; // Reset department filter
+                        statusFilter.value = ''; // Reset status filter
+                        requestorSearch.value = ''; // Reset requestor search
+                        ticketNumberSearch.value = ''; // Reset ticket number search
+                        filterTickets(); // Apply filters after resetting
+                    }
+                });
         </script>
         <script>
             document.getElementById('ticket-form').addEventListener('submit', function() {

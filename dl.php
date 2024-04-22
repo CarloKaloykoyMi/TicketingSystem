@@ -1,39 +1,38 @@
 <?php
 include('function/myfunction.php');
-if(isset($_POST['download'])){
-    $query = "SELECT * FROM ticket";
-$result = $con->query($query);
 
-// Check if records are found
-if ($result->num_rows > 0) {
-    // Filename for the downloaded file
-    $filename = "records.csv";
+if (isset($_POST['download'])) {
+    $query = "SELECT t.`ticket_id`, t.`subject`, t.`requestor`, t.`concern`, t.`status`, t.`date_created`, t.`email`, t.`to_branch`, t.`reason`, t.`updated_date`, CONCAT(u.`firstname`, ' ', u.`lastname`) AS updated_by 
+              FROM ticket t 
+              LEFT JOIN user u ON t.updated_by = u.user_id";
+    $result = $con->query($query);
 
-    // Set headers for download
-    header('Content-Type: text/csv');
-    header('Content-Disposition: attachment; filename="' . $filename . '"');
+    // Check if records are found
+    if ($result->num_rows > 0) {
+        // Filename for the downloaded file
+        $filename = "records.csv";
 
-    // Open file pointer
-    $fp = fopen('php://output', 'w');
+        // Set headers for download
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
 
-    // Write CSV headers
-    $headers = array("Ticket ID","User ID", "Subject", "Company", "requestor", "concern", "status", "date_created", "to_dept", "email", "to_branch", "reason", "updated_date", "updated_by"); // Replace these with your actual column names
-    fputcsv($fp, $headers);
+        // Open file pointer
+        $fp = fopen('php://output', 'w');
 
-    // Loop through each row and write to CSV file
-    while ($row = $result->fetch_assoc()) {
-        fputcsv($fp, $row);
+        // Write CSV headers
+        $headers = array("ITR", "Subject", "Requestor", "Details", "Status", "Date Created", "Email", "Assigned Branch", "Reason", "Updated Date", "Updated By");
+        fputcsv($fp, $headers);
+
+        // Loop through each row and write to CSV file
+        while ($row = $result->fetch_assoc()) {
+            fputcsv($fp, $row);
+        }
+
+        // Close file pointer
+        fclose($fp);
+
+        exit; // Terminate script after file download
+    } else {
+        echo "No records found in the table.";
     }
-
-    // Close file pointer
-    fclose($fp);
-
-
-    exit; // Terminate script after file download
-} else {
-    echo "No records found in the table.";
-
-
 }
-}
-?>
