@@ -144,7 +144,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                             <style>
                                                                 /* Hide the radio buttons */
                                                                 .rating input[type="radio"] {
-                                                                    display: none;``
+                                                                    display: none;
                                                                 }
 
                                                                 /* Define the star symbols */
