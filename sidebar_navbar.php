@@ -96,7 +96,7 @@ while ($row = mysqli_fetch_array($result)) {
             </li>
             <li class="sidebar-item">
                 <a href="resolvedtickets.php" class="sidebar-link">
-                    <i class="fa-solid fa-circle-check"></i>
+                    <i class="fa-solid fa-star"></i>
                     <span><strong>RESOLVED TICKETS</strong></span>
                 </a>
             </li>
