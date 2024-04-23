@@ -90,8 +90,14 @@ while ($row = mysqli_fetch_array($result)) {
             </li> -->
             <li class="sidebar-item">
                 <a href="Home_User.php" class="sidebar-link">
-                <i class="fa-solid fa-house"></i>
+                    <i class="fa-solid fa-house"></i>
                     <span><strong>TICKETS</strong></span>
+                </a>
+            </li>
+            <li class="sidebar-item">
+                <a href="resolvedtickets.php" class="sidebar-link">
+                    <i class="fa-solid fa-circle-check"></i>
+                    <span><strong>RESOLVED TICKETS</strong></span>
                 </a>
             </li>
             <li class="sidebar-item">
