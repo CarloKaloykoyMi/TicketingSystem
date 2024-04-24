@@ -369,4 +369,28 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         echo "<script>alert('Wrong Current Password!')</script>";
         echo '<script>window.location.href = "User_Profile.php"</script>';
     }
+}else if(isset($_POST['rate_requestor'])){
+    $ticket_id= $_POST['ticket_id'];
+    $requestor_id= $_POST['requestor_id'];
+    $resolver_id= $_POST['resolver_id'];
+    $rate= $_POST['rating'];
+    $feedback= $_POST['comment'];
+
+    $check_query = "SELECT * FROM rating WHERE ticket_id = $ticket_id";
+    $result = mysqli_query($con,$check_query);
+
+    if(mysqli_num_rows($result) == 0) {
+        // If there are no records with the given ticket_id in the rating table, insert a new record
+        $insert_query = "INSERT INTO rating (ticket_id, requestor_id, resolver_id, requestor_rating, requestor_comment) VALUES ('$ticket_id', '$requestor_id', '$resolver_id', '$rate', '$feedback')";
+        mysqli_query($con, $insert_query);
+        echo '<script>window.location.href = "resolvedtickets1.php"</script>';
+
+    } else {
+        // If there are records with the given ticket_id, update the existing record
+        $update_query = "UPDATE rating SET requestor_id = '$requestor_id', resolver_id = '$resolver_id', requestor_rating = '$rate', requestor_comment = '$feedback' WHERE ticket_id = $ticket_id";
+        mysqli_query($con, $update_query);
+        echo '<script>window.location.href = "resolvedtickets1.php"</script>';
+
+    }
+    
 }

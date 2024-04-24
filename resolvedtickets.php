@@ -103,7 +103,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             </thead>
                             <tbody>
                                 <?php
-                                $ticketsql = "SELECT * FROM ticket WHERE user_id ='42' AND status='Resolved';";
+                                $ticketsql = "SELECT * FROM ticket WHERE user_id ='$userid' AND status='Resolved';";
                                 $ticket = mysqli_query($con, $ticketsql);
 
                                 if (mysqli_num_rows($ticket) > 0) {
@@ -111,7 +111,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                     foreach ($ticket as $item) {
                                         $status = $item['status'];
 
-                                        $resolved_by_query = "SELECT t.*, u.firstname, u.lastname  FROM ticket t INNER JOIN user u ON t.updated_by = u.user_id  WHERE t.ticket_id = " . $item['ticket_id'];
+                                        $resolved_by_query = "SELECT t.*, u.firstname, u.lastname, u.user_id  FROM ticket t INNER JOIN user u ON t.updated_by = u.user_id  WHERE t.ticket_id = " . $item['ticket_id'];
                                         $resolved_result = mysqli_query($con, $resolved_by_query);
                                         $resolved_row = mysqli_fetch_assoc($resolved_result);
                                 ?>
@@ -166,12 +166,14 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label for="comment">Comment:</label><br>
-                                                                        <!-- Text area for comment -->
-                                                                        <textarea id="comment" name="comment" rows="4" cols="50"></textarea>
+                                                                        <div class="mb-3">
+                                                                            <label for="comment" class="form-label" style="text-align: left;">Comment:</label>
+                                                                            <textarea id="comment" class="form-control" name="comment" id="exampleModal" rows="3"></textarea>
+                                                                        </div>
                                                                     </div>
+                                                                    <input type="hidden" name="resolver_id" value="<?= $resolved_row['user_id']; ?>">
                                                                     <input type="hidden" name="ticket_id" value="<?= $item['ticket_id']; ?>">
-                                                                    <button type="submit" name="rate" class="btn btn-primary">Submit</button>
+                                                                    <button type="submit" name="rate" class="btn btn-primary" style="margin-left: 350px;">Submit</button>
                                                                 </form>
                                                             </div>
                                                         </div>
