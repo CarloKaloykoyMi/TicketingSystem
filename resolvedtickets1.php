@@ -156,16 +156,16 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                             // Check if there's a record in the rating table
                                                             if (mysqli_num_rows($rating_result) > 0) {
                                                                 // Show "View" button modal
-                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal'. $item['ticket_id']  .'"><i class="fa-solid fa-eye"></i> View</button>';
+                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal' . $item['ticket_id']  . '"><i class="fa-solid fa-eye"></i> View</button>';
                                                             } else {
                                                                 // Show "Rate" button modal
-                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rateModal'. $item['ticket_id']  .'"> <i class="fa-solid fa-star"></i> Rate</button>';
+                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rateModal' . $item['ticket_id']  . '"> <i class="fa-solid fa-star"></i> Rate</button>';
                                                             }
                                                             ?>
                                                         </td>
 
                                                         <!-- View Modal -->
-                                                        <div class="modal fade" id="viewModal<?=$item['ticket_id'] ?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="viewModal<?= $item['ticket_id'] ?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -184,7 +184,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                         </div>
 
                                                         <!-- Rate Modal -->
-                                                        <div class="modal fade" id="rateModal<?=$item['ticket_id'] ?>" tabindex="-1" aria-labelledby="rateModalLabel" aria-hidden="true">
+                                                        <div class="modal fade" id="rateModal<?= $item['ticket_id'] ?>" tabindex="-1" aria-labelledby="rateModalLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
                                                                     <div class="modal-header">
@@ -195,7 +195,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                         <!-- Rating form -->
                                                                         <form action="crud.php" method="post">
                                                                             <div class="form-group">
-                                                                                <label for="rating">Rating: <?=$item['ticket_id'] ?></label><br>
+                                                                                <label for="rating">Rating: <?= $item['ticket_id'] ?></label><br>
                                                                                 <!-- Star rating input -->
                                                                                 <div class="rating-css">
                                                                                     <!-- Adjust the radio button IDs and labels accordingly -->
@@ -301,79 +301,79 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                             // Check if there's a record in the rating table
                                                             if (mysqli_num_rows($rating_result) > 0) {
                                                                 // Show "View" button modal
-                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal1'. $item['ticket_id']  .'"><i class="fa-solid fa-eye"></i> View</button>';
+                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal1' . $item['ticket_id']  . '"><i class="fa-solid fa-eye"></i> View</button>';
                                                             } else {
                                                                 // Show "Rate" button modal
-                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rateModal1'. $item['ticket_id']  .'"> <i class="fa-solid fa-star"></i> Rate</button>';
+                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rateModal1' . $item['ticket_id']  . '"> <i class="fa-solid fa-star"></i> Rate</button>';
                                                             }
                                                             ?>
-                                                                                                                    <!-- View Modal -->
-                                                        <div class="modal fade" id="viewModal1<?=$item['ticket_id'] ?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="viewModalLabel">View Modal</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <!-- Add content for view modal here -->
-                                                                        This is the content of the view modal.
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <!-- View Modal -->
+                                                            <div class="modal fade" id="viewModal1<?= $item['ticket_id'] ?>" tabindex="-1" aria-labelledby="viewModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="viewModalLabel">View Modal</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <!-- Add content for view modal here -->
+                                                                            This is the content of the view modal.
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
 
-                                                        <!-- Rate Modal -->
-                                                        <div class="modal fade" id="rateModal1<?=$item['ticket_id'] ?>" tabindex="-1" aria-labelledby="rateModalLabel" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-header">
-                                                                        <h5 class="modal-title" id="rateModalLabel">Rate Modal</h5>
-                                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                                    </div>
-                                                                    <div class="modal-body">
-                                                                        <!-- Rating form -->
-                                                                        <form action="crud.php" method="post">
-                                                                            <div class="form-group">
-                                                                                <label for="rating">Rating:</label><br>
-                                                                                <!-- Star rating input -->
-                                                                                <div class="rating-css">
-                                                                                    <!-- Adjust the radio button IDs and labels accordingly -->
-                                                                                    <div class="star-icon">
-                                                                                        <input type="radio" name="rating" id="rating<?= $counter; ?>_1" value="1">
-                                                                                        <label for="rating1<?= $counter; ?>_1" class="fa fa-star"></label>
-                                                                                        <input type="radio" name="rating" id="rating<?= $counter; ?>_2" value="2">
-                                                                                        <label for="rating1<?= $counter; ?>_2" class="fa fa-star"></label>
-                                                                                        <input type="radio" name="rating" id="rating<?= $counter; ?>_3" value="3">
-                                                                                        <label for="rating1<?= $counter; ?>_3" class="fa fa-star"></label>
-                                                                                        <input type="radio" name="rating" id="rating<?= $counter; ?>_4" value="4">
-                                                                                        <label for="rating1<?= $counter; ?>_4" class="fa fa-star"></label>
-                                                                                        <input type="radio" name="rating" id="rating<?= $counter; ?>_5" value="5">
-                                                                                        <label for="rating1<?= $counter; ?>_5" class="fa fa-star"></label>
+                                                            <!-- Rate Modal -->
+                                                            <div class="modal fade" id="rateModal1<?= $item['ticket_id'] ?>" tabindex="-1" aria-labelledby="rateModalLabel" aria-hidden="true">
+                                                                <div class="modal-dialog">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title" id="rateModalLabel">Rate Modal</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <!-- Rating form -->
+                                                                            <form action="crud.php" method="post">
+                                                                                <div class="form-group">
+                                                                                    <label for="rating">Rating:</label><br>
+                                                                                    <!-- Star rating input -->
+                                                                                    <div class="rating-css">
+                                                                                        <!-- Adjust the radio button IDs and labels accordingly -->
+                                                                                        <div class="star-icon">
+                                                                                            <input type="radio" name="rating" id="rating<?= $counter; ?>_1" value="1">
+                                                                                            <label for="rating1<?= $counter; ?>_1" class="fa fa-star"></label>
+                                                                                            <input type="radio" name="rating" id="rating<?= $counter; ?>_2" value="2">
+                                                                                            <label for="rating1<?= $counter; ?>_2" class="fa fa-star"></label>
+                                                                                            <input type="radio" name="rating" id="rating<?= $counter; ?>_3" value="3">
+                                                                                            <label for="rating1<?= $counter; ?>_3" class="fa fa-star"></label>
+                                                                                            <input type="radio" name="rating" id="rating<?= $counter; ?>_4" value="4">
+                                                                                            <label for="rating1<?= $counter; ?>_4" class="fa fa-star"></label>
+                                                                                            <input type="radio" name="rating" id="rating<?= $counter; ?>_5" value="5">
+                                                                                            <label for="rating1<?= $counter; ?>_5" class="fa fa-star"></label>
+                                                                                        </div>
                                                                                     </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <div class="mb-3">
-                                                                                    <label for="comment" class="form-label" style="text-align: left;">Comment:</label>
-                                                                                    <textarea id="comment" class="form-control" name="comment" id="exampleModal" rows="3"></textarea>
+                                                                                <div class="form-group">
+                                                                                    <div class="mb-3">
+                                                                                        <label for="comment" class="form-label" style="text-align: left;">Comment:</label>
+                                                                                        <textarea id="comment" class="form-control" name="comment" id="exampleModal" rows="3"></textarea>
+                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <input type="text" name="resolver_id" value="<?= $resolved_row['user_id']; ?>">
-                                                                            <input type="text" name="ticket_id" value="<?= $item['ticket_id']; ?>">
-                                                                            <input type="text" name="requestor_id" value="<?= $item['user_id']; ?>">
-                                                                            <button type="submit" name="rate_requestor" class="btn btn-primary" style="margin-left: 350px;">Submit</button>
-                                                                        </form>
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                <input type="text" name="resolver_id" value="<?= $resolved_row['user_id']; ?>">
+                                                                                <input type="text" name="ticket_id" value="<?= $item['ticket_id']; ?>">
+                                                                                <input type="text" name="requestor_id" value="<?= $item['user_id']; ?>">
+                                                                                <button type="submit" name="rate_requestor" class="btn btn-primary" style="margin-left: 350px;">Submit</button>
+                                                                            </form>
+                                                                        </div>
+                                                                        <div class="modal-footer">
+                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
                                                         </td>
                                                     </tr>
                                             <?php

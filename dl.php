@@ -10,7 +10,7 @@ if (isset($_POST['download'])) {
     // Check if records are found
     if ($result->num_rows > 0) {
         // Filename for the downloaded file
-        $filename = "records.csv";
+        $filename = "ticket_list.csv";
 
         // Set headers for download
         header('Content-Type: text/csv');
