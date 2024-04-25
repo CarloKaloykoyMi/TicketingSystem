@@ -91,10 +91,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                             <button class="nav-link " disabled data-bs-toggle="tab" data-bs-target="#admin-audit"></button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#admin-audit">Rate Requestor</button>
+                            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#admin-audit">Rate Resolver</button>
                         </li>
                         <li class="nav-item">
-                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#user-audit">Rate Resolver</button>
+                            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#user-audit">Rate Requestor</button>
                         </li>
 
                     </ul>
