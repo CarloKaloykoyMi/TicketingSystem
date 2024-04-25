@@ -256,7 +256,7 @@ $atresult = mysqli_query($con, $atsql);
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label"><i class="fas fa-location-dot"></i> Branch:</div>
+                                                <div class="col-lg-4 col-md-5 label"><i class="fas fa-code-branch"></i> Branch:</div>
                                                 <div class="col-lg-3 col-md-5"><?php echo $branch ?></div>
                                             </div>
 
@@ -393,20 +393,24 @@ $atresult = mysqli_query($con, $atsql);
 
                                                 <div class="row mb-3">
                                                     <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-lock"></i> Current Password:</label>
-                                                    <div class="col-md-8 col-lg-8">
-                                                        <input name="password" type="password" class="form-control" id="currentPassword">
+                                                    <div class="col-md-5 col-lg-5">
+                                                        <input name="password" type="password" class="form-control" id="currentPassword" placeholder="Enter your current password">
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label for="newPassword" class="form-label"><i class="fas fa-lock"></i> New Password</label>
-                                                    <div class="col-md-8 col-lg-8">
-                                                        <input type="password" class="form-control" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Enter your password" required>
-                                                        <button class="btn btn-outline-secondary" type="button" id="togglePassword"><i class="fas fa-eye"></i></button>
+                                                    <div class="col-md-5 col-lg-4">
+                                                        <label for="newPassword" class="col-form-label"><i class="fas fa-lock"></i> New Password</label>
+                                                    </div>
+                                                    <div class="col-md-5 col-lg-5">
+                                                        <div class="input-group">
+                                                            <input type="password" class="form-control" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Enter your new password" required>
+                                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" style="height: 38px;"><i class="fas fa-eye"></i></button>
+                                                        </div>
                                                     </div>
                                                     <div id="message">
                                                         <h6>Password must contain:</h6>
-                                                        <p id="letter" class="invalid">At least one letter</ p>
+                                                        <p id="letter" class="invalid">At least one letter</p>
                                                         <p id="capital" class="invalid">At least one capital letter</p>
                                                         <p id="number" class="invalid">At least one number</p>
                                                         <p id="special" class="invalid">At least one special character</p>
@@ -414,13 +418,16 @@ $atresult = mysqli_query($con, $atsql);
                                                     </div>
                                                 </div>
 
-
                                                 <div class="row mb-3">
                                                     <label for="renewPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-unlock"></i> Re-enter New Password:</label>
-                                                    <div class="col-md-8 col-lg-8">
-                                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                                    <div class="col-md-5 col-lg-5">
+                                                        <div class="input-group">
+                                                            <input name="renewpassword" type="password" class="form-control" id="renewPassword" placeholder="Re-enter your new password">
+                                                            <button class="btn btn-outline-secondary" type="button" id="toggleRePassword" style="height: 38px;"><i class="fas fa-eye"></i></button>
+                                                        </div>
                                                     </div>
                                                 </div>
+
 
                                                 <div class="text-center">
                                                     <input type="hidden" name="userid" value="<?= $userid ?>">
@@ -607,6 +614,15 @@ $atresult = mysqli_query($con, $atsql);
             confirmPasswordInput.setAttribute('type', type);
             toggleConfirmPasswordButton.querySelector('i').classList.toggle('fa-eye');
             toggleConfirmPasswordButton.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <script>
+        document.getElementById('toggleRePassword').addEventListener('click', function() {
+            var passwordInput = document.getElementById('renewPassword');
+            var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye-slash');
         });
     </script>
 

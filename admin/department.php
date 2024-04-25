@@ -172,7 +172,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 <input type="hidden" name="department_id" value="<?= $item['id']; ?>">
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
+                                                                    <label for="company_name" class="form-label"> <i class="fas fa-building"></i> Company</label>
                                                                     <select class="form-control company_name" name="company_name">
                                                                         <option value="" disabled>Select Company</option>
                                                                         <?php
@@ -283,7 +283,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <form action="code.php" method="POST">
 
                         <div class="col-md-12 mt-3">
-                            <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
+                            <label for="company_name" class="form-label"> <i class="fas fa-building"></i> Company</label>
                             <select id="company" name="company_name" class="form-control" required>
                                 <option value="" disabled selected>Select your Company</option>
                                 <?php

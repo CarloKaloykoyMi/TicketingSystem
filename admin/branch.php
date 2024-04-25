@@ -162,7 +162,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 <input type="hidden" name="branch_id" value="<?= $item['id']; ?>">
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
+                                                                    <label for="company_name" class="form-label"> <i class="fas fa-building"></i> Company</label>
                                                                     <select id=company_name name="company_name" class="form-control">
                                                                         <option value="<?= $item['company']; ?>"><?= $item['company']; ?></option>
                                                                         <?php
@@ -181,7 +181,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 </div>
 
                                                                 <div class="col-md-12 mt-3">
-                                                                    <label for=""><i class="fas fa-building"></i> Branch Name</label>
+                                                                    <label for=""><i class="fas fa-code-branch"></i> Branch Name</label>
                                                                     <input type="text" name="branch_name" value="<?= $item['branch_name']; ?>" class="form-control" required>
                                                                 </div>
 
@@ -240,7 +240,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     <form action="code.php" method="POST">
 
                         <div class="col-md-12 mt-3">
-                            <label for="company_name" class="form-label"> <i class="fas fa-location-dot"></i> Company</label>
+                            <label for="company_name" class="form-label"> <i class="fas fa-building"></i> Company</label>
                             <select id=company_name name="company_name" class="form-control" required>
                                 <option value="" disabled selected>Select your Company</option>
                                 <?php
@@ -259,7 +259,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         </div>
 
                         <div class="col-md-12 mt-3">
-                            <label for=""><i class="fas fa-building"></i> Branch Name</label>
+                            <label for=""><i class="fas fa-code-branch"></i> Branch Name</label>
                             <input type="text" name="branch_name" placeholder="Enter Branch Name" class="form-control" required>
                         </div>
 

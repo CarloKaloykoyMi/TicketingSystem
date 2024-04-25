@@ -160,7 +160,7 @@
                     </div>
 
                     <div class="col-md-4 mt-2">
-                        <label for="branch" id="branchGroup" class="form-label"> <i class="fa-solid fa-location-dot"></i> Branch:</label>
+                        <label for="branch" id="branchGroup" class="form-label"> <i class="fas fa-code-branch"></i> Branch:</label>
                         <select class="form-control" id="branch" name="branch" required>
                             <option value="">Select Branch:</option>
                         </select>

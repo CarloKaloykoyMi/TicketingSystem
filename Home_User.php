@@ -99,9 +99,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <div class="main p-3">
         <div class="container-fluid">
             <div class="container1">
-                <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#myModal" style="position: absolute; top: 175px; right: 30px;">Create Ticket</button>
+                <button type="button" class="btn btn-custom" data-toggle="modal" data-target="#myModal" style="position: absolute; top: 190px; right: 30px;">Create Ticket</button>
                 <form action="dl.php" method="post">
-                    <input type="submit" class="btn btn-secondary" name="download" value="Download CSV" style="position: absolute; top: 175px; right: 150px;">
+                    <input type="submit" class="btn btn-secondary" name="download" value="Download CSV" style="position: absolute; top: 190px; right: 150px;">
                 </form>
                 <div class="row mb-3">
                     <div class="col-md-3">
@@ -131,7 +131,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </div>
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="requestorSearch" placeholder="Search by Requestor">
-                        <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 125px; right: 30px;padding-right:20px;padding-left:10px;">Reset Filters</button>
+                        <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 145px; right: 30px; padding-right: 20px; padding-left: 10px;">Reset Filters</button>
 
                     </div>
 

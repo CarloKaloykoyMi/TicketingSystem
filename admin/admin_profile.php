@@ -43,7 +43,7 @@ while ($row = mysqli_fetch_array($result)) {
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- LineIcons -->
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
 
@@ -52,50 +52,42 @@ while ($row = mysqli_fetch_array($result)) {
 
 </head>
 <style>
-    .container {
-        margin-top: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-        max-width: 800px;
-        /* Increased max-width for better spacing */
-        margin: 0 auto;
-        /* Center the container */
+    /* The message box is shown when the user clicks on the password field */
+    #message {
+        display: none;
+        background: #f1f1f1;
+        color: #000;
+        position: relative;
+        padding: 15px;
+        margin-top: 9px;
     }
 
-    label {
-        margin-top: 10px;
-        margin-bottom: 5px;
-        color: #555;
+    #message p {
+        padding: 9px 30px;
+        font-size: 14px;
     }
 
-    input {
-        padding: 8px;
-        margin-bottom: 10px;
-        border: 1px solid #ddd;
-        border-radius: 4px;
-        width: 100%;
+    /* Add a green text color and a checkmark when the requirements are right */
+    .valid {
+        color: green;
     }
 
-    button {
-        background-color: #007BFF;
-        color: #fff;
-        padding: 10px;
-        border: none;
-        border-radius: 4px;
-        cursor: pointer;
+    .valid:before {
+        position: relative;
+        left: -35px;
+        content: "✅";
     }
 
-    button:hover {
-        background-color: #0056b3;
+    /*copy & paste symbol*/
+    /* Add a red text color and an "x" when the requirements are wrong */
+    .invalid {
+        color: red;
     }
 
-    .nav-tabs-bordered .nav-link:hover {
-        background-color: #007bff;
-        /* Replace with your preferred color */
-        color: #fff;
-        /* Text color on hover */
+    .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "❌";
     }
 </style>
 
@@ -184,7 +176,7 @@ while ($row = mysqli_fetch_array($result)) {
                                             </div>
 
                                             <div class="row">
-                                                <div class="col-lg-4 col-md-5 label"><i class="fas fa-location-dot"></i> Branch:</div>
+                                                <div class="col-lg-4 col-md-5 label"><i class="fas fa-code-branch"></i> Branch:</div>
                                                 <div class="col-lg-3 col-md-5"><?php echo $branch ?></div>
                                             </div>
 
@@ -256,7 +248,7 @@ while ($row = mysqli_fetch_array($result)) {
                                                 </div>
 
                                                 <div class="row mb-3" id="branchGroup">
-                                                    <label for="branch" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-location-dot"></i> Branch</label>
+                                                    <label for="branch" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-code-branch"></i> Branch</label>
                                                     <div class="col-md-8 col-lg-8">
                                                         <select name="branch" class="form-control" value="<?php echo $branch ?>" id="branch"></select>
                                                     </div>
@@ -311,30 +303,47 @@ while ($row = mysqli_fetch_array($result)) {
 
                                         <div class="tab-pane fade pt-3" id="profile-change-password">
                                             <!-- Change Password Form -->
-                                            <form method="POST" action="code.php">
+                                            <form method="POST" action="crud.php">
+
                                                 <div class="row mb-3">
                                                     <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-lock"></i> Current Password:</label>
-                                                    <div class="col-md-8 col-lg-8">
-                                                        <input name="password" type="password" class="form-control" id="currentPassword">
+                                                    <div class="col-md-5 col-lg-5">
+                                                        <input name="password" type="password" class="form-control" id="currentPassword" placeholder="Enter your current password">
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
-                                                    <label for="newPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-key"></i> New Password:</label>
-                                                    <div class="col-md-8 col-lg-8">
-                                                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                                                    <div class="col-md-5 col-lg-4">
+                                                        <label for="newPassword" class="col-form-label"><i class="fas fa-lock"></i> New Password</label>
+                                                    </div>
+                                                    <div class="col-md-5 col-lg-5">
+                                                        <div class="input-group">
+                                                            <input type="password" class="form-control" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Enter your new password" required>
+                                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" style="height: 38px;"><i class="fas fa-eye"></i></button>
+                                                        </div>
+                                                    </div>
+                                                    <div id="message">
+                                                        <h6>Password must contain:</h6>
+                                                        <p id="letter" class="invalid">At least one letter</p>
+                                                        <p id="capital" class="invalid">At least one capital letter</p>
+                                                        <p id="number" class="invalid">At least one number</p>
+                                                        <p id="special" class="invalid">At least one special character</p>
+                                                        <p id="length" class="invalid">Minimum 8 characters</p>
                                                     </div>
                                                 </div>
 
                                                 <div class="row mb-3">
                                                     <label for="renewPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-unlock"></i> Re-enter New Password:</label>
-                                                    <div class="col-md-8 col-lg-8">
-                                                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                                                    <div class="col-md-5 col-lg-5">
+                                                        <div class="input-group">
+                                                            <input name="renewpassword" type="password" class="form-control" id="renewPassword" placeholder="Re-enter your new password">
+                                                            <button class="btn btn-outline-secondary" type="button" id="toggleRePassword" style="height: 38px;"><i class="fas fa-eye"></i></button>
+                                                        </div>
                                                     </div>
                                                 </div>
 
                                                 <div class="text-center">
-                                                    <input type="hidden" name="userid" value="<?= $user_id ?>">
+                                                    <input type="hidden" name="userid" value="<?= $userid ?>">
                                                     <button type="submit" name="ChangePassword" class="btn btn-primary">Change Password</button>
                                                 </div>
                                             </form><!-- End Change Password Form -->
@@ -355,22 +364,22 @@ while ($row = mysqli_fetch_array($result)) {
         </div>
     </div>
 
+    <!-- Bootstrap and custom scripts -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
 
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-    <!-- Font Awesome -->
-    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
-
     <script>
         $(document).ready(function() {
-            // Function to load branches
-            function loadBranches(companyName) {
+            $('#company').change(function() {
+                var companyName = $(this).val();
+
                 $.ajax({
-                    url: 'get_branch.php',
+                    url: 'get_branches.php',
                     type: 'POST',
                     data: {
                         company_name: companyName
@@ -379,31 +388,14 @@ while ($row = mysqli_fetch_array($result)) {
                         console.log(response);
                         $('#branch').html(response);
                         $('#branchGroup').toggle(response.trim() !== '');
-
-                        // Set the value of the input field to $branch
-                        $('#oldbranch').val('<?php echo $branch ?>');
-
-                        // Set the selected option in the branch select
-                        $('#branch').val('<?php echo $branch ?>');
                     },
                     error: function() {
                         alert('Error fetching branches.');
                     }
                 });
-            }
-
-            // Load branches when page loads
-            var companyName = $('#company').val(); // Get the selected company
-            loadBranches(companyName);
-
-            // Change event for company select
-            $('#company').change(function() {
-                var companyName = $(this).val();
-                loadBranches(companyName);
             });
         });
     </script>
-
     <script>
         function restrictToLettersWithSingleSpace(input) {
             var lastNameNote = input.parentNode.querySelector('.note');
@@ -440,6 +432,113 @@ while ($row = mysqli_fetch_array($result)) {
             input.value = numbersOnly;
         }
     </script>
+
+    <script>
+        var myInput = document.getElementById("password");
+        var letter = document.getElementById("letter");
+        var capital = document.getElementById("capital");
+        var number = document.getElementById("number");
+        var length = document.getElementById("length");
+
+        // When the user clicks on the password field, show the message box
+        myInput.onfocus = function() {
+            document.getElementById("message").style.display = "block";
+        }
+
+        // When the user clicks outside of the password field, hide the message box
+        myInput.onblur = function() {
+            document.getElementById("message").style.display = "none";
+        }
+
+        // When the user starts to type something inside the password field
+        myInput.onkeyup = function() {
+            // Validate lowercase letters
+            var lowerCaseLetters = /[a-z]/g;
+            if (myInput.value.match(lowerCaseLetters)) {
+                letter.classList.remove("invalid");
+                letter.classList.add("valid");
+            } else {
+                letter.classList.remove("valid");
+                letter.classList.add("invalid");
+            }
+
+            // Validate capital letters
+            var upperCaseLetters = /[A-Z]/g;
+            if (myInput.value.match(upperCaseLetters)) {
+                capital.classList.remove("invalid");
+                capital.classList.add("valid");
+            } else {
+                capital.classList.remove("valid");
+                capital.classList.add("invalid");
+            }
+
+            // Validate numbers
+            var numbers = /[0-9]/g;
+            if (myInput.value.match(numbers)) {
+                number.classList.remove("invalid");
+                number.classList.add("valid");
+            } else {
+                number.classList.remove("valid");
+                number.classList.add("invalid");
+            }
+
+            var specialCharacters = /[!@#$%^&*(),.?\:{}|<>]/g;
+            if (myInput.value.match(specialCharacters)) {
+                special.classList.remove("invalid");
+                special.classList.add("valid");
+            } else {
+                special.classList.remove("valid");
+                special.classList.add("invalid");
+            }
+
+            // Validate length
+            if (myInput.value.length >= 8) {
+                length.classList.remove("invalid");
+                length.classList.add("valid");
+            } else {
+                length.classList.remove("valid");
+                length.classList.add("invalid");
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS (optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <script>
+        const togglePasswordButton = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePasswordButton.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            togglePasswordButton.querySelector('i').classList.toggle('fa-eye');
+            togglePasswordButton.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <script>
+        const toggleConfirmPasswordButton = document.getElementById('toggleConfirmPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        toggleConfirmPasswordButton.addEventListener('click', function() {
+            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPasswordInput.setAttribute('type', type);
+            toggleConfirmPasswordButton.querySelector('i').classList.toggle('fa-eye');
+            toggleConfirmPasswordButton.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    </script>
+
+    <script>
+        document.getElementById('toggleRePassword').addEventListener('click', function() {
+            var passwordInput = document.getElementById('renewPassword');
+            var type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.querySelector('i').classList.toggle('fa-eye-slash');
+        });
+    </script>
+
 </body>
 
 </html>

@@ -296,7 +296,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="col-md-12 mt-3">
                             <div class="form-group" style="display: none;" id="branchGroup">
                                 <div class="input-group">
-                                    <i class="fa-solid fa-location-dot input-group-text"></i>
+                                    <i class="fas fa-code-branch input-group-text"></i>
                                     </span>
                                     <label for="branch" class="sr-only">Branch:</label>
                                     <select class="form-control" id="branch" name="branch" required>
