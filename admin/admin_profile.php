@@ -295,31 +295,7 @@ while ($row = mysqli_fetch_array($result)) {
                                                     </div>
                                                 </div>
 
-                                                <div class="text-center">
-                                                    <button type="submit" name="saveChanges" class="btn btn-primary">Save Changes</button>
-                                                </div>
-                                            </form><!-- End Profile Edit Form -->
-                                        </div>
-
-                                        <div class="tab-pane fade pt-3" id="profile-change-password">
-                                            <!-- Change Password Form -->
-                                            <form method="POST" action="crud.php">
-
-                                                <div class="row mb-3">
-                                                    <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-lock"></i> Current Password:</label>
-                                                    <div class="col-md-5 col-lg-5">
-                                                        <input name="password" type="password" class="form-control" id="currentPassword" placeholder="Enter your current password">
-                                                    </div>
-                                                </div>
-
-                                                <div class="row mb-3">
-                                                    <div class="col-md-5 col-lg-4">
-                                                        <label for="newPassword" class="col-form-label"><i class="fas fa-lock"></i> New Password</label>
-                                                    </div>
-                                                    <div class="col-md-5 col-lg-5">
-                                                        <div class="input-group">
-                                                            <input type="password" class="form-control" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Enter your new password" required>
-                                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" style="height: 38px;"><i class="fas fa-eye"></i></button>
+                                                <div class="text-center"> 
                                                         </div>
                                                     </div>
                                                     <div id="message">
