@@ -26,12 +26,11 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <title>Resolved</title>
     <!-- css -->
     <link rel="stylesheet" href="css/sidebar_navbar.css">
-    <!-- Add Bootstrap CSS link -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
+    <!-- bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
     <!-- icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/lineicons.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
     <!-- DataTables CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
@@ -337,8 +336,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                 $viewresult = mysqli_query($con, $viewsql);
                                                                 if (mysqli_num_rows($viewresult) > 0) {
                                                                     echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal1' . $item['ticket_id']  . '"><i class="fa-solid fa-eye"></i> View</button>';
-                                                                }else{
-                                                                echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rateModal1' . $item['ticket_id']  . '"> <i class="fa-solid fa-star"></i> Rate</button>';
+                                                                } else {
+                                                                    echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#rateModal1' . $item['ticket_id']  . '"> <i class="fa-solid fa-star"></i> Rate</button>';
                                                                 }
                                                             } else {
                                                                 // Show "Rate" button modal
