@@ -103,22 +103,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <form action="dl.php" method="post">
                     <input type="submit" class="btn btn-secondary" name="download" value="Download CSV" style="position: absolute; top: 190px; right: 150px;">
                 </form>
-                <div class="row mb-3">
+                <div class="row mb-4">
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="ticketNumberSearch" placeholder="Search by Ticket Number">
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-select" id="departmentFilter">
-                            <option value="">Filter by Department</option>
-                            <?php
-                            $departments = getAll("department");
-                            if (mysqli_num_rows($departments) > 0) {
-                                foreach ($departments as $department) {
-                                    echo '<option value="' . $department['department_name'] . '">' . $department['department_name'] . '</option>';
-                                }
-                            }
-                            ?>
-                        </select>
                     </div>
                     <div class="col-md-3">
                         <select class="form-select" id="statusFilter">
@@ -131,7 +118,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     </div>
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="requestorSearch" placeholder="Search by Requestor">
-                        <button type="button" id="resetFilters" class="btn btn-secondary" style="position: absolute; top: 145px; right: 30px; padding-right: 20px; padding-left: 10px;">Reset Filters</button>
+                    </div>
+                    <div class="col-lg-3">
+                    <button type="button" id="resetFilters" class="btn btn-secondary" style="padding-right: 20px; padding-left: 10px;">Reset Filters</button>
 
                     </div>
 
@@ -491,13 +480,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 }
             });
             document.addEventListener("DOMContentLoaded", function() {
-                const departmentFilter = document.getElementById('departmentFilter');
                 const statusFilter = document.getElementById('statusFilter');
                 const requestorSearch = document.getElementById('requestorSearch');
                 const ticketNumberSearch = document.getElementById('ticketNumberSearch');
                 const resetFiltersButton = document.getElementById('resetFilters');
-
-                departmentFilter.addEventListener('change', filterTickets);
                 statusFilter.addEventListener('change', filterTickets);
                 requestorSearch.addEventListener('input', filterTickets);
                 ticketNumberSearch.addEventListener('input', filterTickets);
@@ -505,7 +491,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
 
                 function filterTickets() {
                     const tickets = document.querySelectorAll('#example tbody tr');
-                    const departmentValue = departmentFilter.value.toLowerCase();
                     const statusValue = statusFilter.value.toLowerCase();
                     const requestorValue = requestorSearch.value.toLowerCase();
                     const ticketNumberValue = ticketNumberSearch.value.toLowerCase();
@@ -513,12 +498,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
                     tickets.forEach(ticket => {
                         const ticketID = ticket.querySelector('td:first-child').textContent.toLowerCase();
                         const requestor = ticket.querySelector('td:nth-child(2)').textContent.toLowerCase();
-                        const department = ticket.querySelector('td:nth-child(3)').textContent.toLowerCase();
                         const status = ticket.querySelector('td:nth-child(5) span').textContent.toLowerCase(); // Modified to select only the text content within <span>
 
                         let shouldShow = ticketID.includes(ticketNumberValue) &&
-                            requestor.includes(requestorValue) &&
-                            department.includes(departmentValue);
+                            requestor.includes(requestorValue);
 
                         // Check if status matches selected status or if no status is selected
                         if (statusValue !== '' && status !== statusValue) {
@@ -530,7 +513,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 }
 
                 function resetFilters() {
-                    departmentFilter.value = ''; // Reset department filter
                     statusFilter.value = ''; // Reset status filter
                     requestorSearch.value = ''; // Reset requestor search
                     ticketNumberSearch.value = ''; // Reset ticket number search
