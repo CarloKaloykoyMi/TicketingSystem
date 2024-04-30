@@ -28,7 +28,7 @@ while ($row = mysqli_fetch_array($result)) {
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #595959;">
     <div class="container-fluid">
         <!-- System Name (Upper Left Corner) -->
-        <a class="navbar-brand" href="Home_User.php"><img src="Images/Ticket -Logo-3.png" height="40px" alt="CGG E-Support Logo"> CGG E-Support</a>
+        <a class="navbar-brand" href="Home_User.php"><img src="Images/Ticket -Logo-3.png" height="40px" alt="Logo"> CGG NEXUS</a>
 
         <!-- Navbar Toggler (for responsive behavior) -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

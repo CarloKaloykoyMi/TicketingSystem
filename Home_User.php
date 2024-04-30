@@ -100,6 +100,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <form action="dl.php" method="post">
                     <input type="submit" class="btn btn-secondary" name="download" value="Download CSV" style="position: absolute; top: 190px; right: 150px;">
                 </form>
+                
                 <div class="row mb-4">
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="ticketNumberSearch" placeholder="Search by Ticket Number">
@@ -117,16 +118,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <input type="text" class="form-control" id="requestorSearch" placeholder="Search by Requestor">
                     </div>
                     <div class="col-lg-3">
-                    <button type="button" id="resetFilters" class="btn btn-secondary" style="padding-right: 20px; padding-left: 10px;">Reset Filters</button>
-
+                        <button type="button" id="resetFilters" class="btn btn-secondary" style="padding-right: 20px; padding-left: 10px;">Reset Filters</button>
                     </div>
-
                 </div>
-                <!-- <div>
-                    <form action="dl.php" method="post">
-                        <input type="submit" class="btn btn-secondary" name="download" value="Download">
-                    </form>
-                </div> -->
                 <h3>
                     <center>Ticket List</center>
                 </h3>
