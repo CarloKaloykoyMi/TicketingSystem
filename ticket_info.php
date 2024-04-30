@@ -293,7 +293,7 @@ $reply_result = mysqli_query($con, $query);
                                                 <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
                                                 <input type="hidden" name="user_id" value="<?php echo $userid1; ?>">
                                                 Are you sure you want to delete this ticket?
-                                                <textarea class="form-control" name="delete_reason" rows="4" placeholder="Reason" required></textarea>
+                                                <textarea class="form-control" name="delete" rows="4" placeholder="Reason" required></textarea>
                                                 <div class="modal-footer">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                                                     <button type="submit" name="delete_ticket" class="btn btn-danger">Delete</button>
