@@ -197,7 +197,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                                 }
                                                                                 echo '</div>';
                                                                                 echo '</div>';
-                                                                                
+
 
                                                                                 echo '<div class="mb-3">';
                                                                                 echo '<label for="formGroupExampleInput" class="form-label">Feedback:</label>';
@@ -227,7 +227,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                             <!-- Rating form -->
                                                                             <form action="crud.php" method="post">
                                                                                 <div class="form-group">
-                                                                                    <label for="rating">Please Rate Resolver: <?= $resolved_row['firstname'] . ' ' . $resolved_row['lastname']; ?> </label>
+                                                                                    <label for="rating">Please Rate the Resolver: <?= $resolved_row['firstname'] . ' ' . $resolved_row['lastname']; ?> </label>
                                                                                     <div class="rating-css">
                                                                                         <div class="star-icon">
                                                                                             <div class="rating">
@@ -255,12 +255,13 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                                 <input type="hidden" name="ticket_id" value="<?= $item['ticket_id']; ?>">
                                                                                 <input type="hidden" name="requestor_id" value="<?= $item['user_id']; ?>">
 
+
+                                                                                <div class="modal-footer">
+                                                                                    <button type="submit" name="rate_resolver" class="btn btn-primary">Submit</button>
+                                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                </div>
+                                                                            </form>
                                                                         </div>
-                                                                        <div class="modal-footer">
-                                                                            <button type="submit" name="rate_resolver" class="btn btn-primary">Submit</button>
-                                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                        </div>
-                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -408,7 +409,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                         <!-- Rating form -->
                                                                         <form action="crud.php" method="post">
                                                                             <div class="form-group">
-                                                                                <label for="rating">Please Rate:</label>
+                                                                                <label for="rating">Please Rate the Requestor: <?= $resolved_row['requestor']; ?></label>
                                                                                 <div class="rating-css">
                                                                                     <div class="star-icon">
                                                                                         <div class="rating">
@@ -436,10 +437,11 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                             <input type="hidden" name="resolver_id" value="<?= $resolved_row['user_id']; ?>">
                                                                             <input type="hidden" name="ticket_id" value="<?= $item['ticket_id']; ?>">
                                                                             <input type="hidden" name="requestor_id" value="<?= $item['user_id']; ?>">
-                                                                    </div>
-                                                                    <div class="modal-footer">
-                                                                        <button type="submit" name="rate_requestor" class="btn btn-primary" style="margin-left: 350px;">Submit</button>
-                                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+                                                                            <div class="modal-footer">
+                                                                                <button type="submit" name="rate_requestor" class="btn btn-primary">Submit</button>
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                            </div>
                                                                         </form>
                                                                     </div>
                                                                 </div>
