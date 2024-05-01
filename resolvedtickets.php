@@ -150,7 +150,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                             // Check if there's a record in the rating table
                                                             if (mysqli_num_rows($rating_result) > 0) {
                                                                 // Show "View" or "Rate" button modal
-                                                                $viewsql = "SELECT * FROM rating WHERE ticket_id = {$item['ticket_id']} AND requestor_rating IS NOT NULL";
+                                                                $viewsql = "SELECT * FROM rating WHERE ticket_id = {$item['ticket_id']} AND resolver_rating IS NOT NULL";
                                                                 $viewresult = mysqli_query($con, $viewsql);
                                                                 if (mysqli_num_rows($viewresult) > 0) {
                                                                     echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal' . $item['ticket_id'] . '"><i class="fa-solid fa-eye"></i> View</button>';
@@ -181,12 +181,12 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                             if (mysqli_num_rows($rating_result) > 0) {
                                                                                 // Fetch the rating value
                                                                                 $rating_row = mysqli_fetch_assoc($rating_result);
-                                                                                $rating = $rating_row['requestor_rating'];
-                                                                                $feedback = $rating_row['requestor_comment'];
+                                                                                $rating = $rating_row['resolver_rating'];
+                                                                                $feedback = $rating_row['resolver_comment'];
 
                                                                                 // Display the rating with stars
                                                                                 echo '<div class="mb-3">';
-                                                                                echo '<label for="formGroupExampleInput" class="form-label">Rating:</label>';
+                                                                                echo '<label for="formGroupExampleInput" class="form-label">Rating For Resolver:'.$resolved_row['firstname'] . ' ' . $resolved_row['lastname'].':</label>';
                                                                                 echo '<div class="form-control" disabled>';
                                                                                 for ($i = 1; $i <= 5; $i++) {
                                                                                     if ($i <= $rating) {
@@ -334,7 +334,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                         // Check if there's a record in the rating table
                                                         if (mysqli_num_rows($rating_result) > 0) {
                                                             // Show "View" button modal
-                                                            $viewsql = "SELECT * FROM rating WHERE ticket_id = {$item['ticket_id']} AND resolver_rating IS NOT NULL";
+                                                            $viewsql = "SELECT * FROM rating WHERE ticket_id = {$item['ticket_id']} AND requestor_rating IS NOT NULL";
                                                             $viewresult = mysqli_query($con, $viewsql);
                                                             if (mysqli_num_rows($viewresult) > 0) {
                                                                 echo '<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#viewModal1' . $item['ticket_id']  . '"><i class="fa-solid fa-eye"></i> View</button>';
@@ -364,8 +364,8 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                                                         if (mysqli_num_rows($rating_result) > 0) {
                                                                             // Fetch the rating value
                                                                             $rating_row = mysqli_fetch_assoc($rating_result);
-                                                                            $rating = $rating_row['resolver_rating'];
-                                                                            $feedback = $rating_row['resolver_comment'];
+                                                                            $rating = $rating_row['requestor_rating'];
+                                                                            $feedback = $rating_row['requestor_comment'];
 
                                                                             // Display the rating with stars
                                                                             echo '<div class="mb-3">';

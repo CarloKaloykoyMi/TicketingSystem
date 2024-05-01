@@ -387,7 +387,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
 
     } else {
         // If there are records with the given ticket_id, update the existing record
-        $update_query = "UPDATE rating SET requestor_id = '$requestor_id', resolver_id = '$resolver_id', resolver_rating = '$rate', resolver_comment = '$feedback' WHERE ticket_id = $ticket_id";
+        $update_query = "UPDATE rating SET requestor_id = '$requestor_id', resolver_id = '$resolver_id', requestor_rating = '$rate', requestor_comment = '$feedback' WHERE ticket_id = $ticket_id";
         mysqli_query($con, $update_query);
         echo '<script>window.location.href = "resolvedtickets.php"</script>';
 
@@ -411,7 +411,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
 
     } else {
         // If there are records with the given ticket_id, update the existing record
-        $update_query = "UPDATE rating SET requestor_id = '$requestor_id', resolver_id = '$resolver_id', requestor_rating = '$rate', requestor_comment = '$feedback'  WHERE ticket_id = $ticket_id";
+        $update_query = "UPDATE rating SET requestor_id = '$requestor_id', resolver_id = '$resolver_id', resolver_rating = '$rate', resolver_comment = '$feedback'  WHERE ticket_id = $ticket_id";
         mysqli_query($con, $update_query);
         echo '<script>window.location.href = "resolvedtickets.php"</script>';
 
