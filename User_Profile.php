@@ -1,48 +1,3 @@
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-</head>
-<style>
-    /* The message box is shown when the user clicks on the password field */
-    #message {
-        display: none;
-        background: #f1f1f1;
-        color: #000;
-        position: relative;
-        padding: 15px;
-        margin-top: 9px;
-    }
-
-    #message p {
-        padding: 9px 30px;
-        font-size: 14px;
-    }
-
-    /* Add a green text color and a checkmark when the requirements are right */
-    .valid {
-        color: green;
-    }
-
-    .valid:before {
-        position: relative;
-        left: -35px;
-        content: "✅";
-    }
-
-    /*copy & paste symbol*/
-    /* Add a red text color and an "x" when the requirements are wrong */
-    .invalid {
-        color: red;
-    }
-
-    .invalid:before {
-        position: relative;
-        left: -35px;
-        content: "❌";
-    }
-</style>
-
 <?php include('function/myfunction.php');
 include 'sidebar_navbar.php';
 include('crud.php');
@@ -90,18 +45,16 @@ $atresult = mysqli_query($con, $atsql);
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/lineicons.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
+
     <link rel="stylesheet" href="css/sidebar_navbar.css">
     <!-- jQuery and DataTables JavaScript -->
     <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script defer src="script.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   
 </head>
 <style>
     body h2 {
@@ -162,6 +115,44 @@ $atresult = mysqli_query($con, $atsql);
         /* Replace with your preferred color */
         color: #fff;
         /* Text color on hover */
+    }
+
+     /* The message box is shown when the user clicks on the password field */
+     #message {
+        display: none;
+        background: #f1f1f1;
+        color: #000;
+        position: relative;
+        padding: 15px;
+        margin-top: 9px;
+    }
+
+    #message p {
+        padding: 9px 30px;
+        font-size: 14px;
+    }
+
+    /* Add a green text color and a checkmark when the requirements are right */
+    .valid {
+        color: green;
+    }
+
+    .valid:before {
+        position: relative;
+        left: -35px;
+        content: "✅";
+    }
+
+    /*copy & paste symbol*/
+    /* Add a red text color and an "x" when the requirements are wrong */
+    .invalid {
+        color: red;
+    }
+
+    .invalid:before {
+        position: relative;
+        left: -35px;
+        content: "❌";
     }
 </style>
 </head>
@@ -452,13 +443,13 @@ $atresult = mysqli_query($con, $atsql);
     </div>
 
     <!-- Bootstrap and custom scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     <script>
         $(document).ready(function() {
