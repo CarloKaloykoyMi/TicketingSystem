@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-Ticketing</title>
+    <title>CGG NEXUS</title>
     <link rel="icon" href="img/logo2.png" type="image/x-icon">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
     <link rel="stylesheet" href="./css/des5.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
@@ -91,7 +90,7 @@
                         <a href="index.php">
                             <img src="img/logo2.png" alt="">
                         </a>
-                        <span class="logo-text">CGG e-Ticketing</span>
+                        <span class="logo-text">CGG NEXUS</span>
                     </div>
 
 
@@ -128,14 +127,6 @@
                     <img src="./img/shapes/x.png" class="shape xshape" alt="" />
                 </div>
             </div>
-
-            <script>
-                function addToCartBtn(link) {
-                    // You can perform any additional actions here before redirecting
-                    window.location.href = link;
-                }
-            </script>
-
             <div class="container">
                 <div class="section-header">
                     <h3 class="title">COMPANIES </h3>
@@ -153,7 +144,7 @@
                                         </center>
                                         <center>Integrating technology solutions for workspace and people.</center>
                                     </div>
-                                    <a href="javascript:void(0);" onclick="addToCartBtn('http://comfaccorp.com/')" class="btn">Click</a>
+                                    <a href="http://comfaccorp.com/" class="btn" target="_blank">Click</a>
                                 </div>
                             </div>
                         </div>
@@ -168,7 +159,7 @@
                                         </center>
                                         <center> Marketing and manufacturing modular and custom-made furniture.</center>
                                     </div>
-                                    <a href="javascript:void(0);" onclick="addToCartBtn('http://cornersteelsystems.com/')" class="btn">Click</a>
+                                    <a href="http://cornersteelsystems.com/" class="btn" target="_blank">Click</a>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +174,7 @@
                                         </center>
                                         <center> Facilities maintenance and sustainability solutions.</center>
                                     </div>
-                                    <a href="javascript:void(0);" onclick="addToCartBtn('http://escoincsolutions.com/')" class="btn">Click</a>
+                                    <a href="http://escoincsolutions.com/" target="_blank" class="btn">Click</a>
                                 </div>
                             </div>
                         </div>
@@ -198,7 +189,7 @@
                                         </center>
                                         <center> Consulting and information technology services to enterprise. </center>
                                     </div>
-                                    <a href="javascript:void(0);" onclick="addToCartBtn('https://www.comfactechoptions.com/')" class="btn">Click</a>
+                                    <a href="https://www.comfactechoptions.com/" target="_blank" class="btn" >Click</a>
                                 </div>
                             </div>
                         </div>
@@ -211,12 +202,10 @@
             <div class="header-content">
                 <div class="container grid-2">
                     <div class="column-1">
-                        <h1 class="header-title">E-TICKET</h1>
-                        <p class="text">
-                            Our E-Ticketing System for Support Concerns is a specialized platform designed to
-                            streamline and enhance the users' support process by leveraging digital technology.
-                            It serves as a centralized hub for users to report issues, seek assistance, and
-                            receive timely resolutions, ensuring a seamless support experience.
+                        <h1 class="header-title">CGG NEXUS</h1>
+                        <p class="text" style="text-align: justify;">
+                            CGG NEXUS is a specialized platform designed to streamline and enhance the users' support process by leveraging digital technology.
+                            It serves as a centralized hub for users to report issues, seek assistance, and receive timely resolutions, ensuring a seamless support experience.
                         </p>
                     </div>
                     <div class="container-about">
@@ -365,7 +354,7 @@
 
                             <div class="social-media">
                                 <a href="https://www.instagram.com/cornersteelsystemscorp/">
-                                    <i class="fa fa-instagram"></i>
+                                    <i class="fab fa-instagram"></i>
                                 </a>
                             </div>
                         </div>
