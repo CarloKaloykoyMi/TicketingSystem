@@ -30,6 +30,10 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Users</title>
 
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
+
+
     <!-- datatable css -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
@@ -40,12 +44,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
     <script defer src="js/table.js"></script>
 
-    <!-- icon css -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-
-    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
     <link rel="stylesheet" href="css/sidebar.css">
 </head>
 
@@ -246,8 +244,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="col-md-12 mt-3">
                             <div class="input-group">
                                 <span class="input-group-prepend">
-
-                                    <i class="fa fa-phone input-group-text"></i>
+                                    <i class="fas fa-address-book input-group-text"></i>
                                 </span>
                                 <label for="" class="sr-only">Contact Number</label>
                                 <input type="text" name="contact" id="phoneNumberInput" placeholder="Enter Contact Number" oninput="restrictToNumbers(this)" class="form-control" required>
@@ -258,7 +255,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="col-md-12 mt-3">
                             <div class="input-group">
                                 <span class="input-group-prepend">
-                                    <i class="fas fa-user-friends input-group-text"></i>
+                                    <i class="fas fa-user input-group-text"></i>
                                 </span>
                                 <label for="role" class="sr-only">Role</label>
                                 <select class="form-control" id="role" name="role" required>
@@ -296,7 +293,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="col-md-12 mt-3">
                             <div class="form-group" style="display: none;" id="branchGroup">
                                 <div class="input-group">
-                                    <i class="fas fa-code-branch input-group-text"></i>
+                                    <i class="fas fa-building input-group-text"></i>
                                     </span>
                                     <label for="branch" class="sr-only">Branch:</label>
                                     <select class="form-control" id="branch" name="branch" required>
@@ -344,7 +341,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                         <div class="col-md-12 mt-3">
                             <div class="input-group">
                                 <span class="input-group-prepend">
-                                    <i class="fa fa-lock input-group-text"></i>
+                                    <i class="fas fa-eye-slash input-group-text"></i>
                                 </span>
                                 <label for="password" class="sr-only"> Password</label>
                                 <input type="password" class="form-control" name="password" id="password" placeholder="Enter Password" required>
@@ -361,7 +358,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="js/sidebar.js"></script>
 
