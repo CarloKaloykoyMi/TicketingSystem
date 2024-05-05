@@ -22,12 +22,10 @@ while ($row = mysqli_fetch_array($result)) {
     $img = $row['image'];
 }
 ?>
-
-<script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #595959;">
     <div class="container-fluid">
         <!-- System Name (Upper Left Corner) -->
-        <a class="navbar-brand" href="dashboard.php"><img src="img/logooo.png" height="40px" alt="CGG E-Support Logo"> CGG E-Support</a>
+        <a class="navbar-brand" href="dashboard.php"><img src="img/logooo.png" height="40px" alt="CGG Logo"> CGG Nexus</a>
 
         <!-- Navbar Toggler (for responsive behavior) -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,9 +57,11 @@ while ($row = mysqli_fetch_array($result)) {
     <aside id="sidebar">
         <div class="d-flex">
             <button class="toggle-btn" type="button">
-                <i class="lni lni-grid-alt"></i>
+                <i class="fa-solid fa-bars"></i>
             </button>
-
+            <div class="sidebar-logo">
+                <a href="#">CGG NEXUS</a>
+            </div>
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
@@ -116,6 +116,7 @@ while ($row = mysqli_fetch_array($result)) {
                     <span>Profile</span>
                 </a>
             </li>
+            <hr style="border-color: white;">
             <div class="sidebar-item">
                 <a href="logoutadmin.php" class="sidebar-link">
                     <i class="fa-solid fa-right-from-bracket"></i>

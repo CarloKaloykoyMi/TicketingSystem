@@ -146,16 +146,11 @@ while ($row = mysqli_fetch_assoc($result)) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
 
     <link rel="stylesheet" href="css/sidebar.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-
-    <script src='https://kit.fontawesome.com/ddada6a128.js' crossorigin='anonymous'></script>
-
-
-    <title>Dashboard</title>
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
 </head>
 
 <body>
@@ -295,11 +290,9 @@ while ($row = mysqli_fetch_assoc($result)) {
                         </div>
                     </div>
 
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+                    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
                     <script src="js/sidebar.js"></script>
-
-
-                    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                    <script src="js/chart.umd.js"></script>
 
                     <!-- Add JavaScript to create the chart -->
                     <script>
@@ -328,8 +321,6 @@ while ($row = mysqli_fetch_assoc($result)) {
                             }
                         });
                     </script>
-
-
 
                     <!-- Add JavaScript to create the chart -->
                     <script>
@@ -432,6 +423,10 @@ while ($row = mysqli_fetch_assoc($result)) {
                             options: ticketStatusOptions,
                         });
                     </script>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
 </body>

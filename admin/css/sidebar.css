@@ -7,19 +7,6 @@
   padding: 0;
 }
 
-a {
-  text-decoration: none;
-}
-
-li {
-  list-style: none;
-}
-
-h1 {
-  font-weight: 600;
-  font-size: 1.5rem;
-}
-
 body {
   font-family: "Poppins", sans-serif;
 }
@@ -71,6 +58,7 @@ body {
   color: #fff;
   font-size: 1.15rem;
   font-weight: 600;
+  text-decoration: none;
 }
 
 #sidebar:not(.expand) .sidebar-logo,
@@ -79,7 +67,7 @@ body {
 }
 
 .sidebar-nav {
-  padding: 2rem 0;
+  padding: 0.7rem 0;
   flex: 1 1 auto;
 }
 
@@ -90,11 +78,12 @@ a.sidebar-link {
   font-size: 0.9rem;
   white-space: nowrap;
   border-left: 8px solid transparent;
+  text-decoration: none;
 }
 
 .sidebar-link i {
   font-size: 1.1rem;
-  margin-right: 0.75rem;
+  margin-right: 0.95rem;
 }
 
 a.sidebar-link:hover {
@@ -163,6 +152,7 @@ a.sidebar-link:hover {
   display: block;
   font-size: 0.9rem;
   white-space: nowrap;
+  text-decoration: none;
 }
 .sub-menu a:hover {
   background-color: rgba(
