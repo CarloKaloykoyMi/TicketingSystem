@@ -28,27 +28,23 @@ if (!isset($_SESSION['auth_user']['username'])) {
     <title>Audit Trail</title>
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
 
-    <!-- Line Icons -->
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <!-- datatable css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
 
-<!-- DataTables CSS -->
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.7/css/dataTables.bootstrap5.min.css">
-
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-<!-- DataTables JavaScript -->
-<script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-
-<!-- Bootstrap JS -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- datatable css -->
+    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
+    <script defer src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script defer src="js/table.js"></script>
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/sidebar.css">
@@ -161,79 +157,73 @@ if (!isset($_SESSION['auth_user']['username'])) {
     </div>
 
     <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
-
-    <!-- DataTables JavaScript -->
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
+    <script src="js/bootstrap/bootstrap.bundle.min.js"></script>
 
     <!-- Custom JS -->
     <script src="js/sidebar.js"></script>
     <script>
-    $(document).ready(function() {
-        // Initialize DataTable for Admin Table
-        $('#adminTable').DataTable({
-            "order": [
-                [2, "desc"]
-            ],
-            "columnDefs": [{
-                "targets": [2],
-                "render": function(data, type, row) {
-                    var date = new Date(data);
-                    return formatDate(date);
-                },
-                "type": "date"
-            }]
+        $(document).ready(function() {
+            // Initialize DataTable for Admin Table
+            $('#adminTable').DataTable({
+                "order": [
+                    [2, "desc"]
+                ],
+                "columnDefs": [{
+                    "targets": [2],
+                    "render": function(data, type, row) {
+                        var date = new Date(data);
+                        return formatDate(date);
+                    },
+                    "type": "date"
+                }]
+            });
+
+            // Initialize DataTable for User Table
+            $('#userTable').DataTable({
+                "order": [
+                    [2, "desc"]
+                ],
+                "columnDefs": [{
+                    "targets": [2],
+                    "render": function(data, type, row) {
+                        var date = new Date(data);
+                        return formatDate(date);
+                    },
+                    "type": "date"
+                }]
+            });
+
+            // Initialize DataTable for Delete Table
+            $('#deleteTable').DataTable({
+                "order": [
+                    [2, "desc"]
+                ],
+                "columnDefs": [{
+                    "targets": [2],
+                    "render": function(data, type, row) {
+                        var date = new Date(data);
+                        return formatDate(date);
+                    },
+                    "type": "date"
+                }]
+            });
         });
 
-        // Initialize DataTable for User Table
-        $('#userTable').DataTable({
-            "order": [
-                [2, "desc"]
-            ],
-            "columnDefs": [{
-                "targets": [2],
-                "render": function(data, type, row) {
-                    var date = new Date(data);
-                    return formatDate(date);
-                },
-                "type": "date"
-            }]
-        });
-
-        // Initialize DataTable for Delete Table
-        $('#deleteTable').DataTable({
-            "order": [
-                [2, "desc"]
-            ],
-            "columnDefs": [{
-                "targets": [2],
-                "render": function(data, type, row) {
-                    var date = new Date(data);
-                    return formatDate(date);
-                },
-                "type": "date"
-            }]
-        });
-    });
-
-    // Function to format date as "Month Day, Year Time"
-    function formatDate(date) {
-        var options = {
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit'
-        };
-        var formattedDate = date.toLocaleDateString('en-US', options);
-        // Remove the "at" substring
-        formattedDate = formattedDate.replace(" at", "");
-        return formattedDate;
-    }
-</script>
-
-
+        // Function to format date as "Month Day, Year Time"
+        function formatDate(date) {
+            var options = {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            var formattedDate = date.toLocaleDateString('en-US', options);
+            // Remove the "at" substring
+            formattedDate = formattedDate.replace(" at", "");
+            return formattedDate;
+        }
+    </script>
 
 </body>
 
