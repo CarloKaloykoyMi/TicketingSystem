@@ -56,7 +56,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         // Send email notification to IT Department
         require "phpmailer/PHPMailerAutoload.php"; // Include the PHPMailer library
         $mail = new PHPMailer; // Create a new PHPMailer instance
-        
+
         $mail->isSMTP(); // Enable SMTP
         $mail->Host = 'smtp.gmail.com'; // Specify the SMTP server
         $mail->Port = 587; // Set the SMTP port
@@ -84,7 +84,14 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
 
         $mail->isHTML(true); // Set email format to HTML
         $mail->Subject = "New Ticket has been created"; // Set the email subject
-        $mail->Body = "Dear IT Department,<br>Ticket $ticket_id has been created. Please check.<br><br>Best regards,<br>CGG E-Ticketing"; // Set the email body
+        $mail->Body = "Dear IT Department, <br><br>
+
+        A new ticket ITR#$ticket_id has been generated and requires your attention. Kindly review and address as necessary.<br><br>
+        
+        Thank you for your prompt assistance.<br><br>
+        
+        Best regards,<br>
+        CGG Nexus";
 
         // Send email to IT Department
         if (!$mail->send()) { // Check if the email was sent
@@ -96,7 +103,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
             // Send email notification to the requestor
             $mail->addAddress($requestor_email); // Send email to the requestor
             $mail->Subject = "Ticket Created Successfully"; // Set the email subject
-            $mail->Body = "Dear $requestor,<br><br>Your ticket with subject '$subject' has been successfully created.<br><br>Thank you for using our system.<br><br>Best regards,<br>CGG E-Ticketing"; // Set the email body
+            $mail->Body = "Dear $requestor,<br><br>Your ticket with subject '$subject' has been successfully created.<br><br>Thank you for using our system.<br><br>Best regards,<br>CGG Nexus"; // Set the email body
 
             // Send email to the requestor
             if (!$mail->send()) { // Check if the email was sent
@@ -248,7 +255,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
 
         $mail->isHTML(true); // Set email format to HTML
         $mail->Subject = "Ticket Status Updated"; // Set the email subject
-        $mail->Body = "Dear User,<br><br>Your ticket with ID #$ticket_id has been updated to '$status'.<br><br>Thank you for using our system.<br><br>Best regards,<br>CGG E-Ticketing"; // Set the email body
+        $mail->Body = "Dear User,<br><br>Your ticket with ID #$ticket_id has been updated to '$status'.<br><br>Thank you for using our system.<br><br>Best regards,<br>CGG Nexus"; // Set the email body
 
         // Send email
         if (!$mail->send()) { // Check if the email was sent
