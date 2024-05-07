@@ -53,10 +53,10 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
             }
         }
 
-        // Send email notification
+        // Send email notification to IT Department
         require "phpmailer/PHPMailerAutoload.php"; // Include the PHPMailer library
         $mail = new PHPMailer; // Create a new PHPMailer instance
-
+        
         $mail->isSMTP(); // Enable SMTP
         $mail->Host = 'smtp.gmail.com'; // Specify the SMTP server
         $mail->Port = 587; // Set the SMTP port
@@ -67,28 +67,46 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         $mail->Password = 'mnugjcpwaslqthdn'; // email password
 
         $mail->setFrom('no-reply@gmail.com', 'no-reply'); // Set the sender of the email
-        $mail->addAddress($email); // Send email to the requestor
+        $sql = "SELECT email FROM user WHERE department = 'IT Department'"; // Select all IT emails
+        $result = mysqli_query($con, $sql);
+
+        $it_emails = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $it_emails[] = $row['email'];
+        }
+
+        $requestor_email = $_POST['email']; // Get the email address of the requestor
+
+        // Send email notification to IT Department
+        foreach ($it_emails as $email) {
+            $mail->addAddress($email); // Send email to IT Department
+        }
 
         $mail->isHTML(true); // Set email format to HTML
-        $mail->Subject = "Ticket Created Successfully"; // Set the email subject
-        $mail->Body = "Dear $requestor,<br><br>Your ticket with subject '$subject' has been successfully created.<br><br>Thank you for using our system.<br><br>Best regards,<br>CGG E-Ticketing"; // Set the email body
+        $mail->Subject = "New Ticket has been created"; // Set the email subject
+        $mail->Body = "Dear IT Department,<br>Ticket $ticket_id has been created. Please check.<br><br>Best regards,<br>CGG E-Ticketing"; // Set the email body
 
-        // Send email
+        // Send email to IT Department
         if (!$mail->send()) { // Check if the email was sent
-            echo '<script>alert("Error sending email notification. Please try again.");</script>';
+            echo '<script>alert("Error sending email notification to IT Department. Please try again.");</script>';
         } else {
-            echo '<script>alert("Ticket Submitted. Email notification sent.");</script>';
-            echo '<script>window.location.href = "home_user.php";</script>';
-            exit();
+            // Clear all addresses for next email
+            $mail->clearAddresses();
+
+            // Send email notification to the requestor
+            $mail->addAddress($requestor_email); // Send email to the requestor
+            $mail->Subject = "Ticket Created Successfully"; // Set the email subject
+            $mail->Body = "Dear $requestor,<br><br>Your ticket with subject '$subject' has been successfully created.<br><br>Thank you for using our system.<br><br>Best regards,<br>CGG E-Ticketing"; // Set the email body
+
+            // Send email to the requestor
+            if (!$mail->send()) { // Check if the email was sent
+                echo '<script>alert("Error sending email notification to the requestor. Please try again.");</script>';
+            } else {
+                echo '<script>alert("Ticket Submitted. Email notifications sent.");</script>';
+                echo '<script>window.location.href = "home_user.php";</script>';
+                exit();
+            }
         }
-    } else {
-        echo '<script>alert("Error submitting ticket. Please try again.");</script>';
-    }
-} else if (isset($_POST['add_reply'])) { // Check if the form is submitted
-    if (empty($_POST['reply'])) { // Check if the reply is empty
-        $ticket_id = $_POST['ticket_id']; // Retrieve the ticket_id from the input tag
-        echo '<script>alert("Empty Reply. Please try again.");</script>';
-        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '"</script>'; // Redirect to the ticket_info page
     } else {
         $reply = $_POST['reply'];
         $ticket_id = $_POST['ticket_id'];
@@ -345,8 +363,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         echo '<script>alert("You are not authorized to cancel this ticket.");</script>';
         echo '<script>window.location.href = "ticket_info.php?ticket_id=' . urlencode($ticket_id) . '";</script>';
     }
-}
- else if (isset($_POST['ChangePassword'])) {
+} else if (isset($_POST['ChangePassword'])) {
     $user_id = $_POST['userid'];
     $oldpass = $_POST['password'];
     $newpass = $_POST['newpassword'];
@@ -369,52 +386,46 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         echo "<script>alert('Wrong Current Password!')</script>";
         echo '<script>window.location.href = "User_Profile.php"</script>';
     }
-}else if(isset($_POST['rate_requestor'])){
-    $ticket_id= $_POST['ticket_id'];
-    $requestor_id= $_POST['requestor_id'];
-    $resolver_id= $_POST['resolver_id'];
-    $rate= $_POST['rating'];
-    $feedback= $_POST['comment'];
+} else if (isset($_POST['rate_requestor'])) {
+    $ticket_id = $_POST['ticket_id'];
+    $requestor_id = $_POST['requestor_id'];
+    $resolver_id = $_POST['resolver_id'];
+    $rate = $_POST['rating'];
+    $feedback = $_POST['comment'];
 
     $check_query = "SELECT * FROM rating WHERE ticket_id = $ticket_id";
-    $result = mysqli_query($con,$check_query);
+    $result = mysqli_query($con, $check_query);
 
-    if(mysqli_num_rows($result) == 0) {
+    if (mysqli_num_rows($result) == 0) {
         // If there are no records with the given ticket_id in the rating table, insert a new record
         $insert_query = "INSERT INTO rating (ticket_id, requestor_id, resolver_id, requestor_rating, requestor_comment) VALUES ('$ticket_id', '$requestor_id', '$resolver_id', '$rate', '$feedback')";
         mysqli_query($con, $insert_query);
         echo '<script>window.location.href = "resolvedtickets.php"</script>';
-
     } else {
         // If there are records with the given ticket_id, update the existing record
         $update_query = "UPDATE rating SET requestor_id = '$requestor_id', resolver_id = '$resolver_id', requestor_rating = '$rate', requestor_comment = '$feedback' WHERE ticket_id = $ticket_id";
         mysqli_query($con, $update_query);
         echo '<script>window.location.href = "resolvedtickets.php"</script>';
-
     }
-    
-}else if(isset($_POST['rate_resolver'])){
-    $ticket_id= $_POST['ticket_id'];
-    $requestor_id= $_POST['requestor_id'];
-    $resolver_id= $_POST['resolver_id'];
-    $rate= $_POST['rating'];
-    $feedback= $_POST['comment'];
+} else if (isset($_POST['rate_resolver'])) {
+    $ticket_id = $_POST['ticket_id'];
+    $requestor_id = $_POST['requestor_id'];
+    $resolver_id = $_POST['resolver_id'];
+    $rate = $_POST['rating'];
+    $feedback = $_POST['comment'];
 
     $check_query = "SELECT * FROM rating WHERE ticket_id = $ticket_id";
-    $result = mysqli_query($con,$check_query);
+    $result = mysqli_query($con, $check_query);
 
-    if(mysqli_num_rows($result) == 0) {
+    if (mysqli_num_rows($result) == 0) {
         // If there are no records with the given ticket_id in the rating table, insert a new record
         $insert_query = "INSERT INTO rating (ticket_id, requestor_id, resolver_id, resolver_rating, resolver_comment) VALUES ('$ticket_id', '$requestor_id', '$resolver_id', '$rate', '$feedback')";
         mysqli_query($con, $insert_query);
         echo '<script>window.location.href = "resolvedtickets.php"</script>';
-
     } else {
         // If there are records with the given ticket_id, update the existing record
         $update_query = "UPDATE rating SET requestor_id = '$requestor_id', resolver_id = '$resolver_id', resolver_rating = '$rate', resolver_comment = '$feedback'  WHERE ticket_id = $ticket_id";
         mysqli_query($con, $update_query);
         echo '<script>window.location.href = "resolvedtickets.php"</script>';
-
     }
-    
 }
