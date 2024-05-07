@@ -1,55 +1,7 @@
-<?php include('../function/myfunction.php');
-include 'sidebar_navbar.php';
-
-if (!isset($_SESSION['auth_user']['username'])) {
-    session_destroy();
-    unset($_SESSION['auth_user']['username']);
-    unset($_SESSION['auth_user']['user_id']);
-    unset($_SESSION['auth_user']['email']);
-    unset($_SESSION['auth_user']['role']);
-    unset($_SESSION['auth_user']['fname']);
-    unset($_SESSION['auth_user']['lname']);
-    echo '<script>window.location.href = "../adminlogin.php";</script>';
-} else {
-    $username = $_SESSION['auth_user']['username'];
-    $user_id = $_SESSION['auth_user']['user_id'];
-    $email = $_SESSION['auth_user']['email'];
-    $role = $_SESSION['auth_user']['role'];
-    $lname = $_SESSION['auth_user']['lastname'];
-}
-
-$sql = "SELECT * FROM user WHERE user_id = '$user_id';";
-$result = mysqli_query($con, $sql);
-while ($row = mysqli_fetch_array($result)) {
-    $fn = $row['firstname'];
-    $ml = $row['middleinitial'];
-    $ln = $row['lastname'];
-    $name = $fn . " " . ($ml ? $ml . ". " : "") . $ln; // check if middle initial is not empty, if not, include it in the name
-    $company = $row['company'];
-    $branch = $row['branch'];
-    $department = $row['department'];
-    $contact = $row['contact'];
-}
-?>
-
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <title>Edit Profile</title>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- LineIcons -->
-    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
-
-    <!--css -->
-    <link rel="stylesheet" href="css/sidebar.css">
-
 </head>
 <style>
     /* The message box is shown when the user clicks on the password field */
@@ -91,6 +43,130 @@ while ($row = mysqli_fetch_array($result)) {
     }
 </style>
 
+<?php include('function/myfunction.php');
+include 'sidebar_navbar.php';
+include('crud.php');
+
+if (!isset($_SESSION['auth_user']['username'])) {
+    session_destroy();
+    unset($_SESSION['auth_user']['username']);
+    unset($_SESSION['auth_user']['user_id']);
+    unset($_SESSION['auth_user']['email']);
+    unset($_SESSION['auth_user']['role']);
+
+    echo '<script>window.location.href = "emplogin.php";</script>';
+} else {
+    $username = $_SESSION['auth_user']['username'];
+    $userid = $_SESSION['userid'];
+    $email = $_SESSION['auth_user']['email'];
+    $role = $_SESSION['auth_user']['role'];
+    $lname = $_SESSION['auth_user']['lastname'];
+    $fname = $_SESSION['auth_user']['firstname'];
+}
+
+$sql = "SELECT * FROM user WHERE user_id = '$userid';";
+$result = mysqli_query($con, $sql);
+while ($row = mysqli_fetch_array($result)) {
+    $fn = $row['firstname'];
+    $ml = $row['middleinitial'];
+    $ln = $row['lastname'];
+    $name = $fn . " " . ($ml ? $ml . ". " : "") . $ln; // check if middle initial is not empty, if not, include it in the name
+    $suffix = $row['suffix'];
+    $company = $row['company'];
+    $branch = $row['branch'];
+    $department = $row['department'];
+    $contact = $row['contact'];
+    $img = $row['image'];
+}
+
+$atsql = "SELECT * FROM audit_trail WHERE user_id = '$userid' ORDER BY `Date` desc";
+$atresult = mysqli_query($con, $atsql);
+?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Edit Profile </title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- icons -->
+    <link rel="stylesheet" href="css/lineicons.css">
+    <link rel="stylesheet" href="css/fontawesome/css/all.css">
+
+    <link rel="stylesheet" href="css/sidebar_navbar.css">
+
+    <!-- jQuery and DataTables JavaScript -->
+    <script defer src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script defer src="script.js"></script>
+
+</head>
+<style>
+    body h2 {
+        font-family: "Arial", sans-serif;
+    }
+
+    .container {
+        margin-top: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 800px;
+        /* Increased max-width for better spacing */
+        margin: 0 auto;
+        /* Center the container */
+    }
+
+    label {
+        margin-top: 10px;
+        margin-bottom: 5px;
+        color: #555;
+    }
+
+    input {
+        padding: 8px;
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        width: 100%;
+    }
+
+    button {
+        background-color: #007BFF;
+        color: #fff;
+        padding: 10px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .logs-container {
+        margin-top: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+    }
+
+    .nav-tabs-bordered .nav-link:hover {
+        background-color: #007bff;
+        /* Replace with your preferred color */
+        color: #fff;
+        /* Text color on hover */
+    }
+</style>
+</head>
+
 <body>
     <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -100,7 +176,7 @@ while ($row = mysqli_fetch_array($result)) {
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form method="POST" action="code.php" enctype="multipart/form-data">
+                    <form method="POST" action="crud.php" enctype="multipart/form-data">
                         <input type="hidden" name="size" value="1000000">
                         <input type="hidden" name="userid" value=<?= $user_id ?>>
                         <input type="hidden" name="username" value=<?= $username ?>>
@@ -114,6 +190,7 @@ while ($row = mysqli_fetch_array($result)) {
 
     <div class="main p-3">
         <div class="container-fluid">
+
             <main id="main" class="main">
                 <section class="section profile">
                     <div class="row">
@@ -123,10 +200,9 @@ while ($row = mysqli_fetch_array($result)) {
                                 <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
                                     <div class="card" style="width: 15rem; background-color:#555;">
-                                        <img src='<?php echo "../Images/" . $user_id . "-" . $username . "/" . $img ?>' class="card-img-top" alt="Profile" style="max-width: 100%; max-height: 220px;">
+                                        <img src='<?php echo "Images/" . $user_id . "-" . $username . "/" . $img ?>' class="card-img-top" alt="Profile" style="max-width: 100%; max-height: 220px;">
                                     </div>
-                                    <br>
-                                    <h3><?php echo $name ?></h3>
+                                    <h2><?php echo $name ?></h2>
                                 </div>
                             </div>
                         </div>
@@ -153,7 +229,7 @@ while ($row = mysqli_fetch_array($result)) {
 
                                         <div class="tab-pane fade show active profile-overview" id="profile-overview">
                                             <br>
-                                            <h5 class="card-title"><b>Profile Details:</b></h5>
+                                            <h5 class="card-title"><b>Profile Details: </b></h5>
 
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> First Name:</div>
@@ -167,12 +243,17 @@ while ($row = mysqli_fetch_array($result)) {
 
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> Last Name:</div>
-                                                <div class="col-lg-3 col-md-5"><?php echo $lname ?></div>
+                                                <div class="col-lg-3 col-md-5"><?php echo $ln ?></div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-lg-4 col-md-5 label "><i class="fas fa-user"></i> Suffix:</div>
+                                                <div class="col-lg-3 col-md-5"><?php echo $suffix ?></div>
                                             </div>
 
                                             <div class="row">
                                                 <div class="col-lg-4 col-md-5 label"><i class="fas fa-building"></i> Company:</div>
-                                                <div class="col-lg-5"><?php echo $company ?></div>
+                                                <div class="col-lg-3 col-md-5"><?php echo $company ?></div>
                                             </div>
 
                                             <div class="row">
@@ -195,7 +276,7 @@ while ($row = mysqli_fetch_array($result)) {
                                         <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                                             <!-- Profile Edit Form -->
-                                            <form method="POST" action="code.php">
+                                            <form method="POST" action="crud.php">
                                                 <div class="row mb-3">
                                                     <label for="profileImage" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-id-badge"></i> Profile Image</label>
                                                     <div class="col-md-8 col-lg-8">
@@ -210,7 +291,7 @@ while ($row = mysqli_fetch_array($result)) {
                                                     <div class="col-md-8 col-lg-8">
                                                         <input name="firstName" type="text" class="form-control" id="fullName" value="<?php echo $fn ?>" oninput="restrictToLettersWithSingleSpace(this)" required>
                                                         <span class="note" style="display: none; color: red; font-size: 13px;">Please enter letters only.</span>
-                                                        <input type="hidden" name="userid" value="<?= $user_id ?>">
+                                                        <input type="hidden" name="userid" value="<?= $userid ?>">
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
@@ -228,8 +309,14 @@ while ($row = mysqli_fetch_array($result)) {
                                                     </div>
                                                 </div>
                                                 <div class="row mb-3">
+                                                    <label for="fullName" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-user"></i> Suffix</label>
+                                                    <div class="col-md-8 col-lg-8">
+                                                        <input name="suffix" type="text" class="form-control" value="<?php echo $suffix ?>">
+                                                    </div>
+                                                </div>
+                                                <div class="row mb-3">
                                                     <label for="company" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-building"></i> Company</label>
-                                                    <div class="col-md-8 col-lg">
+                                                    <div class="col-md-8 col-lg-8">
                                                         <?php
                                                         $companies = getAll("company");
 
@@ -247,10 +334,10 @@ while ($row = mysqli_fetch_array($result)) {
                                                     </div>
                                                 </div>
 
-                                                <div class="row mb-3" id="branchGroup">
+                                                <div class="row mb-3" id="branchGroup" style="display:none;">
                                                     <label for="branch" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-code-branch"></i> Branch</label>
                                                     <div class="col-md-8 col-lg-8">
-                                                        <select name="branch" class="form-control" value="<?php echo $branch ?>" id="branch"></select>
+                                                        <select name="branch" class="form-control" id="branch"></select>
                                                     </div>
                                                 </div>
 
@@ -295,7 +382,31 @@ while ($row = mysqli_fetch_array($result)) {
                                                     </div>
                                                 </div>
 
-                                                <div class="text-center"> 
+                                                <div class="text-center">
+                                                    <button type="submit" name="saveChanges" class="btn btn-primary">Save Changes</button>
+                                                </div>
+                                            </form><!-- End Profile Edit Form -->
+
+                                        </div>
+                                        <div class="tab-pane fade pt-3" id="profile-change-password">
+                                            <!-- Change Password Form -->
+                                            <form method="POST" action="crud.php">
+
+                                                <div class="row mb-3">
+                                                    <label for="currentPassword" class="col-md-4 col-lg-4 col-form-label"><i class="fas fa-lock"></i> Current Password:</label>
+                                                    <div class="col-md-5 col-lg-5">
+                                                        <input name="password" type="password" class="form-control" id="currentPassword" placeholder="Enter your current password">
+                                                    </div>
+                                                </div>
+
+                                                <div class="row mb-3">
+                                                    <div class="col-md-5 col-lg-4">
+                                                        <label for="newPassword" class="col-form-label"><i class="fas fa-lock"></i> New Password</label>
+                                                    </div>
+                                                    <div class="col-md-5 col-lg-5">
+                                                        <div class="input-group">
+                                                            <input type="password" class="form-control" name="password" id="password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Enter your new password" required>
+                                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword" style="height: 38px;"><i class="fas fa-eye"></i></button>
                                                         </div>
                                                     </div>
                                                     <div id="message">
@@ -318,6 +429,7 @@ while ($row = mysqli_fetch_array($result)) {
                                                     </div>
                                                 </div>
 
+
                                                 <div class="text-center">
                                                     <input type="hidden" name="userid" value="<?= $userid ?>">
                                                     <button type="submit" name="ChangePassword" class="btn btn-primary">Change Password</button>
@@ -339,14 +451,6 @@ while ($row = mysqli_fetch_array($result)) {
 
         </div>
     </div>
-
-    <!-- Bootstrap and custom scripts -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.7/js/dataTables.bootstrap5.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
     <script src="js/sidebar.js"></script>
 
     <script>
