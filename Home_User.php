@@ -100,7 +100,7 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 <form action="dl.php" method="post">
                     <input type="submit" class="btn btn-secondary" name="download" value="Download CSV" style="position: absolute; top: 190px; right: 150px;">
                 </form>
-                
+
                 <div class="row mb-4">
                     <div class="col-md-3">
                         <input type="text" class="form-control" id="ticketNumberSearch" placeholder="Search by Ticket Number">
@@ -185,8 +185,6 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                             </div>
                                             <div class="modal-body">
                                                 <!-- Your view form content goes here -->
-
-
                                                 <div class="col-md-12 mt-3">
                                                     <label for=""><i class="fas fa-envelope"></i> Updated by</label>
                                                     <input type="text" name="email" value="<?= (!empty($updatedby_result['firstname']) && !empty($updatedby_result['lastname'])) ? (($updatedby_result['status'] == 'Resolved') ? 'Resolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : (($updatedby_result['status'] == 'Unresolved') ? 'Unresolved by ' . $updatedby_result['firstname'] . ' ' . $updatedby_result['lastname'] : '')) : '';

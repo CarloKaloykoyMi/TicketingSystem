@@ -197,6 +197,39 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         // PHP code failed to execute
         echo '<script>alert("Error Changing. Please try again.");</script>';
     }
+} elseif (isset($_POST['accept_ticket'])) {
+    $ticket_id = $_POST['ticket_id'];
+    $updated_by = $_POST['updatedby'];
+
+    // Use prepared statements to prevent SQL injection
+    $accept_ticket_query = "UPDATE ticket SET status = 'Working' WHERE ticket_id=?";
+    $stmt = mysqli_prepare($con, $accept_ticket_query);
+
+    // Bind parameters and execute the query
+    mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+    $accept_ticket_query_run = mysqli_stmt_execute($stmt);
+
+    if ($accept_ticket_query_run) {
+        // If the status is successfully updated to 'Working'
+        $updated_by = $updated_by;
+        $sql = "UPDATE ticket SET updated_date = NOW(), updated_by = ? WHERE ticket_id = ?";
+        $stmt = mysqli_prepare($con, $sql);
+        mysqli_stmt_bind_param($stmt, "ii", $updated_by, $ticket_id);
+        $run = mysqli_stmt_execute($stmt);
+
+        if ($run) {
+            // Success message or any further action if needed
+            echo "Ticket accepted successfully!";
+            echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '";</script>';
+        } else {
+            // Error handling if the update fails
+            echo "Error updating ticket!";
+            echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '";</script>';
+        }
+    } else {
+        // Error handling if the status update fails
+        echo "Error accepting ticket!";
+    }
 } else if (isset($_POST['change_status'])) {
     $ticket_id = $_POST['ticket_id'];
     $status = $_POST['status']; // Retrieve the selected status from the form data

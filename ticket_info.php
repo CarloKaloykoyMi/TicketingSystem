@@ -175,8 +175,9 @@ $reply_result = mysqli_query($con, $query);
             <div class="ticket">
                 <div class="ticket-header">
                     <div class="header-content">
-                        <h2>Ticket #<?php echo $ticket_data['ticket_id'] . ' - ' . $ticket_data['subject']; ?></h2>
-                        <p class="info">Requested by: <a href="#"><?php echo $ticket_data['requestor']; ?></a> <br>
+                        <h2>ITR #<?php echo $ticket_data['ticket_id'] ?></h2>
+                        <p class="info">Subject: <?php echo $ticket_data['subject']; ?> <br>
+                            Requested by: <a href="#"><?php echo $ticket_data['requestor']; ?></a> <br>
                             <?php echo date('F j, Y g:i A', strtotime($ticket_data['date_created'])); ?></p>
                         <span class="number pull-right"><b>Status:
                                 <?php
@@ -252,6 +253,37 @@ $reply_result = mysqli_query($con, $query);
                                     if ($ticket_data['status'] == 'Unresolved') {
                                         echo '<span class="number pull-right"><b>Unresolved on: ' . date('F j, Y g:i A', strtotime($ticket_data['updated_date'])) . '</b></span>' . '<br>';
                                         echo '<span class="number pull-right"><b>Unresolved by: ' . htmlspecialchars($ticket_data['firstname']) . ' ' . htmlspecialchars($ticket_data['lastname']) . '</b></span>';
+                                    }
+                                } else {
+                                    // Ticket not found or other error handling
+                                    echo 'Ticket not found or error fetching ticket.';
+                                }
+                            } else {
+                                // Error preparing statement
+                                echo "Error preparing statement.";
+                            }
+                        }
+                        elseif ($ticket_data['status'] == 'Working') {
+                            $query = "SELECT t.*, u.firstname, u.lastname 
+                            FROM ticket t
+                            INNER JOIN user u ON t.updated_by = u.user_id 
+                            WHERE t.ticket_id = ?";
+
+                            if ($stmt = mysqli_prepare($con, $query)) {
+                                // Bind the $ticket_id parameter
+                                mysqli_stmt_bind_param($stmt, "i", $ticket_id);
+
+                                // Execute
+                                mysqli_stmt_execute($stmt);
+
+                                // Bind the results
+                                $result = mysqli_stmt_get_result($stmt);
+
+                                if ($ticket_data = mysqli_fetch_assoc($result)) {
+                                    // Check if the ticket is Unresolved
+                                    if ($ticket_data['status'] == 'Working') {
+                                        echo '<span class="number pull-right"><b>Working on: ' . date('F j, Y g:i A', strtotime($ticket_data['updated_date'])) . '</b></span>' . '<br>';
+                                        echo '<span class="number pull-right"><b>Working by: ' . htmlspecialchars($ticket_data['firstname']) . ' ' . htmlspecialchars($ticket_data['lastname']) . '</b></span>';
                                     }
                                 } else {
                                     // Ticket not found or other error handling
@@ -354,7 +386,9 @@ $reply_result = mysqli_query($con, $query);
                     </div>
 
                     <div class="header-buttons">
-                        <!-- Reply Button -->
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#acceptModal" <?php if ($status == 'Working' || $status == 'Resolved') {
+                                                                                                                                echo 'disabled';
+                                                                                                                            } ?>>Accept</button>
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#replyModal" <?php if ($status == 'Cancelled') {
                                                                                                                                 echo 'disabled';
                                                                                                                             } ?>>Reply</button>
@@ -362,6 +396,29 @@ $reply_result = mysqli_query($con, $query);
                                                                                                                                 echo 'disabled';
                                                                                                                             } ?>>Cancel Ticket</button>
                         <a href="Home_User.php" class="btn btn-secondary">Go Back</a>
+                    </div>
+
+                    <!-- Accept Ticket Modal -->
+                    <div class="modal fade" id="acceptModal" tabindex="-1" aria-labelledby="acceptModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="acceptModalLabel">Accept ticket</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="crud.php" method="POST">
+                                        <input type="hidden" class="form-control" name="updatedby" value="<?php echo $userid1 ?>">
+                                        <input type="hidden" name="ticket_id" value="<?php echo $ticket_id; ?>">
+                                        Are you sure you want to accept this ticket?<br>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="submit" name="accept_ticket" class="btn btn-success">Confirm</button>
+                                        </div>
+                                </div>
+                                </form>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- Reply Modal -->
