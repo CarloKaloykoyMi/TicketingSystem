@@ -262,8 +262,7 @@ $reply_result = mysqli_query($con, $query);
                                 // Error preparing statement
                                 echo "Error preparing statement.";
                             }
-                        }
-                        elseif ($ticket_data['status'] == 'Working') {
+                        } elseif ($ticket_data['status'] == 'Working') {
                             $query = "SELECT t.*, u.firstname, u.lastname 
                             FROM ticket t
                             INNER JOIN user u ON t.updated_by = u.user_id 

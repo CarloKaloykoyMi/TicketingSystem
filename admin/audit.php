@@ -72,6 +72,9 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                 <li class="nav-item">
                                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#delete-audit">Delete Logs</button>
                                 </li>
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#ticket-delete">Ticket Deleted</button>
+                                </li>
                             </ul>
 
                             <div class="tab-content mt-3">
@@ -147,6 +150,32 @@ if (!isset($_SESSION['auth_user']['username'])) {
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="tab-pane fade" id="ticket-delete">
+                                    <table id="ticketdeleteTable" class="table table-striped" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Action</th>
+                                                <th>Reason</th>
+                                                <th>Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $deleteLogs = "SELECT audit_trail.user_id, audit_trail.Action, audit_trail.delete_reason, audit_trail.Date, CONCAT(user.lastname, ', ', user.firstname) AS NAME FROM audit_trail JOIN user ON audit_trail.user_id = user.user_id WHERE audit_trail.Action = 'Ticket Deletion' ORDER BY audit_trail.Date DESC";
+                                            $deleteLogsResult = mysqli_query($con, $deleteLogs);
+                                            while ($row3 = mysqli_fetch_assoc($deleteLogsResult)) {
+                                                echo "<tr>";
+                                                echo "<td>" . $row3['NAME'] . "</td>";
+                                                echo "<td>" . $row3['Action'] . "</td>";
+                                                echo "<td>" . $row3['delete_reason'] . "</td>";
+                                                echo "<td>" . date('F j, Y g:i A', strtotime($row3['Date'])) . "</td>"; // Changed $row2 to $row3
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                             <!-- Add more tab panes if needed -->
                         </div>
@@ -200,6 +229,19 @@ if (!isset($_SESSION['auth_user']['username'])) {
                 ],
                 "columnDefs": [{
                     "targets": [2],
+                    "render": function(data, type, row) {
+                        var date = new Date(data);
+                        return formatDate(date);
+                    },
+                    "type": "date"
+                }]
+            });
+            $('#ticketdeleteTable').DataTable({
+                "order": [
+                    [2, "desc"]
+                ],
+                "columnDefs": [{
+                    "targets": [3],
                     "render": function(data, type, row) {
                         var date = new Date(data);
                         return formatDate(date);
