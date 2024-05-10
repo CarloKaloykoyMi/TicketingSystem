@@ -469,4 +469,23 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
         mysqli_query($con, $update_query);
         echo '<script>window.location.href = "resolvedtickets.php"</script>';
     }
+}else if (isset($_POST['add_reply'])) {
+    $reply = $_POST['reply'];
+    $ticket_id = $_POST['ticket_id'];
+    $userid = $_POST['userid'];
+    $name = $_POST['sender'];
+
+
+    $insert_reply = "INSERT INTO ticket_reply (reply, ticket_id,user_id,Name) 
+    VALUES ('$reply', '$ticket_id','$userid', '$name')";
+    $insert_reply_run = mysqli_query($con, $insert_reply);
+
+    if ($insert_reply_run) {
+        echo '<script>alert("Reply added.");</script>';
+        echo '<script>window.location.href = "ticket_info.php?ticket_id=' . $ticket_id . '"</script>';
+        exit();
+    } else {
+        // PHP code failed to execute
+        echo '<script>alert("Error adding reply. Please try again.");</script>';
+    }
 }
