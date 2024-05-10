@@ -232,7 +232,7 @@ if (isset($_POST['add_ticket'])) { // Check if the form is submitted
     }
 } else if (isset($_POST['change_status'])) {
     $ticket_id = $_POST['ticket_id'];
-    $status = $_POST['status']; // Retrieve the selected status from the form data
+    $status = $_POST['status'];
     $email = $_POST['email'];
     $updatedby = $_POST['updatedby'];
 
