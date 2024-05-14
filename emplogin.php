@@ -25,7 +25,7 @@ include('mysql_connect.php'); // connection to MySQL
     <nav class="navbar">
         <div class="navbar-logo">
             <a href="index.php"><img src="img/logo2.png"></a>
-            <span class="logo-text">CGG e-Ticketing</span>
+            <span class="logo-text">CGG NEXUS</span>
         </div>
         <div class="links">
             <ul>
